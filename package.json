@@ -1,20 +1,23 @@
 {
-    "name": "ciencia-argentina",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "client": "cd client && npm start",
-      "server": "cd server && npm start",
-      "start": "concurrently --kill-others \"npm run server\" \"npm run client\""
-    },
-    "author": "CienciaArgentina",
-    "license": "ISC",
-    "dependencies": {
-      "express": "^4.16.4",
-      "nodemon": "^1.18.9"
-    },
-    "devDependencies": {
-        "concurrently": "4.1.0"
-    }
+  "name": "ciencia-argentina",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "CienciaArgentina",
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "express": "^4.16.4",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^7.0.2",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   }
+}

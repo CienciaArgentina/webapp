@@ -1,0 +1,16 @@
+// base
+@import './base/vars';
+@import './base/fonts';
+@import './base/base';
+@import './base/mixins';
+
+// patrials
+@import './patrials/button';
+
+// components
+@import './components/footer';
+@import './components/header';
+@import './components/template';
+
+//pages
+@import './pages/index';

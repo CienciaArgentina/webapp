@@ -1,0 +1,149 @@
+/*
+@at-root a#{&} { ignore tree, a + parent
+	...
+}
+*/
+
+$bn-padding: 1.1rem;
+$bn-border: solid .1rem;
+@mixin buton-base() {
+	text-align: center;
+	cursor: pointer;
+	border-radius: 0rem;
+	border: none;
+	padding: $bn-padding;
+	font-weight: 600;
+	position: relative;
+	font-size: 1.4rem;
+	&:focus {
+		outline: none;
+	}
+	@at-root a#{&} { //if its a and button
+		text-decoration: none;
+	}
+}
+@mixin button--filled($bg-c: default, $color: default) {
+	@include buton-base();
+	// FILLED
+	background: $bg-c;
+	border-color: $bg-c;
+	@if $color == default {
+		color: white;
+	}
+	@else {
+		color: $color;
+	}
+}
+@mixin button--outline($bg-c: default, $color: default) {
+	@include buton-base();
+	// OUTLINE
+	background: $transparent;
+	font-weight: 700;
+	padding: $bn-padding - .2rem;
+	border: solid .2rem;
+	border-color: $bg-c;
+	&:before {
+		font-size: 1.5rem;
+	}
+	@if $color == default {
+		color: $bg-c;
+	}
+	&.bn--s {
+		padding: .7rem - .2rem  1.3rem - .2rem;
+	}
+}
+@mixin button--text($bg-c: default, $color: default) {
+	@include buton-base();
+	// TEXT
+	border-color: $transparent;
+	text-transform: uppercase;
+	background: $transparent;
+	@if $bg-c == default {
+		color: $gray-500;
+	} @else {
+		color: $bg-c;
+	}
+}
+@mixin button($bg-c: default, $color: default, $type:all) {
+	@if($bg-c==default) {
+		@include button--filled($lblue, $color);
+	} @else {
+		//Have color
+		@if($type == all) {
+			@include button--filled($bg-c, $color);
+			&--outline {
+				@include button--outline($bg-c, $color);
+			}
+			&--text {
+				@include button--text($bg-c, $color);
+			}
+
+		} @else if($type == filled) {
+			@include button--filled($bg-c, $color);
+
+		} @else if $type == outline {
+			@include button--outline($bg-c, $color);
+
+		} @else if $type == text {
+			@include button--text($bg-c, $color);
+		}
+	}
+}
+//------------------icons
+@mixin bn-icon-right() {
+	padding-left: 1.1rem;
+	padding-right: 2.5rem;
+	&.bn-s {
+		padding-right: 2.3rem;
+		&:before {
+			right: 1.2rem;
+		}
+	}
+	&:before {
+		right: 1.5rem;
+		left: initial;
+		transform: translate(50%, -50%);
+	}
+}
+
+@mixin bn--icon($icon-code:'\f067', $icon-w:600) {
+	&, &#{'--right'} {
+		padding-left: 2.5rem;
+		&:before {
+			@include icon-font();
+			content: $icon-code;
+			font-weight: $icon-w;
+			position: absolute;
+			line-height: 1em;
+			left: 1.5rem;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	&--right {
+		@include bn-icon-right();
+		&.bn--s {
+			padding-right: 2.3rem !important;
+			&:before {
+				right: 1.2rem
+			}
+		}
+	}
+	&.bn--s {
+		padding-left: 2.3rem !important;
+		&:before {
+			left: 1.2rem
+		}
+	}
+}
+
+// flex
+@mixin flex-align($h:false, $v:false){
+	display: flex;
+	@if($h != false){
+		justify-content: $h;
+	}
+	@if($v != false){
+		align-items: $v;
+	}
+}

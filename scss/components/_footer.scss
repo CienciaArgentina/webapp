@@ -1,0 +1,20 @@
+footer {
+	background-color: $gray-800;
+	color: white;
+	padding: $s3;
+	display: flex;
+	& > div {
+		opacity: .5;
+		display: flex;
+		align-items: center;
+		cursor: default;
+		transition: opacity .2s ease;
+		&:hover {
+			opacity: 1;
+		}
+		img {
+			height: 3rem;
+			margin-right: 1rem;
+		}
+	}
+}

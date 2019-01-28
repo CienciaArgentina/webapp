@@ -1,6 +1,8 @@
 import React from 'react'
-import App, { Container } from 'next/app'
-import "../scss/style.scss";
+import App, { Container } from 'next/app';
+
+import 'normalize.css/normalize.css';
+import "../scss/main.scss";
 
 export default class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {

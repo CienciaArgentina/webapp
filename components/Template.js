@@ -21,7 +21,7 @@ export default class Page extends Component {
 	}
 	render() {
 		return (
-			<div id="app">
+			<div id="app" {...this.props.pageprops}>
 				<Header
 					showMenu={this.showMenu}
 					hideMenu={this.hideMenu}

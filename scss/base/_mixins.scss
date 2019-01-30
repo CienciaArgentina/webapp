@@ -147,3 +147,8 @@ $bn-border: solid .1rem;
 		align-items: $v;
 	}
 }
+
+// elevation
+@mixin elevation($e:1){
+	@extend .elevation#{'--z'}#{$e};
+}

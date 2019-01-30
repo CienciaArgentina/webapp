@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Page from '../components/Template';
 import { Component } from 'react';
+import Head from 'next/head';
 
 export default class Index extends Component {
     state = {
@@ -9,9 +10,6 @@ export default class Index extends Component {
         activateIndexParallax: false
     }
     _onMouseMove = (e) => {
-        console.log(this.state.w_width);
-        console.log(this.state.w_height);
-        
         this.setState({
             x: -(e.screenX - this.state.w_width/2) / this.state.w_width * 2,
             y: -(e.screenY - this.state.w_height/2) / this.state.w_height * 2
@@ -24,7 +22,6 @@ export default class Index extends Component {
         } else {
             this.setState(() => ({activateIndexParallax: false}))
         }
-        console.log('Mounted');
     }
     render(){
         const backgroundStyle = {
@@ -38,17 +35,17 @@ export default class Index extends Component {
                         <div className="container">
                             <h1>Encontrá tu lugar en la ciencia</h1>
                             <div className="whiteSearchBar">
-                                <label>¿Qué estas buscando?</label>
+                                ¿Qué estas buscando?
                             </div>
                             <div className="tipoDeBusquedas">
                                 <div>
-                                    <div className="tipo__content"><p className="tipo">Pasantías</p>      <p className="numero">157</p></div>
+                                    <div className="tipo__content"><p className="tipo">Pasantías</p></div>
                                 </div>
                                 <div>
-                                    <div className="tipo__content"><p className="tipo">Doctorados</p>     <p className="numero">68</p></div>
+                                    <div className="tipo__content"><p className="tipo">Doctorados</p></div>
                                 </div>
                                 <div>
-                                    <div className="tipo__content"><p className="tipo">Posdoctorados</p>  <p className="numero">30</p></div>
+                                    <div className="tipo__content"><p className="tipo">Posdoctorados</p></div>
                                 </div>
                             </div>
                         </div>

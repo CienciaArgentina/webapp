@@ -2,8 +2,8 @@
 	.hero {
 		color: white;
 		padding-top: 9rem;
+		padding-bottom: 9rem;
 		box-sizing: border-box;
-		height: 80vh;
 		overflow: hidden;
 		position: relative;
 		.background-desktop {
@@ -44,13 +44,15 @@
 				border: solid .14rem white;
 				border-radius: 1rem;
 				width: 11.2rem;
-				// height: 11.2rem;
 				cursor: pointer;
 				&:before {
 					content: '';
 					position: relative;
 					width: 100%;
-					padding-top: 100%;
+					padding-top: 40%;
+					@media (max-width: $device-tablet) {
+						padding-top: 60%;
+					}
 				}
 				text-align: center;
 				@include flex-align(center, center);
@@ -62,7 +64,7 @@
 					}
 				}
 			}
-			@media (max-width: $device-mobile) {
+			@media (max-width: $device-mobile) { //tipoDeBusquedas
 				margin-top: 7rem;
 				& > div {
 					width: 10.2rem;
@@ -72,10 +74,16 @@
 				}
 			}
 		}
-		@media (min-width: $device-mobileLandscape) {
+		@media (min-width: $device-mobileLandscape) { //hero
+			padding-top: 4rem;
+			padding-bottom: 4rem;
+			.background-desktop {
+				background: url(/static/img/background-cell-xl.svg), $gradient-a;
+			}
 			.tipoDeBusquedas {
+				margin-top: 2rem;
 				& > div {
-					width: 30%;
+					width: 26%;
 					transition: background-color .2s, color 1.5s ease;
 					&:hover {
 						background: white;
@@ -84,10 +92,13 @@
 				}
 			}
 		}
-		@media (min-width: $device-tablet) {
-			.container {
+		@media (min-width: $device-tablet) { //hero
+			padding-top: 5rem;
+			padding-bottom: 6rem;
+		.container {
 				max-width: 80rem;
 				.tipoDeBusquedas {
+					margin-top: 4rem;
 					& > div {
 						width: 25%;
 						.tipo__content {
@@ -101,6 +112,10 @@
 					}
 				}
 			}
+		}
+		@media (min-width: $device-desktopLarge) { //hero
+			padding-top: 9rem;
+			padding-bottom: 9rem;
 		}
 	}
 }

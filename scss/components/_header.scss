@@ -1,9 +1,16 @@
 header {
 	$header-h: 7rem;
-	border-bottom: solid .1rem black;
 	width: 100%;
 	height: $header-h;
+	top: 0;
+	z-index: $z-mobile-menu;
+	position: fixed;
+	background-color: white;
+	@at-root body {
+		padding-top: $header-h;
+	}
 	@include flex-align(space-between, center);
+	@include elevation(2);
 
 	& > .logo {
 		height: 3.5rem;
@@ -30,26 +37,31 @@ header {
 		display: none;
 	}
 	@media (max-width: $device-tablet) {
-		$header-h: 6rem;
+		$header-h: 5.4rem;
 		height: $header-h;
+		@at-root body {
+			padding-top: $header-h;
+		}
 		border-bottom: none;
 		nav, .logo {
 			display: none;
 		}
 		.mobile-nav {
-			background-color: white;
-			position: fixed;
 			box-sizing: border-box;
 			top: 0;
 			@include flex-align(space-between, center);
-			padding: 0 1.5rem;
+			// padding: 0 1.5rem;
 			height: inherit;
 			width: 100%;
 			.logo-mobile, .search-mobile, .menu-mobile {
-				width: 4rem;
-				height: 4rem;
+				// background: red;
+				$size: $header-h - 2;
+				width: $header-h;
+				height: $header-h;
+				padding: ($header-h - $size) / 2;
+				box-sizing: border-box;
 				color: $gray-700;
-				font-size: 2.5rem;
+				font-size: 2rem;
 				@include flex-align(center, center);
 			}
 			.logo-mobile img {
@@ -63,14 +75,14 @@ header {
 			}
 		}
 		.mobile-menu {
-			$delay: 0.3s;
+			$delay: 500ms $ease;
 			$space: 7rem;
 			display: none;
 			position: fixed;
 			top: 0px;
 			height: 100vh;
 			width: 100vw;
-			z-index: $z-mobile-menu;
+			z-index: $z-mobile-menu + 1;
 			&>div {
 				height: 100%;
 				position: absolute;
@@ -78,10 +90,11 @@ header {
 			.mobile-menu__background {
 				background-color: $transparent;
 				width: 100%;
-				transition: background-color $delay ease-in-out;
+				transition: background-color $delay;
 			}
 			.mobile-menu__content {
-				transition: left $delay ease-in-out;
+				box-shadow: 0 8px 10px -5px rgba(0,0,0,.2), 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12);
+				transition: left $delay;
 				background: white;
 				left: calc(-100vw + #{$space} - .1rem);
 				width: calc(100vw - #{$space});
@@ -92,7 +105,7 @@ header {
 			}
 			&.mobile-menu--show {
 				.mobile-menu__background {
-					background-color: rgba(0,0,0,0.3);
+					background-color: rgba(0,0,0,0.32);
 				}
 				.mobile-menu__content {
 					left: 0;

@@ -27,10 +27,7 @@ $transparent: (rgba(0,0,0,0));
 //gradients
 $gradient-a: linear-gradient(-30deg, #1BA4BB 0%, #1B75BB 44.33%, #615BBB 94.85%);
 
-// size
-$s3: 20px;
-$s5: 30px;
-
+//breakpoints
 $device-mobile: 376px;
 $device-mobileLandscape: 426px;
 $device-tablet: 769px;
@@ -45,3 +42,17 @@ $z-nav: 200;
 $z-mobile-menu: 300;
 
 $ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+// size
+$spacer: 1rem;
+$s-0: $spacer * 0;
+$s-1: $spacer * .50;
+$s-2: $spacer * 1;
+$s-3: $spacer * 1.75;
+$s-4: $spacer * 2.50;
+$s-5: $spacer * 3;
+$s-6: $spacer * 4;
+$s-7: $spacer * 6;
+$s-8: $spacer * 10;
+$s-9: $spacer * 14;
+$s-10: $spacer * 17;

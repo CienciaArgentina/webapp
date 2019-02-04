@@ -6,7 +6,7 @@ header {
 	z-index: $z-mobile-menu;
 	position: fixed;
 	background-color: white;
-	@at-root body {
+	@at-root #app {
 		padding-top: $header-h;
 	}
 	@include flex-align(space-between, center);
@@ -14,7 +14,7 @@ header {
 
 	& > .logo {
 		height: 3.5rem;
-		margin-left: $s3;
+		margin-left: $s-3;
 		cursor: pointer;
 	}
 	nav {
@@ -24,12 +24,12 @@ header {
 		a {
 			color: $gray-800;
 			text-decoration: none;
-			margin: $s3;
+			margin: $s-3;
 		}
 		.login {
-			margin-left: $s3;
+			margin-left: $s-3;
 			height: 100%;
-			width: $s3*8;
+			width: $s-3*8;
 			background-color: $lblue;
 		}
 	}
@@ -39,7 +39,7 @@ header {
 	@media (max-width: $device-tablet) {
 		$header-h: 5.4rem;
 		height: $header-h;
-		@at-root body {
+		@at-root #app {
 			padding-top: $header-h;
 		}
 		border-bottom: none;

@@ -15,8 +15,39 @@
 	}
 }
 
+h2 {
+	color: $gray-800;
+	font-size: 2.2rem;
+	font-weight: 700;
+}
+
 h3 {
-	font-weight: 400;
+	font-weight: 600;
 	font-size: 1.5rem;
 	color: $gray-800;
+	@media (max-width: $device-tablet){
+		font-weight: 400;
+	}
+}
+
+.grayTitle {
+	font-size: 6rem;
+	color: $gray-500;
+	font-weight: 800;
+	line-height: 6rem;
+}
+.text {
+	line-height: 2.2rem;
+	font-size: 1.3rem;
+	margin-bottom: 2rem;
+	& a, a#{&} {
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+.text--l {
+	@extend .text;
+	line-height: 2.5rem;
+	font-size: 1.5rem;
+	margin-bottom: 2rem;
 }

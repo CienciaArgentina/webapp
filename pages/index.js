@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Page from '../components/Template';
 import { Component } from 'react';
 import Head from 'next/head';
+import NProgress from 'nprogress';
+import Busqueda from '../components/Busqueda'
 
 export default class Index extends Component {
     state = {
@@ -28,7 +30,7 @@ export default class Index extends Component {
             transform: `translate(${this.state.x}%, ${this.state.y}%)`
             }
         return (
-            <Page pageprops={ this.state.activateIndexParallax ? {onMouseMove:this._onMouseMove} : {} } >
+            <Page contentClass="bg--gray" pageprops={ this.state.activateIndexParallax ? {onMouseMove:this._onMouseMove} : {} } >
                 <div className="Index">
                     <div className="hero">
                         <div className="background-desktop" style={backgroundStyle}></div>
@@ -50,8 +52,13 @@ export default class Index extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="nuevasBusquedas" style={{marginTop:30, marginBottom:30}}>
-                        <h3 className="container">Nuevas búsquedas</h3>
+                    <div className="nuevasBusquedas container--m" style={{marginTop:30, marginBottom:30}}>
+                        <h3 className="pb-2">Nuevas búsquedas</h3>
+                        <div>
+                            <Busqueda logo="leloir_logo.png" favorites={false} />
+                            <Busqueda logo="leloir_logo.png" favorites={true} />
+                            <Busqueda logo="leloir_logo.png" favorites={false} />
+                        </div>
                     </div>
                 </div>
             </Page>

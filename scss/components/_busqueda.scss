@@ -1,0 +1,111 @@
+.busqueda {
+	font-size: 1.2rem;
+	color: $gray-800;
+	font-weight: 500;
+	background: white;
+	box-sizing: border-box;
+	height: 12.5rem;
+	display: flex;
+	position: relative;
+	margin-bottom: $s-6;
+	&:last-child {
+		margin-bottom: 0;
+	}
+	h3 {
+		color: $lblue;
+		font-weight: 600;
+		font-size: 1.5rem;
+	}
+	.busqueda__logo {
+		position: relative;
+		background: $gray-300;
+		width: 12.5rem;
+		flex-shrink: 0;
+		@include proportion(100);
+		img {
+			@include abs-center();
+			max-width: 90%;
+		}
+	}
+	.busqueda__content {
+		position: relative;
+		display: flex;
+		.busqueda__data {
+			height: 100%;
+			padding: $s-2 $s-4;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			.main_data {
+				.busqueda__type {
+					color: $gray-600;
+				}
+			}
+			.middle_data {
+				flex-grow: 1;
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+			.button_data {
+				color: $gray-700;
+			}
+			.busqueda__details {
+				color: $gray-700;
+				position: absolute;
+				bottom: 1rem;
+				right: 1rem;
+				min-width: 7rem;
+				& > div {
+					margin-top: .4rem;
+				}
+				// display: none;
+			}
+		}
+	}
+	.busqueda__favStar {
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+		cursor: pointer;
+		color: $gray-600;
+		&:hover {
+			color: $lblue;
+		}
+		&:before {
+			@include icon-font("\f005", regular);
+		}
+		&.fav {
+			color: $lblue;
+			&:before {
+				@include icon-font("\f005", solid);
+			}
+		}
+	}
+}
+.iconData {
+	cursor: default;
+	display: flex;
+	align-items: center;
+	&:before {
+		content: '';
+		width: 2rem;
+		text-align: center;
+	}
+	&.--persona:before {
+		@include icon-font("\f007", solid);
+	}
+	&.--estipendo:before {
+		@include icon-font("\f53d", solid);
+	}
+	&.--tiempo:before {
+		@include icon-font("\f017", regular);
+	}
+	&.--limite:before {
+		@include icon-font("\f073", solid);
+	}
+	&.--urgente {
+		color: $error;
+	}
+}

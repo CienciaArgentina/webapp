@@ -34,14 +34,14 @@ const Header = (props) => (
 			<Link href="/">
 				<a>Inicio</a>
 			</Link>
-			<Link href="/buscar">
+			<Link href="/about">
 				<a>Buscar</a>
 			</Link>
-			<Link href="/nosotros">
-				<a>Quienes somos</a>
+			<Link href="/equipo">
+				<a>Equipo</a>
 			</Link>
-			<Link href="/contacto">
-				<a>Contacto</a>
+			<Link href="/publicar">
+				<a>Publicar</a>
 			</Link>
 			<Link href="/login">
 				<button className="login">Ingresar</button>

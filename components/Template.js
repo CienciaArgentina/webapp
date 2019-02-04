@@ -2,6 +2,20 @@ import Header from './Header';
 import { Component } from 'react';
 import Head from 'next/head'
 import Document, { Main, NextScript } from 'next/document';
+import NProgress from 'nprogress'
+import Router from 'next/router'
+
+Router.events.on('routeChangeStart', (url) => {
+	console.log(`Loading: ${url}`)
+	NProgress.start()
+  })
+  Router.events.on('routeChangeComplete', () => NProgress.done())
+  Router.events.on('routeChangeError', () => NProgress.done())
+
+NProgress.configure({
+	showSpinner: false,
+	minimum: 0.2
+});
 
 export default class Page extends Component {
 	state = {
@@ -43,6 +57,7 @@ export default class Page extends Component {
 						this.props.ogimage :
 						'/static/img/favicon/ogimage.jpg'
 					} />
+					<meta property="og:site_name" content="Ciencia Argentina" />
 					{/* FAVICONS */}
 					<link rel="icon" type="image/x-icon" href="/static/img/favicon/favicon.ico" />
 					<link rel="icon" type="image/png" sizes="192x192"  href="/static/img/favicon/android-icon-192x192.png" />
@@ -70,6 +85,7 @@ export default class Page extends Component {
 					{/* theme */}
 					<meta name="theme-color" content="#1b75bb" />
 					{/* END FAVICONS */}
+					<link rel="stylesheet" href="/static/css/nprogress.css" />
 				</Head>
 				<Header
 					showMenu={this.showMenu}
@@ -77,7 +93,7 @@ export default class Page extends Component {
 					mobile_menu_display={this.state.mobile_menu_display}
 					mobile_menu_show={this.state.mobile_menu_show}
 				/>
-				<div id="content">
+				<div id="content" className={this.props.contentClass?this.props.contentClass:''}>
 					{this.props.children}
 				</div>
 				<footer>

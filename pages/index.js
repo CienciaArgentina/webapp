@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import Page from '../components/Template';
+import Page from '../layouts/main/main'
 import { Component } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
-import Busqueda from '../components/Busqueda'
+import Busqueda from '../components/search/Busqueda'
 
 export default class Index extends Component {
     state = {

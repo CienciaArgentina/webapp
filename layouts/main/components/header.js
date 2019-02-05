@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import MobileMenu from './mobileMenu'
 
 const MobileNav = (props) => (
 	<div className="mobile-nav">
@@ -12,18 +13,6 @@ const MobileNav = (props) => (
 	</div>
 );
 
-const MovileMenu = (props) => (
-	<div className={
-			"mobile-menu" +
-			(props.mobile_menu_display ? " mobile-menu--display" : '') +
-			(props.mobile_menu_show ? " mobile-menu--show" : '')
-	}>
-		<div onClick={props.hideMenu} className="mobile-menu__background"></div>
-		<div className="mobile-menu__content">
-			asd
-		</div>
-	</div>
-);
 
 const Header = (props) => (
 	<header>
@@ -50,7 +39,7 @@ const Header = (props) => (
 		<MobileNav
 			showMenu={props.showMenu}
 		/>
-		<MovileMenu
+		<MobileMenu
 			hideMenu={props.hideMenu}
 			mobile_menu_display={props.mobile_menu_display}
 			mobile_menu_show={props.mobile_menu_show}

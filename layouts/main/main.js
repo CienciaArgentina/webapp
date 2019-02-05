@@ -1,4 +1,4 @@
-import Header from './Header';
+import Header from './components/header';
 import { Component } from 'react';
 import Head from 'next/head'
 import Document, { Main, NextScript } from 'next/document';

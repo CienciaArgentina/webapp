@@ -1,4 +1,4 @@
-import Page from '../components/Template';
+import Page from '../layouts/main/main'
 
 export default () => (
     <Page>

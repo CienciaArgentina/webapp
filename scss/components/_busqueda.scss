@@ -11,10 +11,23 @@
 	&:last-child {
 		margin-bottom: 0;
 	}
+	a {
+		text-decoration: none;
+	}
 	h3 {
 		color: $lblue;
 		font-weight: 600;
 		font-size: 1.5rem;
+		cursor: pointer;
+		width: calc(100% - 2rem);
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2; /* number of lines to show */
+		line-height: 1.6rem;        /* fallback */
+		max-height: 1.6rem*2;       /* fallback */
 	}
 	.busqueda__logo {
 		position: relative;
@@ -30,9 +43,12 @@
 	.busqueda__content {
 		position: relative;
 		display: flex;
+		width: 100%;
 		.busqueda__data {
 			height: 100%;
-			padding: $s-2 $s-4;
+			width: 100%;
+			padding: 1.4rem $s-4;
+			// padding-top: $s-3;
 			box-sizing: border-box;
 			display: flex;
 			flex-direction: column;
@@ -54,7 +70,7 @@
 			.busqueda__details {
 				color: $gray-700;
 				position: absolute;
-				bottom: 1rem;
+				bottom: 1.4rem;
 				right: 1rem;
 				min-width: 7rem;
 				& > div {
@@ -107,5 +123,8 @@
 	}
 	&.--urgente {
 		color: $error;
+	}
+	&.--left:before {
+		text-align: left;
 	}
 }

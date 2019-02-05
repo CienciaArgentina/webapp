@@ -1,4 +1,5 @@
 import ReactTooltip from 'react-tooltip'
+import Link from 'next/link'
 
 const Busqueda = (props) => (
 	<div className="busqueda">
@@ -11,14 +12,18 @@ const Busqueda = (props) => (
 			<div className="busqueda__data">
 				<div className="main_data">
 					<p className="busqueda__type">Doctorado</p>
-					<h3 className="busqueda__title">Impacto del cambio climático en sistemas naturales y recursos hídricos de superficie</h3>
+					<Link href="/busqueda/asd">
+						<a>
+							<h3 className="busqueda__title">Regulación de la N-glicosilación de proteínas eucariotas</h3>
+						</a>
+					</Link>
 				</div>
 				<div className="middle_data">
 					<p>Insituto Leloir</p>
 					<p>Ciudad Autónoma de Buenos Aires</p>
 				</div>
 				<div className="button_data">
-					<div className="iconData --persona">Dra. Jeanette Acosta</div>
+					<div className="iconData --persona --left">Dra. Jeanette Acosta</div>
 				</div>
 				<div className="busqueda__details">
 					<div className="iconData --estipendo"	data-tip="Estipendo">$18.900</div>

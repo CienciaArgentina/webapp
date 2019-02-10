@@ -14,7 +14,13 @@ const equipoLista = [
 	},
 	{
 		nombre: "Giuliano Tomás",
-		apellido: "Antelo"
+		apellido: "Antelo",
+		social: {
+			researchGate: "Giuliano_Antelo",
+			twitter: "Giuliano_Tomas",
+			instagram: "giuliano.antelo",
+			facebook: "giuliano.antelo"
+		}
 	},
 	{
 		nombre: "Lucas Francisco",
@@ -27,6 +33,7 @@ const equipoLista = [
 		}
 	},
 	{
+		photo: "jean.jpg",
 		nombre: "Jeanette",
 		apellido: "Acosta",
 		social: {
@@ -34,9 +41,25 @@ const equipoLista = [
 			instagram: "acosta.s.jeanette"
 		}
 	},
+	{
+		nombre: "Santiago",
+		apellido: "Cosco",
+	},
+	{
+		nombre: "Nicolas",
+		apellido: "García",
+	},
+	{
+		nombre: "Aldano",
+		apellido: "Pelusso",
+	},
 ];
 const socialIcons = {
-	'github': {
+	researchGate: {
+		baseLink: "https://www.researchgate.net/profile/",
+		icon: <i className="fab fa-researchgate"></i>
+	},
+	github: {
 		baseLink: "https://github.com/",
 		icon: <i className="fab fa-github"></i>
 	},
@@ -51,6 +74,10 @@ const socialIcons = {
 	instagram: {
 		baseLink: "https://www.instagram.com/",
 		icon: <i className="fab fa-instagram"></i>
+	},
+	facebook: {
+		baseLink: "https://www.facebook.com/",
+		icon: <i className="fab fa-facebook"></i>
 	}
 }
 const SocialLink = (props) => (
@@ -74,13 +101,13 @@ const EquipoProfile = (props) => (
 	</div>
 )
 
-const equipo = (props) => (
+const teamPage = (props) => (
 	<Page contentClass="bg--gray pt-7 pb-7">
 		<div id="equipo" className="container--m">
 			<h1 className="grayTitle">Quiénes somos</h1>
 			<div className="equipo__description">
 				<p className="text--l">Somos un grupo de nerds que busca facilitar la comunicación en el campo de la ciencia. Nos dedicamos a buscar ofertas de pasantías, doctorados y posdoctorados y publicarlas para que los estudiantes y científicos puedan encontrar fácilmente un lugar para continuar con su carrera. Esta plataforma es de código abierto y fue creada de manera voluntaria, podés ver el código en <a href="https://github.com/CienciaArgentina" target="_blank">Github.</a></p>
-				<p className="text--l">¿Tenés dudas? Tenemos una página de preguntas frecuentes donde respondemos algunas preguntas útiles.</p>
+				{/* <p className="text--l">¿Tenés dudas? Tenemos una página de preguntas frecuentes donde respondemos algunas preguntas útiles.</p> */}
 				<div className="equipo__lista">
 					{equipoLista.map( (o,key)=>(
 						<EquipoProfile key={key} data={o} />
@@ -91,4 +118,4 @@ const equipo = (props) => (
 	</Page>
 );
 
-export default equipo;
+export default teamPage;

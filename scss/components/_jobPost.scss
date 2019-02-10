@@ -1,4 +1,4 @@
-.busqueda {
+.jobPost {
 	font-size: 1.2rem;
 	color: $gray-800;
 	font-weight: 500;
@@ -21,15 +21,9 @@
 		cursor: pointer;
 		width: calc(100% - 2rem);
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2; /* number of lines to show */
-		line-height: 1.6rem;        /* fallback */
-		max-height: 1.6rem*2;       /* fallback */
+		@include max-lines(2, 1.6rem);
 	}
-	.busqueda__logo {
+	.jobPost__logo {
 		position: relative;
 		background: $gray-300;
 		width: 12.5rem;
@@ -37,14 +31,14 @@
 		@include proportion(100);
 		img {
 			@include abs-center();
-			max-width: 90%;
+			max-width: 60%;
 		}
 	}
-	.busqueda__content {
+	.jobPost__content {
 		position: relative;
 		display: flex;
 		width: 100%;
-		.busqueda__data {
+		.jobPost__data {
 			height: 100%;
 			width: 100%;
 			padding: 1.4rem $s-4;
@@ -53,7 +47,7 @@
 			display: flex;
 			flex-direction: column;
 			.main_data {
-				.busqueda__type {
+				.jobPost__type {
 					color: $gray-600;
 				}
 			}
@@ -67,7 +61,7 @@
 			.button_data {
 				color: $gray-700;
 			}
-			.busqueda__details {
+			.jobPost__details {
 				color: $gray-700;
 				position: absolute;
 				bottom: 1.4rem;
@@ -80,7 +74,7 @@
 			}
 		}
 	}
-	.busqueda__favStar {
+	.jobPost__favStar {
 		position: absolute;
 		right: 1rem;
 		top: 1rem;
@@ -98,6 +92,56 @@
 				@include icon-font("\f005", solid);
 			}
 		}
+	}
+	@media (min-width: $device-tablet){
+		.InstituteName {
+			display: none;
+		}
+	}
+	@media (max-width: $device-tablet){
+		height: initial;
+		margin-bottom: $s-3;
+		.jobPost__favStar {
+			font-size: 1.5rem;
+		}
+		 .jobPost__logo {
+			 display: none;
+		 }
+		 .jobPost__content {
+			 .jobPost__data {
+				 padding: $s-3 $s-3;
+				 .InstituteName {
+					margin-bottom: $s-2;
+				}
+				.main_data {
+					h3 {
+						@include max-lines(3, 1.6rem);
+					}
+				}
+				 .middle_data {
+					 display: none;
+				 }
+				 .button_data {
+					 margin-top: $s-2;
+				 }
+				 .jobPost__details {
+					 margin-top: $s-1;
+					 position: relative;
+					 bottom: 0;
+					 right: 0;
+					 display: flex;
+					 .iconData {
+						 margin-top: 0;
+						 margin-right: $s-3;
+						 &:before {
+							 text-align: left;
+							 width: initial;
+							 margin-right: $s-1;
+						 }
+					 }
+				 }
+			 }
+		 }
 	}
 }
 .iconData {

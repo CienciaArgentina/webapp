@@ -1,5 +1,5 @@
 import React from 'react'
-import Page from '../components/Template';
+import Page from '../layouts/main/main';
 
 
 export default class Error extends React.Component {
@@ -18,7 +18,7 @@ export default class Error extends React.Component {
 					{this.props.statusCode == 404 ? 'Page not found' :''}
 				</p>
 				<p className="errorDesc">
-					{this.props.statusCode == 404 ? 'El diccionario lo define como una Página que no se puede encontrar... Que NO se puede encontrar.' :''}
+					{this.props.statusCode == 404 ? 'El diccionario lo define como una página que no se puede encontrar... Que NO se puede encontrar.' :''}
 				</p>
 			</div>
 			{/* <p>

@@ -3,13 +3,14 @@ import Page from '../layouts/main/main'
 import { Component } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
-import Busqueda from '../components/search/Busqueda'
+import JobPost from '../components/jobs/JobPost';
 
 export default class Index extends Component {
     state = {
         x: 0,
         y: 0,
-        activateIndexParallax: false
+        activateIndexParallax: false,
+        newJobs: this.props.newJobs
     }
     _onMouseMove = (e) => {
         this.setState({
@@ -34,7 +35,7 @@ export default class Index extends Component {
                 <div className="Index">
                     <div className="hero">
                         <div className="background-desktop" style={backgroundStyle}></div>
-                        <div className="container">
+                        <div className="container--m">
                             <h1>Encontrá tu lugar en la ciencia</h1>
                             <div className="whiteSearchBar">
                                 ¿Qué estas buscando?
@@ -55,13 +56,79 @@ export default class Index extends Component {
                     <div className="nuevasBusquedas container--m" style={{marginTop:30, marginBottom:30}}>
                         <h3 className="pb-2">Nuevas búsquedas</h3>
                         <div>
-                            <Busqueda logo="leloir_logo.png" favorites={false} />
-                            <Busqueda logo="leloir_logo.png" favorites={true} />
-                            <Busqueda logo="leloir_logo.png" favorites={false} />
+                            {/* <JobPost logo="leloir_logo.png" favorite={false} />
+                            <JobPost logo="leloir_logo.png" favorite={true} />
+                            <JobPost logo="leloir_logo.png" favorite={false} /> */}
+                            {this.state.newJobs.map( (o,k)=>(
+                                <JobPost key={k}
+                                    title={o.title}
+                                    type={o.type}
+                                    instituteName={o.instituteName}
+                                    place={o.place}
+                                    boss={o.boss}
+                                    logo={o.logo}
+                                    earn={o.earn}
+                                    duration={o.duration}
+                                    deadline={o.deadline}
+                                    closeDeadline={o.closeDeadline}
+                                    favorite={o.favorite}
+                                />
+                                
+                            ) )}
                         </div>
                     </div>
                 </div>
             </Page>
         );
     }
+}
+
+Index.getInitialProps = async function() {
+	return {
+		newJobs: [
+            {
+                title: "Regulación de la N-glicosilación de proteínas eucariotas",
+                type: "Doctorado",
+                instituteName: "Insituto Leloir",
+                place: "Ciudad Autónoma de Buenos Aires",
+                boss: "Dra. Jeanette Acosta",
+                logo: "leloir_logo.png",
+                earn: "$18.900",
+                duration: "4 años",
+                deadline: "10 Ago.",
+                closeDeadline: false,
+                favorite: true
+            },
+            {
+                title: "Inmunoterapia en la tuberculosis de la humana",
+                type: "Doctorado",
+                instituteName: "IFIBYNE",
+                place: "Ciudad Autónoma de Buenos Aires",
+                boss: "Dra. Jeanette Acosta",
+                logo: "ifibyne_logo.png",
+                earn: "$18.900",
+                duration: "4 años",
+                deadline: "2 días",
+                closeDeadline: true,
+                favorite: false
+            },
+            {
+                title: "Nuevos genes de expresión asimétrica temprana y su rol en el establecimineto de ejes corporales",
+                type: "Doctorado",
+                instituteName: "Insituto Leloir",
+                place: "Ciudad Autónoma de Buenos Aires",
+                boss: "Dra. Jeanette Acosta",
+                logo: "leloir_logo.png",
+                earn: "$18.900",
+                duration: "4 años",
+                deadline: "6 Oct.",
+                closeDeadline: false,
+                favorite: false
+            },
+        ]
+	}
+	const res = await fetch('')
+	const data = await res.json()
+  
+	return data
 }

@@ -7,14 +7,17 @@
 
 // patrials
 @import './patrials/button';
+@import './patrials/spacing';
 
 // components
-@import './components/busqueda';
 @import './components/footer';
 @import './components/header';
+@import './components/InstituteName';
+@import './components/jobPost';
 @import './components/template';
 
 //pages
 @import './pages/index';
 @import './pages/equipo';
 @import './pages/errorPage';
+@import './pages/job';

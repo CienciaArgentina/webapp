@@ -12,7 +12,7 @@ header {
 	@include flex-align(space-between, center);
 	@include elevation(2);
 
-	& > .logo {
+	& .logo {
 		height: 3.5rem;
 		margin-left: $s-3;
 		cursor: pointer;

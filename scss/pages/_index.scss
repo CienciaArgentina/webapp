@@ -95,8 +95,8 @@
 		@media (min-width: $device-tablet) { //hero
 			padding-top: 5rem;
 			padding-bottom: 6rem;
-		.container {
-				max-width: 80rem;
+		.container--m {
+				// max-width: 80rem;
 				.tipoDeBusquedas {
 					margin-top: 4rem;
 					& > div {

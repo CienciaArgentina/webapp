@@ -1,4 +1,5 @@
-import Header from './components/header';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import { Component } from 'react';
 import Head from 'next/head'
 import Document, { Main, NextScript } from 'next/document';
@@ -96,12 +97,7 @@ export default class Page extends Component {
 				<div id="content" className={this.props.contentClass?this.props.contentClass:''}>
 					{this.props.children}
 				</div>
-				<footer>
-					<div>
-						<img src="/static/img/logos/icon-white.svg" />
-						Ciencia Argentina
-					</div>
-				</footer>
+				<Footer />
 			</div>
 		);
 	}

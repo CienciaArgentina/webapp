@@ -17,20 +17,16 @@ const MobileNav = (props) => (
 const Header = (props) => (
 	<header>
 		<Link href="/">
-			<img className="logo" src="/static/img/logos/logo-color.svg" />
+			<a>
+				<img className="logo" src="/static/img/logos/logo-color.svg" />
+			</a>
 		</Link>
 		<nav>
 			<Link href="/">
-				<a>Inicio</a>
+				<a>Trabajos</a>
 			</Link>
-			<Link href="/about">
-				<a>Buscar</a>
-			</Link>
-			<Link href="/equipo">
-				<a>Equipo</a>
-			</Link>
-			<Link href="/publicar">
-				<a>Publicar</a>
+			<Link href="/">
+				<a>Reclutar</a>
 			</Link>
 			<Link href="/login">
 				<button className="login">Ingresar</button>

@@ -4,7 +4,7 @@ import Page from '../layouts/main/main';
 
 export default class Error extends React.Component {
   static getInitialProps({ res, err }) {
-    const statusCode = res ? res.statusCode : err ? err.statusCode : null;
+    const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
     return { statusCode }
   }
 

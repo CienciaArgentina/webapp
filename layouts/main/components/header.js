@@ -1,17 +1,6 @@
 import Link from 'next/link';
-import MobileMenu from './mobileMenu'
-
-const MobileNav = (props) => (
-	<div className="mobile-nav">
-		<div onClick={props.showMenu} className="menu-mobile"></div>
-		<div className="logo-mobile">
-			<Link href="/">
-				<img src="/static/img/logos/icon-color.svg" />
-			</Link>
-		</div>
-		<div className="search-mobile"></div>
-	</div>
-);
+import MobileMenu from './MobileMenu'
+import MobileNav from './MobileNav'
 
 
 const Header = (props) => (

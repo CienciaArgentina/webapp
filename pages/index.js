@@ -56,9 +56,6 @@ export default class Index extends Component {
                     <div className="nuevasBusquedas container--m" style={{marginTop:30, marginBottom:30}}>
                         <h3 className="pb-2">Nuevas búsquedas</h3>
                         <div>
-                            {/* <JobPost logo="leloir_logo.png" favorite={false} />
-                            <JobPost logo="leloir_logo.png" favorite={true} />
-                            <JobPost logo="leloir_logo.png" favorite={false} /> */}
                             {this.state.newJobs.map( (o,k)=>(
                                 <JobPost key={k}
                                     title={o.title}

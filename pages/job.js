@@ -32,12 +32,25 @@ export default class job extends Component {
 		return (
 		<Page contentClass="bg--gray">
 			<div className="jobPage">
+				<div className="job__mobilApply">
+					<Link href="/aplicar">
+						<a>
+							Aplicar
+						</a>
+					</Link>
+					<div onClick={this.switchInterest} className="markFav --fav"></div>
+						:
+					<div onClick={this.switchInterest} className="markFav"></div>
+					}
+				</div>
 				<div className="job__header">
 					<div className="container">
 						<div className="job__header__back"></div>
 						<div className="job__header__main">
-							<h3>Doctorado</h3>
-							<h1>Regulación de la N-glicosilación de proteínas eucariotas</h1>
+							<div className="job__header__titles">
+								<h3>Doctorado</h3>
+								<h1>Regulación de la N-glicosilación de proteínas eucariotas</h1>
+							</div>
 							<div className="job__highlights">
 							<Hightlight
 								icon="fas fa-clock"
@@ -67,11 +80,11 @@ export default class job extends Component {
 					</div>
 				</div>
 				<div className="job__tabs container">
-					<div className="job__tabMenu">
+					{/* <div className="job__tabMenu">
 						<button className="bn--text active">General</button>
 						<button className="bn--text">Requisitos</button>
 						<button className="bn--text">Detalles</button>
-					</div>
+					</div> */}
 					<div className="job__details">
 						<div className="job__details__data">
 							<h3>Proyecto</h3>
@@ -172,22 +185,24 @@ export default class job extends Component {
 								laboratoryId="asd"
 								noBackground
 							/>
-							<p className="text--s mt-3 mb-0">
+							<p className="text--s mt-3 mb-0 instituteDescription">
 								La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.
 							</p>
-							<div>
-								<Link href="https://www.leloir.org.ar/">
-									<a className="bn--text bn--icon-link mt-2" target="_blank">
-										Sitio web
-									</a>
-								</Link>
-							</div>
-							<div>
-								<Link href="institute/asd">
-									<a className="bn--text mt-0">
-										Perfil del instituto
-									</a>
-								</Link>
+							<div className="mt-2 institute__actions">
+								<div>
+									<Link href="https://www.leloir.org.ar/">
+										<a className="bn--text bn--icon-link" target="_blank">
+											Sitio web
+										</a>
+									</Link>
+								</div>
+								<div>
+									<Link href="institute/asd">
+										<a className="bn--text mt-0">
+											Perfil del instituto
+										</a>
+									</Link>
+								</div>
 							</div>
 						</div>
 					</div>

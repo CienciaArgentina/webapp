@@ -1,6 +1,9 @@
 .jobPage {
 	padding-bottom: $s-5;
 	box-sizing: border-box;
+	.job__mobilApply {
+		display: none;
+	}
 	.job__header {
 		background-color: white;
 		padding: $s-6 0;
@@ -118,6 +121,85 @@
 				border-left: $grayBorder-400;
 				flex-shrink: 0;
 				width: 30rem;
+			}
+		}
+	}
+	@media(max-width: $device-tablet){
+		background-color: white;
+		.job__header {
+			background: $gradient-a;
+			padding: 2rem 0;
+			& > div {
+				.job__header__main {
+					&>*{
+						color: white;
+					}
+					.job__header__titles {
+						display: flex;
+						flex-direction: column-reverse;
+						align-items: flex-start;
+						h3 {
+							background-color: white;
+							padding: .2rem .5rem;
+							color: $lblue;
+							display: inline-flex;
+							font-size: 1.2rem;
+							margin-top: .7rem;
+							font-weight: 600;
+						}
+						h1 {
+							font-size: 1.7rem;
+							font-weight: 500;
+							padding-top: 2rem;
+						}
+					}
+					.job__highlights {
+						display: flex;
+						justify-content: space-between;
+						width: 100%;
+						margin-top: 2rem;
+						.highlight {
+							margin: 0;
+							.highlight__icon {
+								color: white;
+								font-size: 1.5rem;
+							}
+							.highlight__text {
+								h4 {
+									font-size: 1.5rem;
+								}
+								h4, p {
+									color: white;
+								}
+							}
+						}
+					}
+					.job__actions {
+						display: none;
+					}
+				}
+			}
+		}
+		.job__tabs {
+			.job__details {
+				padding: 0;
+				padding-top: $s-3;
+				flex-direction: column-reverse;
+				.job__details__data {
+
+				}
+				.job__details__institute {
+					margin: 0;
+					padding: 0;
+					border: none;
+					.instituteDescription {
+						display: none;
+					}
+					.institute__actions {
+						display: flex;
+						margin: 1rem 0;
+					}
+				}
 			}
 		}
 	}

@@ -1,7 +1,12 @@
-import Page from '../layouts/main/main';
-import InstituteNameCard from '../components/institutes/InstituteName';
-import Link from 'next/link';
+import Page from '../layouts/main/main'
+import Link from 'next/link'
 import { Component } from 'react'
+
+import {
+	InstituteName,
+	Tag,
+	Mapbox
+} from '../components/Science';
 
 const Hightlight = (props) => (
 	<div className="highlight">
@@ -70,10 +75,39 @@ export default class job extends Component {
 					<div className="job__details">
 						<div className="job__details__data">
 							<h3>Proyecto</h3>
-							<ul>
-								<li>Regulación de la N-glicosilación de proteínas eucariotas</li>
-								<li>Supervisor: Dra. Jeanette Acosta</li>
-								<li>Laboratorio: Biología Celular del RNA</li>
+							<ul className="job__details__detailsList">
+								<li>
+									<i className="fas fa-graduation-cap"></i>
+									<p>Posibilidad de presentación a tesina</p>
+								</li>
+								<li>
+									<i className="fas fa-dollar-sign"></i>
+									<p>Beca CONICET - $18.600</p>
+								</li>
+								
+								<li>
+									<i className="fas fa-user"></i>
+									<p>Responsable: Dra. Jeanette Acosta</p>
+								</li>
+								<li>
+									<i className="fas fa-at"></i>
+									<p>Contacto: giuliano@cienciaargentina.com</p>
+								</li>
+							</ul>
+							<h3>Laboratorio</h3>
+							<ul className="job__details__detailsList">
+								<li>
+									<i className="fas fa-university"></i>
+									<p>Instituto Leloir > Biología Celular del RNA</p>
+								</li>
+								<li>
+									<i className="fas fa-globe-americas"></i>
+									<p>Buenos Aires, Argentina</p>
+								</li>
+								<li>
+									<i className="fas fa-flask"></i>
+									<p>Línea de investigación: Mutaciones y deleciones de genes de interés, y complementación de las mismas.</p>
+								</li>
 							</ul>
 							<h3>Tema de investigación</h3>
 							<p>
@@ -86,9 +120,51 @@ export default class job extends Component {
 							<p>
 								Most of the graduates of the BIO program continue on with graduate education in Turkey and abroad. All of our graduates are equipped with in depth knowledge of modern molecular biology. Our graduates attain research and management positions in industrial and research institutions operating in various areas of the biological sciences and biotechnology.
 							</p>
+							<div>
+								<Tag 
+									text="Biología"
+								/>
+								<Tag 
+									text="Plantas"
+								/>
+								<Tag>ADN</Tag>
+							</div>
+							<h3>Requisitos</h3>
+							<h4>Obligatorios</h4>
+							<ul>
+								<li>Tener experiencia en un laboratorio</li>
+								<li>Adjuntar carta de presentación</li>
+								<li>Adjuntar referentes</li>
+								<li>Finalizar carrera antes del 10/5/2018</li>
+							</ul>
+							<h4>Preferentes</h4>
+							<ul>
+								<li>Estado de la carrera avanzado (~75% de las materias aprobadas)</li>
+								<li>Alemán intermedio</li>
+							</ul>
+							<h3>Ubicación</h3>
+							<p>Callao 86, Ciudad Autónoma de Buenos Aires, Argentina</p>
+							<Mapbox
+								geoJsonData = {{
+									"type": "FeatureCollection",
+									"features": [{
+										"type": "Feature",
+										"geometry": {
+											"type": "Point",
+											"coordinates": [-58.4330264,-34.6020053]
+										},
+										"properties": {
+											"title": "Instituto Leloir",
+											"icon": "LabIcon"
+										}
+									}]
+								}}
+								center= {[-58.4330264,-34.6020053]}
+							/>
 						</div>
+
 						<div className="job__details__institute">
-							<InstituteNameCard
+							<InstituteName
 								img="leloir_logo.png"
 								id="asd"
 								name="Instituto Leloir"
@@ -107,7 +183,7 @@ export default class job extends Component {
 								</Link>
 							</div>
 							<div>
-								<Link href="instituto/asd">
+								<Link href="institute/asd">
 									<a className="bn--text mt-0">
 										Perfil del instituto
 									</a>
@@ -124,7 +200,8 @@ export default class job extends Component {
 
 job.getInitialProps = async function() {
 	return {
-		isInterest: false
+		isInterest: false,
+		
 	}
 	const res = await fetch('')
 	const data = await res.json()

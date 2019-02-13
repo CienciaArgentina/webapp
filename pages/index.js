@@ -3,7 +3,7 @@ import Page from '../layouts/main/main'
 import { Component } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
-import JobPost from '../components/jobs/JobPost';
+import { JobPost } from '../components/Science';
 
 export default class Index extends Component {
     state = {
@@ -72,6 +72,7 @@ export default class Index extends Component {
                                     deadline={o.deadline}
                                     closeDeadline={o.closeDeadline}
                                     favorite={o.favorite}
+                                    prefetch
                                 />
                                 
                             ) )}
@@ -108,7 +109,7 @@ Index.getInitialProps = async function() {
                 logo: "ifibyne_logo.png",
                 earn: "$18.900",
                 duration: "4 años",
-                deadline: "2 días",
+                deadline: "en 2 días",
                 closeDeadline: true,
                 favorite: false
             },

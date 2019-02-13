@@ -23,11 +23,14 @@ h2 {
 
 h3 {
 	font-weight: 600;
+	font-size: 1.9rem;
+	color: $gray-800;
+}
+
+h4 {
+	font-weight: 600;
 	font-size: 1.5rem;
 	color: $gray-800;
-	@media (max-width: $device-tablet){
-		font-weight: 400;
-	}
 }
 
 .grayTitle {

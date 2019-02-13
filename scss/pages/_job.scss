@@ -67,6 +67,9 @@
 			padding: $s-4;
 			display: flex;
 			.job__details__data {
+				h4 {
+					margin-bottom: $s-2;
+				}
 				flex: 1;
 				p {
 					@extend .text;
@@ -76,11 +79,37 @@
 					margin-bottom: 0;
 					list-style: none;
 				}
+				ul.job__details__detailsList {
+					$lh: 2rem;
+					li {
+						display: flex;
+						align-items: flex-start;
+						margin-bottom: $s-2;
+						i {
+							flex-shrink: 0;
+							width: $s-3;
+							height: $lh;
+							align-items: center;
+							display: flex;
+							justify-content: center;
+							margin-right: $s-1;
+							color: $gray-800;
+						}
+						p {
+							margin-bottom: 0;
+							line-height: $lh;
+						}
+					}
+				}
 				h3 {
 					margin-bottom: $s-2;
 					&:not(:first-child){
 						margin-top: $s-4;
 					}
+				}
+				h4 {
+					margin-top: $s-3;					
+					margin-bottom: $s-2;					
 				}
 			}
 			.job__details__institute {

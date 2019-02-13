@@ -19,7 +19,7 @@ const JobPost = (props) => (
 				/>
 				<div className="main_data">
 					<p className="jobPost__type">{props.type}</p>
-					<Link href="/job">
+					<Link href="/job" prefetch={props.prefetch?true:false}>
 						<a>
 							<h3 className="jobPost__title">{props.title}</h3>
 						</a>
@@ -40,7 +40,7 @@ const JobPost = (props) => (
 						<div className="iconData --tiempo"		data-tip="Duración">{props.duration}</div>
 					}
 					{!!props.deadline &&
-						<div className={`iconData --limite`+(!!props.closeDeadline ?' --urgente':'')} data-tip={"Finaliza "+(!!props.closeDeadline ?'en':'el')}>{props.deadline}</div>
+						<div className={`iconData --limite`+(!!props.closeDeadline ?' --urgente':'')} data-tip={"Deadline"}>{props.deadline}</div>
 					}
 				</div>
 			</div>

@@ -13,6 +13,7 @@ const equipoLista = [
 		}
 	},
 	{
+		photo: "giuliano.jpg",
 		nombre: "Giuliano Tomás",
 		apellido: "Antelo",
 		social: {

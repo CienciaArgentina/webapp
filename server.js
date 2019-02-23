@@ -16,6 +16,38 @@ app.prepare()
   //   app.render(req, res, actualPage, queryParams)
   // })
 
+    server.get('/institute/:id', (req, res) => {
+		const actualPage = '/institute'
+		const queryParams = { id: req.params.id } 
+		app.render(req, res, actualPage, queryParams)
+	})
+	server.get('/laboratory/:id/:view/:projectId', (req, res) => {
+		const actualPage = '/laboratory';
+		if(req.params.view==='project'){
+			const queryParams = {
+				id: req.params.id,
+				view: 'project',
+				projectId: req.params.projectId
+			}
+			app.render(req, res, actualPage, queryParams)
+		} else {
+			app.render(req, res, '404');
+		}
+	});
+	server.get('/laboratory/:id/:view', (req, res) => {
+		const actualPage = '/laboratory'
+		const queryParams = {
+			id: req.params.id,
+			view: req.params.view
+		} 
+		app.render(req, res, actualPage, queryParams)
+	});
+	server.get('/laboratory/:id', (req, res) => {
+		const actualPage = '/laboratory'
+		const queryParams = { id: req.params.id } 
+		app.render(req, res, actualPage, queryParams)
+	});
+
 	server.get('*', (req, res) => {
 		return handle(req, res);
 	});

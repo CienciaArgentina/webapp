@@ -23,7 +23,7 @@ h2 {
 
 h3 {
 	font-weight: 600;
-	font-size: 1.9rem;
+	font-size: 2rem;
 	color: $gray-800;
 }
 
@@ -39,23 +39,48 @@ h4 {
 	font-weight: 800;
 	line-height: 6rem;
 }
-.text {
-	line-height: 2.2rem;
-	font-size: 1.3rem;
-	margin-bottom: 2rem;
+@mixin text($size: m){
+	@if ($size == m){
+		line-height: 2.2rem;
+		font-size: 1.4rem;
+		margin-bottom: 2rem;
+	} @else if($size == l){
+		line-height: 2.5rem;
+		font-size: 1.5rem;
+		margin-bottom: 2rem;
+	} @else if($size == s){
+		line-height: 1.7rem;
+		font-size: 1.2rem;
+		margin-bottom: $s-2;
+	}
 	& a, a#{&} {
 		color: inherit;
 		text-decoration: underline;
 	}
 }
+.text {
+	@include text()
+}
 .text--l {
-	@extend .text;
-	line-height: 2.5rem;
-	font-size: 1.5rem;
+	@include text(l)
 }
 .text--s {
-	@extend .text;
-	line-height: 1.7rem;
-	font-size: 1.2rem;
-	margin-bottom: $s-2;
+	@include text(s)
+}
+
+@mixin label($s:s, $color:gray) {
+	@if ($color == gray) {
+		color: $gray-700;
+	} @else {
+		color: $color;
+	}
+	font-weight: 500;
+	@if $s == s {
+		font-size: 1.2rem;
+	} @else if $s == m {
+		font-size: 1.3rem;
+	}
+}
+.label--s--gray {
+	@include label(s, gray)
 }

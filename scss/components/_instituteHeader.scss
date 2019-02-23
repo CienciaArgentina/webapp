@@ -1,0 +1,37 @@
+.institute__header {
+	background: $gradient-b;
+	color: white;
+	box-shadow: $elevation--z3;
+	position: relative;
+	z-index: 100;
+	.institute__headerData {
+		display: flex;
+		align-items: center;
+		padding: $s-3 $cont_padding;
+		padding-top: 2.5rem;
+		h1 {
+			font-size: 2rem;
+		}
+		label {
+			@include label(m, white);
+		}
+		.institute__logo {
+			background: white;
+			border-radius: 50%;
+			position: relative;
+			width: 6rem;
+			overflow: hidden;
+			margin-right: $s-3;
+			&:before {
+				content: '';
+				width: 100%;
+				padding-top: 100%;
+				display: block;
+			}
+			img {
+				width: 70%;
+				@include abs-center();
+			}
+		}
+	}
+}

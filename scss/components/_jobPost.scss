@@ -100,7 +100,13 @@
 	}
 	@media (max-width: $device-tablet){
 		height: initial;
-		margin-bottom: $s-3;
+		margin: 0;
+		padding-bottom: $s-4;
+		padding-top: $s-4;
+		border-bottom: 1px solid $gray-400;
+		&:last-child {
+			border-bottom: none;
+		}
 		.jobPost__favStar {
 			font-size: 1.5rem;
 		}
@@ -109,7 +115,7 @@
 		 }
 		 .jobPost__content {
 			 .jobPost__data {
-				 padding: $s-3 $s-3;
+				 padding: 0;
 				 .InstituteName {
 					margin-bottom: $s-2;
 				}

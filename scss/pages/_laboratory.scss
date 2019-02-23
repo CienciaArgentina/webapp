@@ -1,0 +1,35 @@
+#laboratory {
+	.proyectos {
+		h3 {
+			line-height: 2.1rem;
+			font-size: 1.7rem;
+			font-weight: 400;
+		}
+	}
+}
+.tabDisplay {
+	.notSelected {
+		display: none;
+	}
+}
+
+#project {
+	padding-top: $s-4;
+	padding-bottom: $s-6;
+	.projectBack {
+		color: $gray-700;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		i {
+			margin-right: $s-2;
+		}
+	}
+	.projectName {
+		color: $lblue;
+		font-weight: 400;
+		font-size: 2rem;
+		margin-top: $s-2;
+		margin-bottom: $s-3;
+	}
+}

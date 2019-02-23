@@ -51,6 +51,9 @@ button {
 .bn--icon-link {
 	@include bn--icon('\f0c1');
 }
+.bn--icon-world {
+	@include bn--icon('\f57d');
+}
 
 //with
 .bn--w2 {

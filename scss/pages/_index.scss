@@ -92,10 +92,20 @@
 				}
 			}
 		}
-		@media (min-width: $device-tablet) { //hero
+		@media (min-width: $device-desktopLarge) { //hero
+			padding-top: 9rem;
+			padding-bottom: 9rem;
+		}
+	}
+	.nuevasBusquedas {
+		margin-top: $s-5;
+		margin-bottom: $s-5;
+	}
+	@media (min-width: $device-tablet) { //Index
+		.hero {
 			padding-top: 5rem;
 			padding-bottom: 6rem;
-		.container--m {
+			.container--m {
 				// max-width: 80rem;
 				.tipoDeBusquedas {
 					margin-top: 4rem;
@@ -113,9 +123,19 @@
 				}
 			}
 		}
-		@media (min-width: $device-desktopLarge) { //hero
-			padding-top: 9rem;
-			padding-bottom: 9rem;
+	}
+	@media (max-width: $device-tablet) {
+		.nuevasBusquedas {
+			padding: 0;
+			margin-bottom: 0;
+			& > h3 {
+				padding: 0 $cont_padding;
+				margin-bottom: $s-2;
+			}
+			.busquedas {
+				padding: 0 $cont_padding;
+				background-color: white;
+			}
 		}
 	}
 }

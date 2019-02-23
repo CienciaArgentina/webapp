@@ -3,7 +3,7 @@ import Link from 'next/link';
 const InstituteName = (props) => (
 	<div className="InstituteName">
 		<div className={`__profilePick`+(props.noBackground?' __noBackground':'')}>
-			<Link href={`/institute/${props.id}`}>
+			<Link href={`/institute?id=${props.id}`} as={`/institute/${props.id}`}>
 				<a>
 					<div>
 						<img alt={props.name} src={`/static/img/logos-labos/${props.img}`} />
@@ -12,7 +12,7 @@ const InstituteName = (props) => (
 			</Link>
 		</div>
 		<div className="__profileData">
-			<Link href={`/institute/${props.id}`}>
+			<Link href={`/institute?id=${props.id}`} as={`/institute/${props.id}`}>
 				<a className="__name">
 					<h4>{props.name}</h4>
 				</a>

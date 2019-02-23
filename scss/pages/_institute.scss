@@ -1,0 +1,45 @@
+#institute, #laboratory {
+	.contentDisplay {
+		& > .container {
+			padding-top: $s-4;
+			padding-bottom: $s-6;
+		}
+		.instituteJobs {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+	}
+	.textCont {
+		p {
+			@include text();
+		}
+		h3 {
+			margin-bottom: $s-2;
+			&:not(:first-child){
+				margin-top: $s-4;
+			}
+		}
+	}
+}
+.tabDisplay {
+	.notSelected {
+		display: none;
+	}
+}
+
+.institute__staff {
+	.staff__person {
+		margin-bottom: $s-3;
+		p {
+			margin-bottom: 0 !important;
+		}
+		.staff__name {
+			font-weight: 600;
+		}
+		.staff__position, .staff__mail {
+			@include label(s, gray);
+			width: 100%;
+			display: block;
+		}
+	}
+}

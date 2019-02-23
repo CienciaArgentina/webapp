@@ -1,0 +1,39 @@
+.labList {
+	margin-bottom: $s-3;
+	padding-bottom: $s-3;
+	border-bottom: $grayBorder-400;
+	&:last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+	h3 {
+		color: $lblue;
+		font-weight: 300;
+		margin-bottom: $s-1 !important;
+		line-height: 2.3rem;
+		@include max-lines(2, 2.3rem);
+	}
+	& > .researcher {
+		@include label(m, gray)
+	}
+	p {
+		@include text();
+		margin-top: $s-2;
+		margin-bottom: 0;
+		line-height: 2.2rem;
+		@include max-lines(3, 2.2rem)
+	}
+	.activeSearchs {
+		margin-top: $s-3;
+		display: flex;
+		align-items: center;
+		i {
+			margin-right: $s-2;
+		}
+		i, label {
+			@include label(m);
+			font-weight: 600;
+		}
+	}
+}

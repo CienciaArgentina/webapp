@@ -1,5 +1,8 @@
 // institutes
 import InstituteName from './institutes/InstituteName'
+import InstituteHeader from './institutes/InstituteHeader'
+import LabList from './institutes/LabList'
+import {Tabs, Tab, TabDisplay} from './institutes/Tabs'
 
 // jobs
 import JobPost from './jobs/JobPost'
@@ -11,5 +14,10 @@ export {
 	JobPost,
 	Tag,
 	InstituteName,
-	Mapbox
+	Mapbox,
+	Tabs,
+	Tab,
+	TabDisplay,
+	LabList,
+	InstituteHeader
 }

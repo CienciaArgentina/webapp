@@ -13,13 +13,18 @@
 @import './components/footer';
 @import './components/header';
 @import './components/InstituteName';
+@import './components/InstituteHeader';
 @import './components/jobPost';
+@import './components/labList';
 @import './components/mapbox';
+@import './components/tabs';
 @import './components/tag';
 @import './components/template';
 
 //pages
 @import './pages/index';
+@import './pages/institute';
+@import './pages/laboratory';
 @import './pages/team';
 @import './pages/errorPage';
 @import './pages/job';

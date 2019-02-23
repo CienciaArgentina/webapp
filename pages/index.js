@@ -53,9 +53,9 @@ export default class Index extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="nuevasBusquedas container--m" style={{marginTop:30, marginBottom:30}}>
+                    <div className="nuevasBusquedas container--m">
                         <h3 className="pb-2">Nuevas búsquedas</h3>
-                        <div>
+                        <div className="busquedas">
                             {this.state.newJobs.map( (o,k)=>(
                                 <JobPost key={k}
                                     title={o.title}

@@ -69,6 +69,7 @@
 			background: white;
 			padding: $s-4;
 			display: flex;
+			margin-top: $s-5;
 			.job__details__data {
 				h4 {
 					margin-bottom: $s-2;
@@ -126,6 +127,40 @@
 	}
 	@media(max-width: $device-tablet){
 		background-color: white;
+		.job__mobilApply {
+			display: flex;
+			position: fixed;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 2rem;
+			z-index: 100;
+			background-color: $green;
+			border-radius: 10rem;
+			color: white;
+			font-size: 1.7rem;
+			font-weight: 500;
+			box-shadow: $elevation--z2;
+			a {
+				padding: 1.6rem;
+				padding-left: 2rem;
+				padding-right: .5em;
+			}
+			.markFav {
+				width: 4.5rem;
+				position: relative;
+				&:before {
+					@include icon-font('\f005', light);
+					// @include abs-center();
+					position: absolute;
+					right: 2rem;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+				&.--fav:before {
+					@include icon-font('\f005', solid);
+				}
+			}
+		}
 		.job__header {
 			background: $gradient-a;
 			padding: 2rem 0;
@@ -184,6 +219,7 @@
 			.job__details {
 				padding: 0;
 				padding-top: $s-3;
+				margin-top: 0;
 				flex-direction: column-reverse;
 				.job__details__data {
 

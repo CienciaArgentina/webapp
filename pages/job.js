@@ -35,9 +35,10 @@ export default class job extends Component {
 				<div className="job__mobilApply">
 					<Link href="/aplicar">
 						<a>
-							Aplicar
+							Postularme
 						</a>
 					</Link>
+					{this.state.isInterest ?
 					<div onClick={this.switchInterest} className="markFav --fav"></div>
 						:
 					<div onClick={this.switchInterest} className="markFav"></div>
@@ -124,10 +125,10 @@ export default class job extends Component {
 							</ul>
 							<h3>Tema de investigación</h3>
 							<p>
-								These topics all rely on a solid background in mathematics, physics, and chemistry. The program also has a biotechnology dimension with courses on the exploitation of biological systems for developing new technologies and industrial applications. We educate future bioengineers who benefit from interdisciplinary undergraduate courses to build an understanding of engineering concepts and techniques. Students learn to apply engineering principles to the re-conceptualization of of biological phenomena and are trained to acquire skills for developing new materials and processes, including genetic modification of agriculturally important plants and human cells.
+								These topics all rely on a solid background in mathematics, physics, and chemistry. The program also has a biotechnology dimension with courses on the exploitation of biological systems for developing new technologies and industrial applications. We educate future bioengineers who benefit from interdisciplinary undergraduate courses to build an understanding of engineering concepts and techniques.
 							</p>
 							<p>
-								Most of the graduates of the BIO program continue on with graduate education in Turkey and abroad. All of our graduates are equipped with in depth knowledge of modern molecular biology. Our graduates attain research and management positions in industrial and research institutions operating in various areas of the biological sciences and biotechnology.
+								Students learn to apply engineering principles to the re-conceptualization of of biological phenomena and are trained to acquire skills for developing new materials and processes, including genetic modification of agriculturally important plants and human cells.
 							</p>
 							<h3>Técnicas a utilizar y modelo experimental</h3>
 							<p>
@@ -197,7 +198,7 @@ export default class job extends Component {
 									</Link>
 								</div>
 								<div>
-									<Link href="institute/asd">
+									<Link href="institute?id=asd" as="institute/asd">
 										<a className="bn--text mt-0">
 											Perfil del instituto
 										</a>

@@ -36,6 +36,19 @@ export default class Page extends Component {
 			this.setState( () => ({mobile_menu_display: false}) );
 		}, 300);
 	}
+	componentDidMount() {
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
+					// Registration was successful
+					console.log('ServiceWorker registration successful with scope: ', registration.scope);
+				}, function(err) {
+					// registration failed :(
+					console.log('ServiceWorker registration failed: ', err);
+				});
+			});
+		}
+	}
 	render() {
 		return (
 			<div id="app" {...this.props.pageprops}>
@@ -61,7 +74,6 @@ export default class Page extends Component {
 					<meta property="og:site_name" content="Ciencia Argentina" />
 					{/* FAVICONS */}
 					<link rel="icon" type="image/x-icon" href="/static/img/favicon/favicon.ico" />
-					<link rel="icon" type="image/png" sizes="192x192"  href="/static/img/favicon/android-icon-192x192.png" />
 					<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png" />
 					<link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon/favicon-96x96.png" />
 					<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png" />
@@ -87,6 +99,8 @@ export default class Page extends Component {
 					<meta name="theme-color" content="#1b75bb" />
 					{/* END FAVICONS */}
 					<link rel="stylesheet" href="/static/css/nprogress.css" />
+					{/* MANIFEST */}
+					<link rel="manifest" href="/static/manifest.json" />
 				</Head>
 				<Header
 					showMenu={this.showMenu}

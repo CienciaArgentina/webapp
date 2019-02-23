@@ -1,0 +1,28 @@
+.tabs {
+	display: flex;
+	.tab {
+		min-width: 33%;
+		padding: $s-2;
+		text-align: center;
+		position: relative;
+		box-sizing: border-box;
+		flex-grow: 1;
+		label {
+			opacity: 0.8;
+		}
+		&.selected {
+			label {
+				opacity: 1;
+			}
+			&:before {
+				content: '';
+				height: .2rem;
+				background-color: #fff;
+				width: 100%;
+				bottom: 0;
+				left: 0;
+				position: absolute;
+			}
+		}
+	}
+}

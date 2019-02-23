@@ -28,9 +28,10 @@
 			color: $gray-800;
 		}
 		.__detail {
-			color: $gray-700;
-			font-weight: 500;
-			font-size: 1.2rem;
+			@include label(s, gray);
+			@media (max-width: $device-tablet) {
+				margin-top: .2rem;
+			}
 			a:hover {
 				text-decoration: underline;
 			}

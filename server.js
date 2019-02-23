@@ -10,11 +10,12 @@ app.prepare()
 .then( () =>{
 	const server = express();
 
-    server.get('/institute/:id', (req, res) => {
+	server.get('/institute/:id', (req, res) => {
 		const actualPage = '/institute'
 		const queryParams = { id: req.params.id } 
 		app.render(req, res, actualPage, queryParams)
 	})
+
 	server.get('/laboratory/:id/:view/:projectId', (req, res) => {
 		const actualPage = '/laboratory';
 		if(req.params.view==='project'){
@@ -28,6 +29,7 @@ app.prepare()
 			app.render(req, res, '404');
 		}
 	});
+
 	server.get('/laboratory/:id/:view', (req, res) => {
 		const actualPage = '/laboratory'
 		const queryParams = {
@@ -36,6 +38,7 @@ app.prepare()
 		} 
 		app.render(req, res, actualPage, queryParams)
 	});
+
 	server.get('/laboratory/:id', (req, res) => {
 		const actualPage = '/laboratory'
 		const queryParams = { id: req.params.id } 

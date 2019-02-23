@@ -11,7 +11,7 @@
 	}
 	.textCont {
 		p {
-			@include text();
+			// @include text();
 		}
 		h3 {
 			margin-bottom: $s-2;
@@ -20,26 +20,25 @@
 			}
 		}
 	}
+	.institute__staff {
+		.staff__person {
+			margin-bottom: $s-3;
+			p {
+				margin-bottom: 0 !important;
+			}
+			.staff__name {
+				font-weight: 600;
+				font-size: 1.5rem;		}
+			.staff__position, .staff__mail {
+				@include label(s, gray);
+				width: 100%;
+				display: block;
+			}
+		}
+	}
 }
 .tabDisplay {
 	.notSelected {
 		display: none;
-	}
-}
-
-.institute__staff {
-	.staff__person {
-		margin-bottom: $s-3;
-		p {
-			margin-bottom: 0 !important;
-		}
-		.staff__name {
-			font-weight: 600;
-		}
-		.staff__position, .staff__mail {
-			@include label(s, gray);
-			width: 100%;
-			display: block;
-		}
 	}
 }

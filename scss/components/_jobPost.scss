@@ -104,6 +104,14 @@
 		padding-bottom: $s-4;
 		padding-top: $s-4;
 		border-bottom: 1px solid $gray-400;
+		&.noPadding {
+			&:first-child {
+				padding-top: 0;
+			}
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
 		&:last-child {
 			border-bottom: none;
 		}

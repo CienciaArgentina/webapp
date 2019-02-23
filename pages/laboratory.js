@@ -11,7 +11,8 @@ import {
 	LabList,
 	InstituteHeader,
 	InstituteName,
-	JobPost
+	JobPost,
+	ProjectPage
 } from '../components/Science';
 
 export default class laboratory extends Component {
@@ -46,12 +47,13 @@ export default class laboratory extends Component {
 			<Page>
 				<div id="laboratory">
 					<InstituteHeader
-						img={`/static/img/logos-labos/leloir_logo.png`}
 						title={
 							<div className="institute__name">
 								<label>Laboratorio</label>
 								<h1>Biología celular del RNA</h1>
-								<label>Instituto Leloir</label>
+								<div className="pt-1">
+									<label>Instituto Leloir</label>
+								</div>
 							</div>
 						}
 						tabs={
@@ -66,21 +68,9 @@ export default class laboratory extends Component {
 						}
 					/>
 					{this.state.projectView ?
-					<div id="project" className="container contentDisplay textCont">
-						<div onClick={()=>{this.handleChange(1)}} className="projectBack">
-							<i className="fas fa-angle-left"></i>
-							<span>Lista de proyectos</span>
-						</div>
-						<h3>Proyecto</h3>
-						<h2 className="projectName">Mutaciones y deleciones de genes de interés, y complementación de las mismas.</h2>
-						<p>
-							Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular.  Esta reacción se da en todos los organismos y es denominada “respuesta al estrés celular”. El estrés celular es importante en diversas patologías humanas, y la intervención del balance muerte-sobrevida es la base racional de numerosas terapias.
-						</p>
-						<h3>Modelo experimental y técnicas</h3>
-						<p>
-							Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular.  Esta reacción se da en todos los organismos y es denominada “respuesta al estrés celular”. El estrés celular es importante en diversas patologías humanas, y la intervención del balance muerte-sobrevida es la base racional de numerosas terapias.
-						</p>
-					</div>
+						<ProjectPage
+							onBack={() => {this.handleChange(1)}}
+						/>
 					:
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
 						<div className="textCont container">
@@ -95,9 +85,7 @@ export default class laboratory extends Component {
 								img="leloir_logo.png"
 								id="asd"
 								name="Instituto Leloir"
-								laboratory="Biología Celular del RNA"
-								laboratoryId="asd"
-								noBackground
+								location= "Ciudad Autónoma de Buenos Aires"
 							/>
 							<h3>Staff</h3>
 							<div className="institute__staff">

@@ -78,9 +78,12 @@ h4 {
 	@if $s == s {
 		font-size: 1.2rem;
 	} @else if $s == m {
-		font-size: 1.3rem;
+		font-size: 1.4rem;
 	}
 }
 .label--s--gray {
 	@include label(s, gray)
+}
+.label--m--gray {
+	@include label(m, gray)
 }

@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
     "build": "next build",
     "heroku-postbuild": "npm run build",
-    "start": "next start -p $PORT"
+    "start": "node server.js"
   },
   "engines": {
     "node": "10.15.0"

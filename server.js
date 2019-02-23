@@ -10,12 +10,6 @@ app.prepare()
 .then( () =>{
 	const server = express();
 
-  // server.get('/post/:id', (req, res) => {
-  //   const actualPage = '/index'
-  //   const queryParams = { id: req.params.id } 
-  //   app.render(req, res, actualPage, queryParams)
-  // })
-
     server.get('/institute/:id', (req, res) => {
 		const actualPage = '/institute'
 		const queryParams = { id: req.params.id } 

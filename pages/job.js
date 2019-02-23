@@ -112,7 +112,25 @@ export default class job extends Component {
 							<ul className="job__details__detailsList">
 								<li>
 									<i className="fas fa-university"></i>
-									<p>Instituto Leloir > Biología Celular del RNA</p>
+									<p>
+										<Link
+											href={`/institute?id=asd`}
+											as="/institute/ads"
+										>
+											<a>
+												Instituto Leloir
+											</a>
+											</Link>
+										&nbsp;>&nbsp;
+										<Link
+											href={`/laboratory?id=asd`}
+											as="/laboratory/ads"
+										>
+											<a>
+												Biología Celular del RNA
+											</a>
+										</Link>
+									</p>
 								</li>
 								<li>
 									<i className="fas fa-globe-americas"></i>
@@ -120,7 +138,17 @@ export default class job extends Component {
 								</li>
 								<li>
 									<i className="fas fa-flask"></i>
-									<p>Línea de investigación: Mutaciones y deleciones de genes de interés, y complementación de las mismas.</p>
+									<p>
+											Proyecto:&nbsp;
+											<Link
+												href={`/laboratory?id=asd&view=project&projectId=asd`}
+												as="/laboratory/ads/project/asd"
+											>
+												<a>
+													Mutaciones y deleciones de genes de interés, y complementación de las mismas.
+												</a>
+											</Link>
+									</p>
 								</li>
 							</ul>
 							<h3>Tema de investigación</h3>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import InstituteNameCard from '../institutes/InstituteName'
 
 const JobPost = (props) => (
-	<div className={`jobPost${!!props.noPadding&&' noPadding'}`}>
+	<div className={`jobPost${!!props.noPadding?' noPadding':''}`}>
 		<ReactTooltip effect='solid' />
 		<div className="jobPost__logo">
 			<img src={"/static/img/logos-labos/"+props.logo} />

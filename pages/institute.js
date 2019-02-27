@@ -37,7 +37,7 @@ export default class institute extends Component {
 			<Page contentClass= 'bg--gray' customMeta={{
 				title:`Instituto ${this.instituteName}`,
 				description: this.description,
-				img: this.logo
+				ogimage: this.logo
 			}}>
 				<div id="institute">
 					<InstituteHeader

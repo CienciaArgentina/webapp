@@ -28,11 +28,58 @@
 			}
 			.staff__name {
 				font-weight: 600;
-				font-size: 1.5rem;		}
+				font-size: 1.5rem;
+			}
 			.staff__position, .staff__mail {
 				@include label(s, gray);
 				width: 100%;
 				display: block;
+			}
+		}
+	}
+	@media (max-width: $device-tabletLandscape) {
+		background: white;
+		.desktopTabs {
+			display: none;
+		}
+		.contentDisplay {
+			& > div {
+				&.aboutInstitute {
+					.mainAbout {
+					}
+					.asideAbout {
+						margin-top: $s-3;
+					}
+				}
+			}
+		}
+	}
+	@media (min-width: $device-tabletLandscape) {
+		@include container();
+		.contentDisplay {
+			& > div {
+				@include container();
+				background-color: white;
+				padding-top: $s-4;
+				padding-bottom: $s-4;
+				&.aboutInstitute.selected {
+					display: flex;
+					.mainAbout {
+						flex-grow: 1;
+						margin-right: $s-3;
+					}
+					.asideAbout {
+						flex-shrink: 0;
+						width: 30rem;
+					}
+				}
+				&.instituteJobs {
+					padding: 0;
+					padding-top: $s-4;
+					padding-bottom: $s-5;
+					max-width: $container-w-m;
+					background-color: initial;
+				}
 			}
 		}
 	}

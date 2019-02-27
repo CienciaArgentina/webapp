@@ -6,6 +6,18 @@ const Tab = (props) => (
 	</div>
 );
 
+const DesktopTabs = props => (
+	<div className="desktopTabs">
+		{Children.map(props.children, (child, i)=>{
+			return React.cloneElement(child, {
+				selected: props.selected===i,
+				onChange: props.onChange,
+				tabKey: i
+			});
+		})}
+	</div>
+)
+
 const Tabs = (props) => (
 	<div className="tabs">
 		{Children.map(props.children, (child, i)=>{
@@ -32,5 +44,6 @@ const TabDisplay = (props) => (
 export {
 	Tabs,
 	Tab,
-	TabDisplay
+	TabDisplay,
+	DesktopTabs
 }

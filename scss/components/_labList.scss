@@ -1,12 +1,5 @@
 .labList {
 	margin-bottom: $s-3;
-	padding-bottom: $s-3;
-	border-bottom: $grayBorder-400;
-	&:last-child {
-		margin-bottom: 0;
-		padding-bottom: 0;
-		border-bottom: none;
-	}
 	h3 {
 		color: $lblue;
 		font-weight: 300;
@@ -35,5 +28,23 @@
 			@include label(m);
 			font-weight: 600;
 		}
+	}
+	padding-bottom: $s-3;
+	border-bottom: $grayBorder-400;
+	&:last-child {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+	@media (max-width: $device-tabletLandscape) {
+	}
+	@media (min-width: $device-tabletLandscape) {
+		// border: $grayBorder-400;
+		// padding: $s-2;
+		// border-radius: 1rem;
+		// margin-bottom: $s-4;
+		// &:last-child {
+		// 	margin-bottom: 0;
+		// }
 	}
 }

@@ -5,9 +5,13 @@ import InstituteNameCard from '../institutes/InstituteName'
 const JobPost = (props) => (
 	<div className={`jobPost${!!props.noPadding?' noPadding':''}`}>
 		<ReactTooltip effect='solid' />
-		<div className="jobPost__logo">
-			<img src={"/static/img/logos-labos/"+props.logo} />
-		</div>
+		{props.noLogo ?
+			''
+		:
+			<div className="jobPost__logo">
+				<img src={"/static/img/logos-labos/"+props.logo} />
+			</div>
+		}
 		<div className="jobPost__content">
 			<button className={"bn--reset jobPost__favStar"+(props.favorite ? ' fav' : '')}></button>
 			<div className="jobPost__data">

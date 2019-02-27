@@ -12,7 +12,8 @@ import {
 	InstituteHeader,
 	InstituteName,
 	JobPost,
-	ProjectPage
+	ProjectPage,
+	DesktopTabs
 } from '../components/Science';
 
 export default class laboratory extends Component {
@@ -44,15 +45,20 @@ export default class laboratory extends Component {
 	}
 	render() {
 		return (
-			<Page>
+			<Page contentClass="bg--gray">
 				<div id="laboratory">
 					<InstituteHeader
+						img={`/static/img/logos-labos/leloir_logo.png`}
 						title={
 							<div className="institute__name">
 								<label>Laboratorio</label>
 								<h1>Biología celular del RNA</h1>
 								<div className="pt-1">
-									<label>Instituto Leloir</label>
+									<Link href={`/institute?id=asd`} as={`/institute/asd`}>
+										<a>
+											<label>Instituto Leloir</label>
+										</a>
+									</Link>
 								</div>
 							</div>
 						}
@@ -67,36 +73,49 @@ export default class laboratory extends Component {
 							</Tabs>
 						}
 					/>
+					<DesktopTabs
+						selected={this.state.selected}
+						onChange={this.handleChange}
+					>
+						<Tab><i className="fas fa-home"></i>Laboratorio</Tab>
+						<Tab><i className="fas fa-flask"></i>Proyectos</Tab>
+						<Tab><i className="fas fa-search"></i>Búsquedas</Tab>
+					</DesktopTabs>
 					{this.state.projectView ?
 						<ProjectPage
 							onBack={() => {this.handleChange(1)}}
 						/>
 					:
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
-						<div className="textCont container">
-							<h3>Sobre el laboratorio</h3>
-							<p className="text">
-								Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular.  Esta reacción se da en todos los organismos y es denominada “respuesta al estrés celular”.
-							</p>
-							<p className="text">
-								El estrés celular es importante en diversas patologías humanas, y la intervención del balance muerte-sobrevida es la base racional de numerosas terapias. Empleando modelos in vitro de estrés celular que recapitulan lo que ocurre en condiciones patológicas, estudiamos cómo la célula detiene la generación de las proteínas que normalmente sintetiza para estimular la producción de proteínas protectivas.
-							</p>
-							<InstituteName
-								img="leloir_logo.png"
-								id="asd"
-								name="Instituto Leloir"
-								location= "Ciudad Autónoma de Buenos Aires"
-							/>
-							<h3>Staff</h3>
-							<div className="institute__staff">
-								{[0,0,0,0,0,0].map((o,k) => (
-									<div key={k} className="staff__person">
-										<p className="staff__name">Jeanette Acosta</p>
-										<label className="staff__position">Investigadora Independiente</label>
-										<label className="staff__mail">jeanette@cienciaargentina.com</label>
-									</div>
-								))}
+						<div className="textCont container aboutInstitute">
+							<div className="mainAbout">
+								<h3>Sobre el laboratorio</h3>
+								<p className="text">
+									Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular.  Esta reacción se da en todos los organismos y es denominada “respuesta al estrés celular”.
+								</p>
+								<p className="text">
+									El estrés celular es importante en diversas patologías humanas, y la intervención del balance muerte-sobrevida es la base racional de numerosas terapias. Empleando modelos in vitro de estrés celular que recapitulan lo que ocurre en condiciones patológicas, estudiamos cómo la célula detiene la generación de las proteínas que normalmente sintetiza para estimular la producción de proteínas protectivas.
+								</p>
+								<InstituteName
+									img="leloir_logo.png"
+									id="asd"
+									name="Instituto Leloir"
+									location= "Ciudad Autónoma de Buenos Aires"
+								/>
 							</div>
+							<div className="asideAbout">
+								<h3>Staff</h3>
+								<div className="institute__staff">
+									{[0,0,0,0,0,0].map((o,k) => (
+										<div key={k} className="staff__person">
+											<p className="staff__name">Jeanette Acosta</p>
+											<label className="staff__position">Investigadora Independiente</label>
+											<label className="staff__mail">jeanette@cienciaargentina.com</label>
+										</div>
+									))}
+								</div>
+							</div>
+							
 						</div>
 						<div className="proyectos container">
 							{[0,0,0,0].map((o,k)=>(

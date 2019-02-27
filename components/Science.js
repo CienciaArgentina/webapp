@@ -2,7 +2,7 @@
 import InstituteName from './institutes/InstituteName'
 import InstituteHeader from './institutes/InstituteHeader'
 import LabList from './institutes/LabList'
-import {Tabs, Tab, TabDisplay} from './institutes/Tabs'
+import {Tabs, Tab, TabDisplay, DesktopTabs} from './institutes/Tabs'
 import ProjectPage from './institutes/ProjectPage'
 
 // jobs
@@ -21,5 +21,6 @@ export {
 	TabDisplay,
 	ProjectPage,
 	LabList,
-	InstituteHeader
+	InstituteHeader,
+	DesktopTabs
 }

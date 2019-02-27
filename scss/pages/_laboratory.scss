@@ -14,8 +14,6 @@
 }
 
 #project {
-	padding-top: $s-4;
-	padding-bottom: $s-6;
 	.projectBack {
 		color: $gray-700;
 		display: flex;
@@ -31,5 +29,15 @@
 		font-size: 2rem;
 		margin-top: $s-2;
 		margin-bottom: $s-3;
+	}
+	@media (max-width: $device-tabletLandscape) {
+		@include container();
+		padding-top: $s-4;
+		padding-bottom: $s-6;
+	}
+	@media (min-width: $device-tabletLandscape) {
+		.projectBack {
+			padding: $s-2;
+		}
 	}
 }

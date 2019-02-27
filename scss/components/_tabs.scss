@@ -26,3 +26,21 @@
 		}
 	}
 }
+.desktopTabs {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.tab {
+		margin-right: $s-2;
+		@include button($gray-700, default, text);
+		label {
+			cursor: pointer;
+			i {
+				margin-right: $s-1;
+			}
+		}
+		&.selected {
+			color: $lblue;
+		}
+	}
+}

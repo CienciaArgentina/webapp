@@ -9,10 +9,22 @@ import {
 	TabDisplay,
 	LabList,
 	InstituteHeader,
-	JobPost
+	JobPost,
+	DesktopTabs
 } from '../components/Science';
 
 export default class institute extends Component {
+	instituteName = 'Leloir'
+	location = 'Buenos Aires, Argentina'
+	description = 'La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.'
+	staff = [
+		{name: 'Jeanette Acosta', position: 'Directora', email: 'jean@cienciaargentina.com'},
+		{name: 'Lucas Lopez', position: 'Tesorero', email: 'jean@cienciaargentina.com'},
+		{name: 'Matias Gonzalez', position: 'Comunicación', email: 'jean@cienciaargentina.com'},
+	]
+	website = 'http://leloir.org.ar'
+	logo = `/static/img/logos-labos/leloir_logo.png`
+
 	state = {
 		selected: 0,
 		jobOffers: this.props.jobOffers
@@ -22,14 +34,18 @@ export default class institute extends Component {
 	}
 	render() {
 		return (
-			<Page>
+			<Page contentClass= 'bg--gray' customMeta={{
+				title:`Instituto ${this.instituteName}`,
+				description: this.description,
+				img: this.logo
+			}}>
 				<div id="institute">
 					<InstituteHeader
-						img={`/static/img/logos-labos/leloir_logo.png`}
+						img={this.logo}
 						title={
 							<div className="institute__name">
-								<h1>Instituto Leloir</h1>
-								<label>Buenos Aires, Argentina</label>
+								<h1>Instituto {this.instituteName}</h1>
+								<label>{this.location}</label>
 							</div>
 						}
 						tabs={
@@ -43,28 +59,40 @@ export default class institute extends Component {
 							</Tabs>
 						}
 					/>
+					<DesktopTabs
+						selected={this.state.selected}
+						onChange={this.handleChange}
+					>
+						<Tab><i className="fas fa-home"></i>Instituto</Tab>
+						<Tab><i className="fas fa-flask"></i>Laboratorios</Tab>
+						<Tab><i className="fas fa-search"></i>Búsquedas</Tab>
+					</DesktopTabs>
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
-						<div className="container textCont">
-							<h3>Sobre el instituto</h3>
-							<p className="text">
-								La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.
-							</p>
-							<Link href={`http://leloir.org.ar`}>
-								<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
-							</Link>
-							<button className="bn--text bn--icon-world">Argentina</button>
-							<h3>Staff</h3>
-							<div className="institute__staff">
-								{[0,0,0,0,0,0].map((o,k) => (
-									<div key={k} className="staff__person">
-										<p className="staff__name">Jeanette Acosta</p>
-										<label className="staff__position">Tesorera</label>
-										<label className="staff__mail">jeanette@cienciaargentina.com</label>
-									</div>
-								))}
+						<div className="container textCont aboutInstitute">
+							<div className="mainAbout">
+								<h3>Sobre el instituto</h3>
+								<p className="text">
+									{this.description}
+								</p>
+								<Link href={`http://leloir.org.ar`}>
+									<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
+								</Link>
+								<button className="bn--text bn--icon-world">Argentina</button>
+							</div>
+							<div className="asideAbout">
+								<h3>Staff</h3>
+								<div className="institute__staff">
+									{this.staff.map((o,k) => (
+										<div key={k} className="staff__person">
+											<p className="staff__name">{o.name}</p>
+											<label className="staff__position">{o.position}</label>
+											<label className="staff__mail">{o.email}</label>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
-						<div className="container">
+						<div className="container labListCont">
 							{[0,0,0,0].map((o,k)=>(
 								<LabList
 									title="Biología Celular del RNA"

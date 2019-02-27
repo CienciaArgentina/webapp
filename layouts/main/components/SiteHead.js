@@ -50,7 +50,7 @@ const SiteHead = (props) => (
 	{/* END FAVICONS */}
 	<link rel="stylesheet" href="/static/css/nprogress.css" />
 	{/* MANIFEST */}
-	<link rel="manifest" href="/static/manifest.json" />
+	<link rel="manifest" href="/manifest.json" />
 </Head>
 );
 

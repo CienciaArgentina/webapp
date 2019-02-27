@@ -13,9 +13,10 @@ app.prepare()
 .then( () =>{
 	const server = express();
 
-	server.get('/serviceworker.js', (req, res) => {
-		const path = join(__dirname, 'static', 'serviceworker.js')
-		app.serveStatic(req, res, path)
+	server.get(['/serviceworker.js', '/manifest.json'], (req, res) => {
+		const parsedUrl = parse(req.url, true)
+		const path = join(__dirname, 'static', parsedUrl.pathname)
+		app.serveStatic(req, res, path);
 	});
 
 

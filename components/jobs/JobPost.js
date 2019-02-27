@@ -30,7 +30,13 @@ const JobPost = (props) => (
 					</Link>
 				</div>
 				<div className="middle_data">
-					<p>{props.instituteName}</p>
+					<p>
+						<Link href={`/institute?id=${props.id}`} as={`/institute/${props.id}`}>
+							<a>
+								{props.instituteName}
+							</a>
+						</Link>
+					</p>
 					<p>{props.place}</p>
 				</div>
 				<div className="button_data">

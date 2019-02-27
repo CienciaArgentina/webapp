@@ -1,7 +1,8 @@
 import Head from 'next/head';
+import Router from 'next/router';
 
 const SiteHead = (props) => (
-	<Head>
+<Head>
 	<title>{props.title?props.title+' | ':''}Ciencia Argentina</title>
 	<meta name="og:title" property="og:title" content={
 		props.title?props.title+' | Ciencia Argentina':'Ciencia Argentina'

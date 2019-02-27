@@ -6,9 +6,18 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const { parse } = require('url')
+const { join } = require('path')
+
 app.prepare()
 .then( () =>{
 	const server = express();
+
+	server.get('/serviceworker.js', (req, res) => {
+		const path = join(__dirname, 'static', 'serviceworker.js')
+		app.serveStatic(req, res, path)
+	});
+
 
 	server.get('/institute/:id', (req, res) => {
 		const actualPage = '/institute'

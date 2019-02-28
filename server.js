@@ -13,11 +13,13 @@ app.prepare()
 .then( () =>{
 	const server = express();
 
-	server.get(['/serviceworker.js', '/manifest.json'], (req, res) => {
-		const parsedUrl = parse(req.url, true)
-		const path = join(__dirname, 'static', parsedUrl.pathname)
-		app.serveStatic(req, res, path);
-	});
+	if(!dev) {
+		server.get(['/serviceworker.js', '/manifest.json'], (req, res) => {
+			const parsedUrl = parse(req.url, true)
+			const path = join(__dirname, 'static', parsedUrl.pathname)
+			app.serveStatic(req, res, path);
+		});
+	}
 
 
 	server.get('/institute/:id', (req, res) => {

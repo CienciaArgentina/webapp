@@ -94,9 +94,10 @@ header {
 			}
 			.mobile-menu__content {
 				box-shadow: 0 8px 10px -5px rgba(0,0,0,.2), 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12);
-				transition: left $delay;
+				transition: transform $delay;
 				background: white;
-				left: calc(-100vw + #{$space} - .1rem);
+				transform: translateX(calc(-100vw + #{$space} - .1rem));
+				// left: calc(-100vw + #{$space} - .1rem);
 				width: calc(100vw - #{$space});
 				height: 100%;
 			}
@@ -108,7 +109,7 @@ header {
 					background-color: rgba(0,0,0,0.32);
 				}
 				.mobile-menu__content {
-					left: 0;
+					transform: translateX(0px);
 				}
 			}
 		}

@@ -25,6 +25,8 @@ const Header = (props) => (
 			showMenu={props.showMenu}
 		/>
 		<MobileMenu
+			canInstallApp={props.canInstallApp}
+			installApp={props.installApp}
 			hideMenu={props.hideMenu}
 			mobile_menu_display={props.mobile_menu_display}
 			mobile_menu_show={props.mobile_menu_show}

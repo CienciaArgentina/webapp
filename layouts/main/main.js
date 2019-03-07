@@ -23,20 +23,44 @@ export default class Page extends Component {
 		mobile_menu_display: false,
 		mobile_menu_show: false,
 		noscroll: false,
+		canInstallApp: false,
+		installApp: false
 	}
 	showMenu = () => {
 		this.setState( () => ({mobile_menu_display: true, noscroll: true}) );
 		setTimeout( () => {
 			this.setState( () => ({mobile_menu_show: true}) );
 		}, 10);
+		document.querySelector('body').classList.add('noScroll')
 	}
 	hideMenu = () => {
 		this.setState( () => ({mobile_menu_show: false, noscroll: false}) );
 		setTimeout( () => {
 			this.setState( () => ({mobile_menu_display: false}) );
 		}, 300);
+		document.querySelector('body').classList.remove('noScroll')
+	}
+	handleInstallApp = () => {
+		let deferredPrompt = this.state.installApp;
+		deferredPrompt.prompt();
+
+		// Follow what the user has done with the prompt.
+		deferredPrompt.userChoice.then((choiceResult) => {
+		  console.log(choiceResult.outcome);
+		  if(choiceResult.outcome == 'dismissed') {
+			console.log('User cancelled home screen install');
+		  }
+		  else {
+			console.log('User added to home screen');
+			this.setState(()=>({
+				canInstallApp: false,
+				installApp: false
+			}))
+		  }
+		});
 	}
 	componentDidMount() {
+		// this.showMenu();
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', function() {
 				navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
@@ -48,6 +72,16 @@ export default class Page extends Component {
 				});
 			});
 		}
+		window.addEventListener('beforeinstallprompt', (e) => {
+		  console.log('beforeinstallprompt Event fired');
+		  e.preventDefault();
+		  // Stash the event so it can be triggered later.
+		  this.setState(()=>({
+			canInstallApp: true,
+			installApp: e
+		  }))
+		  return false;
+		});
 	}
 	render() {
 		return (
@@ -58,6 +92,8 @@ export default class Page extends Component {
 					ogimage = {this.props.customMeta ? this.props.customMeta.ogimage : false}
 				/>
 				<Header
+					canInstallApp={this.state.canInstallApp}
+					installApp={this.handleInstallApp}
 					showMenu={this.showMenu}
 					hideMenu={this.hideMenu}
 					mobile_menu_display={this.state.mobile_menu_display}

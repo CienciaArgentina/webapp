@@ -24,6 +24,7 @@ const equipoLista = [
 		}
 	},
 	{
+		photo: "lucas.jpg",
 		nombre: "Lucas Francisco",
 		apellido: "Lopez",
 		social: {
@@ -43,16 +44,34 @@ const equipoLista = [
 		}
 	},
 	{
+		photo: "santi.jpg",
 		nombre: "Santiago",
 		apellido: "Cosco",
+		social: {
+			linkedin: "santiago-cosco",
+			instagram: "santiago_cosco"
+		}
 	},
 	{
+		photo: "nico.jpg",
 		nombre: "Nicolas",
-		apellido: "García",
+		apellido: "García Camilo",
+		social: {
+			github: "nicolascamilo",
+			linkedin: "nicolas-ezequiel-garcia-camilo",
+		}
 	},
 	{
+		photo: "aldanois.jpg",
 		nombre: "Aldano",
 		apellido: "Pelusso",
+		social: {
+			github: "aldanois",
+			linkedin: "aldanois",
+			twitter: "aldanois",
+			instagram: "aldanois",
+			facebook: "aldanois",
+		}
 	},
 ];
 const socialIcons = {

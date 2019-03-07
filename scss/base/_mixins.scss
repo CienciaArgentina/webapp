@@ -15,6 +15,7 @@ $bn-border: solid .1rem;
 	font-weight: 600;
 	position: relative;
 	font-size: 1.3rem;
+	user-select: none;
 	&:focus {
 		outline: none;
 	}
@@ -236,12 +237,32 @@ $bn-border: solid .1rem;
 	transform: translate(-50%, -50%);
 }
 
-@mixin max-lines($lines, $lheight) {
+@mixin max-lines($lines, $lheight:1.2rem) {
+	@if ($lines == 1) {
+		white-space: nowrap; 
+		overflow: hidden;
+		text-overflow: ellipsis
+	} @else {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: $lines; /* number of lines to show */
+		line-height: $lheight;        /* fallback */
+		max-height: $lheight*$lines;       /* fallback */
+	}
+}
+
+@mixin profilePic($imgw) {
+	width: $imgw;
+	height: $imgw;
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+	position: relative;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: $lines; /* number of lines to show */
-	line-height: $lheight;        /* fallback */
-	max-height: $lheight*$lines;       /* fallback */
+	img {
+		@include abs-center();
+		width: 100%;
+	}
 }

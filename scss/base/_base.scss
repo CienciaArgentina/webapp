@@ -4,6 +4,9 @@ html {
 body {
     font-size: 1.4rem; //14px
     font-family: 'Montserrat', sans-serif;
+    &.noScroll {
+        overflow: hidden;
+    }
 }
 *, h1, h2, h3, h4, p, a, button {
     padding: 0;

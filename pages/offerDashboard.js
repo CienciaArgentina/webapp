@@ -1,5 +1,7 @@
 import React from 'react';
 import Page from '../layouts/main/main';
+import Link from 'next/link'
+import ReactTooltip from 'react-tooltip'
 
 const OfferCantidates = (props) => (
 	<div className="offerCandidates">
@@ -36,48 +38,52 @@ const OfferCantidates = (props) => (
 			{props.candidates.map( (o,k)=> {
 				return (
 					<div key={k} className={`candidateConainer`+(o.selected?' selected':'')+(o.fav?' fav':'')}>
-						<div className="candidateData cellRow">
-							<div className="cell profile">
-								<div>
-									<img src={o.profile} />
+						<Link href={`/offerProfile`}>
+							<a>
+								<div className="candidateData cellRow">
+									<div className="cell profile">
+										<div>
+											<img src={o.profile} />
+										</div>
+									</div>
+									<div className="cell name">
+										<div>
+											{o.lastName}, {o.firstName}
+										</div>
+									</div>
+									<div className="cell age">
+										<div>
+											{o.age}
+										</div>
+									</div>
+									<div className="cell university">
+										<div>
+											{o.university}
+										</div>
+									</div>
+									<div className="cell careerName">
+										<div>
+											{o.careerName}
+										</div>
+									</div>
+									<div className="cell careerStatus">
+										<div>
+											{o.careerStatus}
+										</div>
+									</div>
+									<div className="cell labExperience">
+										<div>
+											{o.experience?'Si':'No'}
+										</div>
+									</div>
+									<div className="cell date">
+										<div>
+											{o.date}
+										</div>
+									</div>
 								</div>
-							</div>
-							<div className="cell name">
-								<div>
-									{o.lastName}, {o.firstName}
-								</div>
-							</div>
-							<div className="cell age">
-								<div>
-									{o.age}
-								</div>
-							</div>
-							<div className="cell university">
-								<div>
-									{o.university}
-								</div>
-							</div>
-							<div className="cell careerName">
-								<div>
-									{o.careerName}
-								</div>
-							</div>
-							<div className="cell careerStatus">
-								<div>
-									{o.careerStatus}
-								</div>
-							</div>
-							<div className="cell labExperience">
-								<div>
-									{o.experience?'Si':'No'}
-								</div>
-							</div>
-							<div className="cell date">
-								<div>
-									{o.date}
-								</div>
-							</div>
-						</div>
+							</a>
+						</Link>
 					</div>
 				);
 			})}
@@ -86,9 +92,21 @@ const OfferCantidates = (props) => (
 )
 
 export default class offerDashboard extends React.Component {
-	state = {
-		candidates: this.props.candidates,
-		sortedBy: false
+	constructor(props) {
+		super(props);
+		let {candidates} = props;
+		if(candidates) {
+			candidates.sort((a,b) => this.sortAB(
+				`${a.lastName} ${a.firstName}`,
+				`${b.lastName} ${b.firstName}`,
+				false
+			));
+			candidates.sort((a,b) => this.sortAB(a.date, b.date, false) );
+		}
+		this.state = {
+			candidates,
+			sortedBy: 'date'
+		}
 	}
 	jobType = "Doctorado"
 	jobTitle = "Actividad neuronal y estimulantes pro-cognitivos"
@@ -146,18 +164,30 @@ export default class offerDashboard extends React.Component {
 		}
 	}
 	componentDidMount() {
-		this.sortBy('date');
+		// this.sortBy('date');
 	}
 	render() {
 		return (
 			<Page contentClass="bg--gray">
+				<ReactTooltip effect='solid' />
 				<div id="offerDashboard" className="pt-3">
 					<div className="offer__header">
 						<h1>Postulaciones</h1>
 						<div className="offer__details">
-							<p className="text">
-								{this.jobType} - {this.jobTitle}
-							</p>
+							<h3 className="text">
+								<Link href={`/job`}>
+									<a>
+										{this.jobType} - {this.jobTitle}
+									</a>
+								</Link>
+							</h3>
+						</div>
+						<div className="mb-1">
+							<Link href={`/job`}>
+								<button className="mr-2 pl-0 bn--gray--text">Ver</button>
+							</Link>
+							<button className="mr-2 bn--gray--text">Editar</button>
+							<button data-tip={"No recibir más candidatos"} className="mr-2 bn--red--text">Cerrar oferta</button>
 						</div>
 					</div>
 					<div className="offer__dataDashboard">

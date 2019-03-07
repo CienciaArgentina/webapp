@@ -16,6 +16,9 @@ button {
 .bn--gray {
 	@include button($gray-400, $gray-900, filled);
 }
+.bn--gray--text {
+	@include button($gray-800, $gray-900, text);
+}
 
 // icons
 .bn--icon-add {

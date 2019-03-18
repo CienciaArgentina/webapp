@@ -18,7 +18,7 @@ export default class MyApp extends App {
 		const { Component, pageProps } = this.props
 		
 		return (
-			<Container asd={true}>
+			<Container>
 				<Component {...pageProps}/>
 			</Container>
 		)

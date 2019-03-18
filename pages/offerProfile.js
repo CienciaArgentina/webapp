@@ -127,6 +127,7 @@ export default class offerProfile extends React.Component {
 							<div className="__fixedContent">
 								<div className="bn--green px-0 mb-2">Aceptar postulación</div>
 								<div className="bn--red px-0">Rechazar postulación</div>
+								<button className="mt-4 py-0 bn--icon-download bn--text">Descargar CV</button>
 								<div className="action__section">
 									<div className="section__header">
 										<i className="fas fa-sticky-note"></i>

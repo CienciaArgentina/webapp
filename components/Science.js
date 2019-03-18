@@ -11,6 +11,11 @@ import Tag from './jobs/Tag'
 
 import Mapbox from './MapBox';
 
+// ui
+import Input from './ui/Input'
+
+const APIBase = 'https://cienciaargentinamicroservices20190313100734.azurewebsites.net/api/';
+
 export {
 	JobPost,
 	Tag,
@@ -22,5 +27,7 @@ export {
 	ProjectPage,
 	LabList,
 	InstituteHeader,
-	DesktopTabs
+	DesktopTabs,
+	APIBase,
+	Input
 }

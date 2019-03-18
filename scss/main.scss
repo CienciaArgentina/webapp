@@ -17,11 +17,13 @@
 @import './components/jobPost';
 @import './components/labList';
 @import './components/mapbox';
+@import './components/sui';
 @import './components/tabs';
 @import './components/tag';
 @import './components/template';
 
 //pages
+@import './pages/editProfile';
 @import './pages/index';
 @import './pages/institute';
 @import './pages/laboratory';

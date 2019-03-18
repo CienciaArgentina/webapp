@@ -57,6 +57,9 @@ button {
 .bn--icon-world {
 	@include bn--icon('\f57d');
 }
+.bn--icon-download {
+	@include bn--icon('\f381');
+}
 
 //with
 .bn--w2 {

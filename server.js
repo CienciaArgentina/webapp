@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const cookieParser = require('cookie-parser')
 
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -14,7 +15,13 @@ app
 .prepare()
 .then( () =>{
 	const server = express();
+	server.use(cookieParser());
 
+	// server.get('/logguinTEST', (req,res) => {
+	// 	console.log(req.cookies);
+	// 	// res.clearCookie('cookieName'); // DELETE COOKIE
+	// 	res.render(req, res, path)
+	// })
 	server.get('/serviceworker.js', (req, res) => {
 		const parsedUrl = parse(req.url, true)
 		const path = join(__dirname, 'static', '/serviceworker.js')
@@ -56,6 +63,11 @@ app
 		const queryParams = { id: req.params.id } 
 		app.render(req, res, actualPage, queryParams)
 	});
+	server.get(['/editProfile/:section', '/editProfile/', '/editProfile'],(req,res) => {
+		const actualPage = '/editProfile'
+		const queryParams = { section: req.params.section } 
+		app.render(req, res, actualPage, queryParams)
+	})
 	server.get('*', (req, res) => {
 		return handle(req, res);
 	});

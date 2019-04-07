@@ -19,6 +19,7 @@
     "@zeit/next-sass": "^1.0.1",
     "classnames": "^2.2.6",
     "cleave.js": "^1.4.9",
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
     "isomorphic-unfetch": "^3.0.0",
     "mapbox-gl": "^0.53.0",
@@ -26,12 +27,18 @@
     "next": "^8.0.3",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
+    "nookies": "^2.0.4",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-mapbox-gl": "^4.2.0",
-    "react-tooltip": "^3.9.2"
+    "react-modal": "^3.8.1",
+    "react-redux": "^6.0.1",
+    "react-tooltip": "^3.9.2",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   }
 }

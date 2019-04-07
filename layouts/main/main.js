@@ -18,7 +18,19 @@ NProgress.configure({
 	minimum: 0.2
 });
 
-export default class Page extends Component {
+//redux
+import { connect } from 'react-redux'
+// import { startClock, serverRenderClock } from '../../store'
+// --- Importar funciones del store --- //
+
+
+class Page extends Component {
+	static async getInitialProps({ reduxStore, req }) {
+    const isServer = !!req
+    // reduxStore.dispatch(serverRenderClock(isServer))
+		// --- Uso alguna funcion cuando cargo --- //
+    return {}
+	}
 	state = {
 		mobile_menu_display: false,
 		mobile_menu_show: false,
@@ -60,6 +72,10 @@ export default class Page extends Component {
 		});
 	}
 	componentDidMount() {
+    const { dispatch } = this.props
+		// this.timer = startClock(dispatch)
+		// --- Uso alguna funcion cuando cargo local --- //
+		
 		// this.showMenu();
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', function() {
@@ -107,3 +123,5 @@ export default class Page extends Component {
 		);
 	}
 }
+
+export default connect()(Page)

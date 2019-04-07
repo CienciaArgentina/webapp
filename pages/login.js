@@ -4,9 +4,21 @@ import {
 	APIBase
 } from '../components/Science'
 
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
+
 export default class login extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
+	}
+	state = {
+		name: this.props.name
+	}
+	static async getInitialProps(ctx) {
+		// Parse
+		const cookies = parseCookies(ctx);
+		return {
+			name: cookies.loginName
+		}
 	}
 	sendLogin = (event) => {
 		event.preventDefault();
@@ -14,11 +26,18 @@ export default class login extends React.Component {
 		const password = event.target.elements.password.value;
 		//SEND HERE
 		//APIBase es la url de base para las apis
+		setCookie(false, 'loginName', user, {
+			maxAge: 30 * 24 * 60 * 60,
+			path: '/',
+		  });
 	}
 	render() {
 		return(
 			<Page>
 				<div className="container pt-6">
+					<h2>
+						La cookie con tu nombre es {this.state.name}. (SSR papu)
+					</h2>
 					<form onSubmit={this.sendLogin}>
 						<Input
 							label="Nombre de usuario"

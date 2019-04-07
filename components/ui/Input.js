@@ -12,68 +12,90 @@ export default class Input extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		this.preInput = React.createRef()
+		this.preInput = React.createRef();
+		this.inputBase = React.createRef();
+		this.cleaveInput = React.createRef();
 	}
 	_focus = (focused) => {
 		this.setState(()=>({focused}));
 		if(!focused && this.props.required && !this.state.hasValue) {
-			this.setState(()=>({invalid: true}))
+			this._setInvalid(true, false)
 		}
 	}
 	_change = (event) => {
-		const hasValue = !!event.target.value
-		this.setState(()=>({hasValue}))
-		if(this.props.required) {
-			this.setState(()=>({invalid: !hasValue}))
-		}
-		this.validate(event.target.value);
+		this.validate();
 		if(this.props.onChange) {
 			this.props.onChange(event)
 		}
 	}
-	validate = (value) => {
-		const {validation} = this.props
+	validate = () => {
+		//validate function
+		let input = this.props.formatInput ? this.inputBase.current.element : this.inputBase.current
+		const value = input.value;
+		return this._checkValid(value); //response to formControl
+	}
+	_checkValid = (value) => {
+		// return if valid or not
+		const {validation} = this.props;
+		const hasValue = !!value;
+		this.setState(()=>({hasValue}))
+
+		if(!value && !this.props.required) {
+			return this._setInvalid(false, false)
+		}
+
+		if(!value && this.props.required) {
+			return this._setInvalid(true, false)
+		}
+
 		if(this.props.validation) {
 			for(let i=0; i < validation.length; i++) {
 				let valid = validation[i]( value );
 				if(valid!==true) {
 					let invalidMsg = valid
-					this.setState(()=>({
-						invalid: true,
-						invalidMsg
-					}))
-					return false
+					return this._setInvalid(true, invalidMsg)
 				}
 			}
-			this.setState(()=>({
-				invalid: false,
-				invalidMsg: false
-			}));
-			return false
+			return this._setInvalid(false, false);
 		}
+
+		return this._setInvalid(false, false);
+	}
+	_setInvalid = (invalid, invalidMsg=false) => {
+		this.setState(()=>({ invalid, invalidMsg }));
+		return({valid: !invalid, invalid, invalidMsg})
 	}
 	componentDidMount() {
 		if(!!this.props.preInput) {
 			const preInputWidth = ((this.preInput.current.offsetWidth + 1 + 12) / 10) +'rem';
 			this.setState(()=>({preInputWidth}))
-			console.log(preInputWidth);
 		}
+		const inputBase = this.props.formatInput ? this.inputBase.current.element : this.inputBase.current;
+		if(!!inputBase.value && inputBase.tagName.toLowerCase()!='select') {
+			this.validate(inputBase.value)
+		}
+		if(inputBase.value!='undefined' && inputBase.tagName.toLowerCase()=='select') {
+			this.validate(inputBase.value)
+		}
+		
 	}
 	render () {
 		const props = this.props
 		const variant = props.variant?props.variant:'filled'
+		const color = props.color?props.color:'gray'
 		const type = props.type?props.type:'text'
 		const inputProps = {...props.inputProps}
 		const {placeholder} = props;
 		return (
 			<div className={classnames(
-				'SUI-input',`SUI-input-${variant}`,
+				'SUI-input',`SUI-input-${variant}`,`SUI-input-color-${color}`,
 				{
 					'SUI-input-focused': this.state.focused,
 					'SUI-input-hasValue': this.state.hasValue,
 					'SUI-input-invalid': this.state.invalid,
 					'SUI-input-labelUp': this.state.focused||this.state.hasValue||props.labelUp,
-					'SUI-input-hasPreInput':props.preInput
+					'SUI-input-hasPreInput':props.preInput,
+					'SUI-width-full': props.fullWidth
 				},
 				props.className
 			)}>
@@ -91,7 +113,7 @@ export default class Input extends React.Component {
 							<Cleave
 								className="SUI-input-input SUI-input-main" 
 								type={type}
-								defaultValue={props.value?props.value:undefined}
+								value={props.value?props.value:''}
 								onFocus={()=>(this._focus(true))}
 								onBlur={()=>(this._focus(false))}
 								onChange={this._change}
@@ -100,12 +122,13 @@ export default class Input extends React.Component {
 								placeholder={(this.state.focused||props.labelUp)?placeholder:undefined}
 								options={props.formatInput}
 								style={{paddingLeft:this.state.preInputWidth}}
-							/>
+								ref={this.inputBase}
+								/>
 						:
 							<input
 								className="SUI-input-input SUI-input-main" 
 								type={type}
-								defaultValue={props.value?props.value:undefined}
+								value={props.value?props.value:''}
 								onFocus={()=>(this._focus(true))}
 								onBlur={()=>(this._focus(false))}
 								onChange={this._change}
@@ -113,18 +136,20 @@ export default class Input extends React.Component {
 								{...inputProps}
 								placeholder={(this.state.focused||props.labelUp)?placeholder:undefined}
 								style={{paddingLeft:this.state.preInputWidth}}
+								ref={this.inputBase}
 							/>
 						
 					:
 						<select
 							className="SUI-input-select SUI-input-main" 
-							defaultValue={props.value ? props.value : 'undefined'}
+							value={props.value ? props.value : 'undefined'}
 							onFocus={()=>(this._focus(true))}
 							onBlur={()=>(this._focus(false))}
 							onChange={this._change}
 							name={props.name}
 							{...props.inputProps}
-						>
+							ref={this.inputBase}
+							>
 							{!props.value?
 								<option value="undefined" disabled></option>
 							:false}

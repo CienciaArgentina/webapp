@@ -2,7 +2,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	.SUI-input {
+	& > .SUI-input {
 		width: calc(50% - (#{$s-3} / 2));
 		margin: 0;
 		margin-bottom: $s-4;
@@ -29,6 +29,10 @@
 			background-color: #fff;
 			color: $gray-800;
 			.__menuItem {
+				&.selectedLink {
+					color: white;
+					background-color: $lblue;
+				}
 				a {
 					div {
 						display: flex;
@@ -50,21 +54,71 @@
 		}
 	}
 	.mainEdit {
+		flex-grow: 1;
 		.profileForm {
 			background-color: #fff;
-			padding: $s-4;
+			padding: $s-6 $s-5;
 		}
 	}
 	form {
 		h3 {
 			margin-top: $s-3;
+			&:first-child {
+				margin-top: 0;
+			}
 		}
 		.formSection {
-			@include inputsHalf();
 			margin-top: $s-3;
 			&:first-child {
 				margin-top: 0;
 			}
 		}
+	}
+}
+#formEditCareer {
+	.__study, .__work {
+		border-top: $grayBorder-400;
+		margin-top: $s-2;
+		padding-top: $s-6;
+		&:first-child {
+			border-top: none;
+			margin-top: 0;
+			padding-top: 0;
+		}
+		.__studyHeader, .__workHeader {
+			display: flex;
+			align-items: center;
+			i {
+				width: 4rem;
+				height: 4rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				margin-left: $s-2;
+				flex-grow: 0;
+				flex-shrink: 0;
+				opacity: .5;
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
+.addPaperModal {
+	@include abs-center();
+	background-color: #fff;
+	padding: $s-5;
+	box-shadow: $elevation--z2;
+	border-radius: 1rem;
+	max-width: calc(100% - #{$s-2 * 2});
+	max-height: calc(100vh - #{$s-2 * 2});
+	overflow-y: auto;
+	width: 80rem;
+	box-sizing: border-box;
+	&:focus {
+		outline: none;
 	}
 }

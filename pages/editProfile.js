@@ -1,22 +1,40 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Page from '../layouts/main/main'
 
 import Link from 'next/link'
 
-import moment from 'moment'
-// import 'moment/locale/es'
+import className from 'classnames'
 
-import {
-	Input
-} from '../components/Science'
+import EditPersonalData from '../components/editProfile/editPersonalData'
+import EditCareerData from '../components/editProfile/editCareerData'
+import EditPublicationsData from '../components/editProfile/editPublicationsData'
 
 
 class editProfile extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			selectedForm: props.selectedForm!=undefined ? props.selectedForm : 'basica'
+		}
+		this.formParams = {
+			'basica' : ['fas fa-user','Información básica'],
+			'carrera' : ['fas fa-graduation-cap','Carrera'],
+			'publicaciones' : ['fas fa-file-alt','Publicaciones'],
+			'cuenta' : ['fas fa-cog','Cuenta'],
+		}
 	}
-	state = {
-		nombre: false,
+	static async getInitialProps(context) {
+		const section = context.query.section;
+		return {
+			selectedForm: section
+		}
+	}
+	componentDidUpdate() {
+		const selectedForm = this.props.selectedForm!=undefined ? this.props.selectedForm : 'basica'
+		if(this.state.selectedForm != selectedForm) {
+			this.setState(()=>({selectedForm}))
+		}
 	}
 	handleChange = (e) => {
 		const name = e.target.name
@@ -25,128 +43,53 @@ class editProfile extends React.Component {
 			[name]: value
 		}))
 	}
+	_submit = (e) => {
+		e.preventDefault();
+	}
 	render() {
 		return (
-			<Page>
+			<Page contentClass="bg--gray">
 				<div id="editProfile">
 					<div className="editProfile__menu">
 						<div className="__menuMain">
-							{[
-								['fas fa-user','Información básica'],
-								['fas fa-graduation-cap','Carrera'],
-								['fas fa-tasks','Intereses'],
-								['fas fa-cog','Cuenta'],
-							].map( (o,k) =>(
-								<div className="__menuItem" key={k}>
-									<Link href={`/editProfile/${k}`}>
-										<a>
-											<div>
-												<i className={o[0]}></i>
-												<span>{o[1]}</span>
-											</div>
-										</a>
-									</Link>
-								</div>
-							))}
+							{Object.keys(this.formParams).map( (k,i) => {
+								const o = this.formParams[k]
+								return(
+									<div
+									key={k}
+									className={className({
+										selectedLink: this.state.selectedForm==k,
+										'__menuItem':true
+									})}>
+										<Link
+										href={`/editProfile?section=${k}`}
+										as={`/editProfile/${k}`}>
+											<a>
+												<div>
+													<i className={o[0]}></i>
+													<span>{o[1]}</span>
+												</div>
+											</a>
+										</Link>
+									</div>
+								)
+							})}
 						</div>
 					</div>
 					<div className="mainEdit">
-						<form className="profileForm">
-							<div className="formSection">
-								<Input
-									label="Nombre"
-									name="nombre"
-									// helperText="Tu nombre aquí"
-									required
-									onChange={this.handleChange}
-									/>
-								<Input
-									label="Apellido"
-									required
-								/>
-								<Input
-									label="Fecha de nacimiento"
-									required
-									formatInput={
-										{date: true, datePattern: ['d', 'm', 'Y']}
-									}
-									validation={
-										[
-											v => /^\d\d\/\d\d\/\d\d\d\d$/.test(v)
-												? true : 'Completa tu fecha de nacimiento.',
-											v => moment().diff(moment(v,'DD/MM/YYYY'),'Years') >= 18
-												? true : 'Debes ser mayor de 18.',
-										]
-									}
-									placeholder= 'dd/mm/yyyy'
-								/>
-								<Input
-									label="Sexo"
-									type="select"
-									required
-									options={(['Femenino','Masculino','Otro'].map((o,k)=>(
-										<option key={k} value="a">{o}</option>
-									)))}
-								/>
-							</div>
-							<h3>Dirección</h3>
-							<p className="label--m--gray">No compartiremos tu dirección exacta con nadie.</p>
-							<div className="formSection">
-								<Input
-									label='País'
-								/>
-								<Input
-									label='Provincia'
-								/>
-								<Input
-									label='Calle'
-								/>
-								<Input
-									label='Altura'
-								/>
-							</div>
-							<h3>Contacto</h3>
-							<div className="formSection">
-								<Input
-									label="Celular"
-									placeholder="+54 11 2222 2222"
-									formatInput={
-										{phone:true,phoneRegionCode: 'AR'}
-									}
-								/>
-								<Input
-									label="Research Gate"
-								/>
-								<Input
-									label="Facebook"
-									placeholder="tuPerfil"
-									preInput="fb.com/"
-								/>
-								<Input
-									label="Instagram"
-									placeholder="tuPerfil"
-									validation={[
-										v => /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(v)
-										? true : 'Ingresa un usuario válido.'
-									]}
-									preInput="@"
-								/>
-								<Input
-									label="Twitter"
-									placeholder="tuPerfil"
-									validation={[
-										v => /^([a-zA-Z0-9_]{1,20})$/.test(v)
-										? true : 'Ingresa un usuario válido.'
-									]}
-									preInput="@"
-								/>
-								<Input
-									label="Sitio web"
-								/>
-							</div>
-							<button className="bn--green">
-								Guardar
-							</button>
+						<form className="profileForm" onSubmit={this._submit}>
+							{this.state.selectedForm == 'basica' ?
+								<EditPersonalData handleChange={this.handleChange} /> : false
+							}
+							{this.state.selectedForm == 'carrera' ?
+								<EditCareerData handleChange={this.handleChange} /> : false
+							}
+							{this.state.selectedForm == 'publicaciones' ?
+								<EditPublicationsData handleChange={this.handleChange} /> : false
+							}
+							{this.state.selectedForm == 'cuenta' ?
+								<EditPersonalData handleChange={this.handleChange} /> : false
+							}
 						</form>
 					</div>
 				</div>

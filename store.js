@@ -3,9 +3,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 
 const exampleInitialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0
+  isLogged: false,
+  username: false,
+  email: false,
+  rol: false
 }
 
 // REDUCERS
@@ -15,6 +16,13 @@ export const reducer = (state = exampleInitialState, action) => {
     //   return Object.assign({}, state, {
     //     count: exampleInitialState.count
     //   })
+    case 'INITUSER':
+      return {...state,
+        isLogged: action.data.isLogged,
+        username: action.data.username,
+        email: action.data.email,
+        rol: action.data.rol
+      };
     default:
       return state
   }

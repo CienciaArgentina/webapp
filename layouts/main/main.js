@@ -76,18 +76,6 @@ class Page extends Component {
 		// this.timer = startClock(dispatch)
 		// --- Uso alguna funcion cuando cargo local --- //
 		
-		// this.showMenu();
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', function() {
-				navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
-					// Registration was successful
-					console.log('ServiceWorker registration successful with scope: ', registration.scope);
-				}, function(err) {
-					// registration failed :(
-					console.log('ServiceWorker registration failed: ', err);
-				});
-			});
-		}
 		window.addEventListener('beforeinstallprompt', (e) => {
 		  console.log('beforeinstallprompt Event fired');
 		  e.preventDefault();

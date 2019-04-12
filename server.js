@@ -23,9 +23,9 @@ app
 	// 	// res.clearCookie('cookieName'); // DELETE COOKIE
 	// 	res.render(req, res, path)
 	// })
-	server.get('/serviceworker.js', (req, res) => {
+	server.get('/service-worker.js', (req, res) => {
 		const parsedUrl = parse(req.url, true)
-		const path = join(__dirname, 'static', '/serviceworker.js')
+		const path = join(__dirname, '.next', '/service-worker.js');
 		app.serveStatic(req, res, path);
 	});
 	server.get('/manifest.json', (req, res) => {

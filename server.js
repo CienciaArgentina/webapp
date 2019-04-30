@@ -33,6 +33,13 @@ app
 		const path = join(__dirname, 'static', '/manifest.json')
 		app.serveStatic(req, res, path);
 	});
+	server.get('/job/:id', (req, res) => {
+		const actualPage = '/job'
+		const queryParams = {
+			id: req.params.id
+		}
+		app.render(req, res, actualPage, queryParams)
+	})
 	server.get('/institute/:id', (req, res) => {
 		const actualPage = '/institute'
 		const queryParams = { id: req.params.id } 

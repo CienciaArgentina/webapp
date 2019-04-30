@@ -2,6 +2,8 @@ import Page from '../layouts/main/main'
 import Link from 'next/link'
 import { Component } from 'react'
 
+import { JobsApi } from '../src/api/api'
+
 import {
 	InstituteName,
 	Tag,
@@ -21,12 +23,16 @@ const Hightlight = (props) => (
 );
 
 export default class job extends Component {
+	static async getInitialProps(context) {
+		const job = JobsApi.getJob(context.query.id);
+		return job
+	}
 	state= {
-		isInterest: this.props.isInterest
+		isFav: this.props.isFav,
 	};
 	switchInterest = () => {
-		const isInterest = !this.state.isInterest;
-		this.setState( () => ({isInterest}) );
+		const isFav = !this.state.isFav;
+		this.setState( () => ({isFav}) );
 	}
 	render(){
 		return (
@@ -38,7 +44,7 @@ export default class job extends Component {
 							Postularme
 						</a>
 					</Link>
-					{this.state.isInterest ?
+					{this.state.isFav ?
 					<div onClick={this.switchInterest} className="markFav --fav"></div>
 						:
 					<div onClick={this.switchInterest} className="markFav"></div>
@@ -50,7 +56,7 @@ export default class job extends Component {
 						<div className="job__header__main">
 							<div className="job__header__titles">
 								<h3>Doctorado</h3>
-								<h1>Regulación de la N-glicosilación de proteínas eucariotas</h1>
+								<h1>{this.props.title}</h1>
 							</div>
 							<div className="job__highlights">
 							<Hightlight
@@ -71,7 +77,7 @@ export default class job extends Component {
 							</div>
 							<div className="job__actions">
 								<button className="bn--green mr-4 bn--w2">Postularme</button>
-								{this.state.isInterest ?
+								{this.state.isFav ?
 								<button onClick={this.switchInterest} className="bn--blue bn--icon-star-filled">Te interesa</button>
 								:
 								<button onClick={this.switchInterest} className="bn--blue--outline bn--icon-star">Agregar a mis intereses</button>
@@ -240,15 +246,4 @@ export default class job extends Component {
 		</Page>
 		);
 	}
-}
-
-job.getInitialProps = async function() {
-	return {
-		isInterest: false,
-		
-	}
-	const res = await fetch('')
-	const data = await res.json()
-  
-	return data
 }

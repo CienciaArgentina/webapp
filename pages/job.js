@@ -1,13 +1,15 @@
 import Page from '../layouts/main/main'
 import Link from 'next/link'
 import { Component } from 'react'
+import moment from 'moment'
 
 import { JobsApi } from '../src/api/api'
 
 import {
 	InstituteName,
 	Tag,
-	Mapbox
+	Mapbox,
+	JobPost
 } from '../components/Science';
 
 const Hightlight = (props) => (
@@ -35,6 +37,7 @@ export default class job extends Component {
 		this.setState( () => ({isFav}) );
 	}
 	render(){
+		const job = this.props;
 		return (
 		<Page contentClass="bg--gray">
 			<div className="jobPage">
@@ -55,8 +58,8 @@ export default class job extends Component {
 						<div className="job__header__back"></div>
 						<div className="job__header__main">
 							<div className="job__header__titles">
-								<h3>Doctorado</h3>
-								<h1>{this.props.title}</h1>
+								<h3>{job.typeName}</h3>
+								<h1>{job.title}</h1>
 							</div>
 							<div className="job__highlights">
 							<Hightlight
@@ -64,16 +67,20 @@ export default class job extends Component {
 								data="4 años"
 								label="Duración"
 							/>
-							<Hightlight
-								icon="fas fa-money-check-alt"
-								data="$18.900"
-								label="Estipendo"
-							/>
-							<Hightlight
-								icon="fas fa-calendar-alt"
-								data="31 Mayo"
-								label="Deadline"
-							/>
+							{job.salary &&
+								<Hightlight
+									icon="fas fa-money-check-alt"
+									data={`$${job.salary}`}
+									label="Estipendo"
+								/>
+							}
+							{job.endOffer &&
+								<Hightlight
+									icon="fas fa-calendar-alt"
+									data={moment(job.endOffer).format('D MMMM')}
+									label="Deadline"
+								/>
+							}
 							</div>
 							<div className="job__actions">
 								<button className="bn--green mr-4 bn--w2">Postularme</button>
@@ -96,23 +103,30 @@ export default class job extends Component {
 						<div className="job__details__data">
 							<h3>Proyecto</h3>
 							<ul className="job__details__detailsList">
-								<li>
-									<i className="fas fa-graduation-cap"></i>
-									<p>Posibilidad de presentación a tesina</p>
-								</li>
-								<li>
-									<i className="fas fa-dollar-sign"></i>
-									<p>Beca CONICET - $18.600</p>
-								</li>
-								
-								<li>
-									<i className="fas fa-user"></i>
-									<p>Responsable: Dra. Jeanette Acosta</p>
-								</li>
-								<li>
-									<i className="fas fa-at"></i>
-									<p>Contacto: giuliano@cienciaargentina.com</p>
-								</li>
+								{job.posibleThesis &&
+									<li>
+										<i className="fas fa-graduation-cap"></i>
+										<p>Posibilidad de presentación a tesina</p>
+									</li>
+								}
+								{!!job.scholarship &&
+									<li>
+										<i className="fas fa-dollar-sign"></i>
+										<p>Beca {job.scholarship} - ${job.salary}</p>
+									</li>
+								}
+								{!!job.projectManager &&
+									<li>
+										<i className="fas fa-user"></i>
+										<p>Responsable: {job.projectManager}</p>
+									</li>
+								}
+								{!!job.contactEmail &&
+									<li>
+										<i className="fas fa-at"></i>
+										<p>Contacto: {job.contactEmail}</p>
+									</li>
+								}
 							</ul>
 							<h3>Laboratorio</h3>
 							<ul className="job__details__detailsList">
@@ -120,78 +134,105 @@ export default class job extends Component {
 									<i className="fas fa-university"></i>
 									<p>
 										<Link
-											href={`/institute?id=asd`}
-											as="/institute/ads"
+											href={`/institute?id=${job.organization.instituteId}`}
+											as={`/institute/${job.organization.instituteId}`}
 										>
 											<a>
-												Instituto Leloir
+												{job.organization.instituteName}
 											</a>
 											</Link>
 										&nbsp;>&nbsp;
 										<Link
-											href={`/laboratory?id=asd`}
-											as="/laboratory/ads"
+											href={`/laboratory?id=${job.organization.labId}`}
+											as={`/laboratory/${job.organization.labId}`}
 										>
 											<a>
-												Biología Celular del RNA
+												{job.organization.labName}
 											</a>
 										</Link>
 									</p>
 								</li>
 								<li>
 									<i className="fas fa-globe-americas"></i>
-									<p>Buenos Aires, Argentina</p>
+									<p>{job.organization.city}, {job.organization.country}</p>
 								</li>
 								<li>
 									<i className="fas fa-flask"></i>
 									<p>
 											Proyecto:&nbsp;
 											<Link
-												href={`/laboratory?id=asd&view=project&projectId=asd`}
-												as="/laboratory/ads/project/asd"
+												href={`/laboratory?id=${job.organization.labId}&view=project&projectId=${job.organization.proyectId}`}
+												as={`/laboratory/${job.organization.labId}/project/${job.organization.proyectId}`}
 											>
 												<a>
-													Mutaciones y deleciones de genes de interés, y complementación de las mismas.
+													{job.organization.proyectName}
 												</a>
 											</Link>
 									</p>
 								</li>
 							</ul>
-							<h3>Tema de investigación</h3>
-							<p>
-								These topics all rely on a solid background in mathematics, physics, and chemistry. The program also has a biotechnology dimension with courses on the exploitation of biological systems for developing new technologies and industrial applications. We educate future bioengineers who benefit from interdisciplinary undergraduate courses to build an understanding of engineering concepts and techniques.
-							</p>
-							<p>
-								Students learn to apply engineering principles to the re-conceptualization of of biological phenomena and are trained to acquire skills for developing new materials and processes, including genetic modification of agriculturally important plants and human cells.
-							</p>
-							<h3>Técnicas a utilizar y modelo experimental</h3>
-							<p>
-								Most of the graduates of the BIO program continue on with graduate education in Turkey and abroad. All of our graduates are equipped with in depth knowledge of modern molecular biology. Our graduates attain research and management positions in industrial and research institutions operating in various areas of the biological sciences and biotechnology.
-							</p>
-							<div>
-								<Tag 
-									text="Biología"
-								/>
-								<Tag 
-									text="Plantas"
-								/>
-								<Tag>ADN</Tag>
-							</div>
+							{!!job.researchTopics &&
+								<div>
+									<h3>Tema de investigación</h3>
+									{job.researchTopics.split('\n').map((o,k) => (
+										<p key={k}>
+											{o}
+										</p>
+	
+									))}
+								</div>
+							}
+							{!!job.experimentalModel &&
+								<div>
+									<h3>Técnicas a utilizar y modelo experimental</h3>
+									{job.experimentalModel.split('\n').map((o,k) => (
+										<p key={k}>
+											{o}
+										</p>
+	
+									))}
+								</div>
+							}
+							{job.tags && 
+								<div>
+									{job.tags.map((o,k)=>(
+										<Tag
+											key={k}
+											text={o}
+										/>
+									))}
+								</div>
+							}
 							<h3>Requisitos</h3>
 							<h4>Obligatorios</h4>
 							<ul>
-								<li>Tener experiencia en un laboratorio</li>
-								<li>Adjuntar carta de presentación</li>
-								<li>Adjuntar referentes</li>
-								<li>Finalizar carrera antes del 10/5/2018</li>
+								{job.labExperience === true &&
+									<li>Tener experiencia en un laboratorio</li>
+								}
+								<li>
+									{[
+										'Estado de la carrera principiante',
+										'Estado de la carrera inicial (~20% de las materias aprobadas)',
+										'Estado de la carrera intermedio (~50% de las materias aprobadas)',
+										'Estado de la carrera avanzado (~75% de las materias aprobadas)',
+									].filter((o,k)=>(k==job.careerState))
+									}
+								</li>
+								{!!job.requirements &&
+									<li>{job.requirements}</li>
+								}
 							</ul>
 							<h4>Preferentes</h4>
 							<ul>
-								<li>Estado de la carrera avanzado (~75% de las materias aprobadas)</li>
-								<li>Alemán intermedio</li>
+								{job.labExperience === false &&
+									<li>Tener experiencia en un laboratorio</li>
+								}
+								{!!job.optionalRequirements &&
+									<li>{job.optionalRequirements}</li>
+								}
 							</ul>
 							<h3>Ubicación</h3>
-							<p>Callao 86, Ciudad Autónoma de Buenos Aires, Argentina</p>
+							<p>{job.organization.locationName}</p>
 							<Mapbox
 								geoJsonData = {{
 									"type": "FeatureCollection",
@@ -199,40 +240,44 @@ export default class job extends Component {
 										"type": "Feature",
 										"geometry": {
 											"type": "Point",
-											"coordinates": [-58.4330264,-34.6020053]
+											"coordinates": job.organization.coordinates
 										},
 										"properties": {
-											"title": "Instituto Leloir",
+											"title": job.organization.instituteName,
 											"icon": "LabIcon"
 										}
 									}]
 								}}
-								center= {[-58.4330264,-34.6020053]}
+								center= {job.organization.coordinates}
 							/>
 						</div>
 
 						<div className="job__details__institute">
 							<InstituteName
 								img="leloir_logo.png"
-								id="asd"
-								name="Instituto Leloir"
-								laboratory="Biología Celular del RNA"
-								laboratoryId="asd"
+								id={job.organization.instituteId}
+								name={job.organization.instituteName}
+								laboratory={job.organization.labName}
+								laboratoryId={job.organization.labId}
 								noBackground
 							/>
-							<p className="text--s mt-3 mb-0 instituteDescription">
-								La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.
-							</p>
+							{!!job.organization.instituteDescription &&
+								<p className="text--s mt-3 mb-0 instituteDescription">
+									{job.organization.instituteDescription}
+								</p>
+							}
 							<div className="mt-2 institute__actions">
+								{!!job.organization.instituteUrl && 
+									<div>
+										<Link href={job.organization.instituteUrl}>
+											<a className="bn--text bn--icon-link" target="_blank">
+												Sitio web
+											</a>
+										</Link>
+									</div>
+								}
 								<div>
-									<Link href="https://www.leloir.org.ar/">
-										<a className="bn--text bn--icon-link" target="_blank">
-											Sitio web
-										</a>
-									</Link>
-								</div>
-								<div>
-									<Link href="institute?id=asd" as="institute/asd">
+									<Link href={`/institute?id=${job.organization.instituteId}`} as={`/institute/${job.organization.instituteId}`}>
 										<a className="bn--text mt-0">
 											Perfil del instituto
 										</a>

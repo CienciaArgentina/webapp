@@ -107,13 +107,14 @@
 				}
 				h3 {
 					margin-bottom: $s-2;
-					&:not(:first-child){
-						margin-top: $s-4;
-					}
+					margin-top: $s-4;
+				}
+				> h3:first-child {
+					margin-top: 0;
 				}
 				h4 {
-					margin-top: $s-3;					
-					margin-bottom: $s-2;					
+					margin-top: $s-3;
+					margin-bottom: $s-2;
 				}
 			}
 			.job__details__institute {

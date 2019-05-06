@@ -3,6 +3,7 @@ import Page from '../layouts/main/main'
 import { Component } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
+import { JobsApi } from '../src/api/api'
 import { JobPost } from '../components/Science';
 
 export default class Index extends Component {
@@ -29,7 +30,7 @@ export default class Index extends Component {
     render(){
         const backgroundStyle = {
             transform: `translate(${this.state.x}%, ${this.state.y}%)`
-            }
+        }
         return (
             <Page contentClass="bg--gray" pageprops={ this.state.activateIndexParallax ? {onMouseMove:this._onMouseMove} : {} } >
                 <div className="Index">
@@ -57,21 +58,12 @@ export default class Index extends Component {
                         <h3 className="pb-2">Nuevas búsquedas</h3>
                         <div className="busquedas">
                             {this.state.newJobs.map( (o,k)=>(
-                                <JobPost key={k}
-                                    title={o.title}
-                                    type={o.type}
-                                    instituteName={o.instituteName}
-                                    place={o.place}
-                                    boss={o.boss}
-                                    logo={o.logo}
-                                    earn={o.earn}
-                                    duration={o.duration}
-                                    deadline={o.deadline}
-                                    closeDeadline={o.closeDeadline}
-                                    favorite={o.favorite}
-                                    prefetch
+                                <JobPost
+                                    key={k}
+                                    data={o}
+                                    // noPadding
+                                    // noLogo
                                 />
-                                
                             ) )}
                         </div>
                     </div>
@@ -81,52 +73,10 @@ export default class Index extends Component {
     }
 }
 
+
 Index.getInitialProps = async function() {
-	return {
-		newJobs: [
-            {
-                title: "Regulación de la N-glicosilación de proteínas eucariotas",
-                type: "Doctorado",
-                instituteName: "Insituto Leloir",
-                place: "Ciudad Autónoma de Buenos Aires",
-                boss: "Dra. Jeanette Acosta",
-                logo: "leloir_logo.png",
-                earn: "$18.900",
-                duration: "4 años",
-                deadline: "10 Ago.",
-                closeDeadline: false,
-                favorite: true
-            },
-            {
-                title: "Inmunoterapia en la tuberculosis de la humana",
-                type: "Doctorado",
-                instituteName: "IFIBYNE",
-                place: "Ciudad Autónoma de Buenos Aires",
-                boss: "Dra. Jeanette Acosta",
-                logo: "ifibyne_logo.png",
-                earn: "$18.900",
-                duration: "4 años",
-                deadline: "en 2 días",
-                closeDeadline: true,
-                favorite: false
-            },
-            {
-                title: "Nuevos genes de expresión asimétrica temprana y su rol en el establecimineto de ejes corporales",
-                type: "Doctorado",
-                instituteName: "Insituto Leloir",
-                place: "Ciudad Autónoma de Buenos Aires",
-                boss: "Dra. Jeanette Acosta",
-                logo: "leloir_logo.png",
-                earn: "$18.900",
-                duration: "4 años",
-                deadline: "6 Oct.",
-                closeDeadline: false,
-                favorite: false
-            },
-        ]
-	}
-	const res = await fetch('')
-	const data = await res.json()
-  
-	return data
+    const Jobs = await JobsApi.getJobList('last')
+    return {
+        newJobs: Jobs
+    }
 }

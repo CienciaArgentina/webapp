@@ -35,6 +35,7 @@ export default class job extends Component {
 	switchInterest = () => {
 		const isFav = !this.state.isFav;
 		this.setState( () => ({isFav}) );
+		const response = JobsApi.setFav(this.props.id)
 	}
 	render(){
 		const job = this.props;
@@ -94,11 +95,6 @@ export default class job extends Component {
 					</div>
 				</div>
 				<div className="job__tabs container">
-					{/* <div className="job__tabMenu">
-						<button className="bn--text active">General</button>
-						<button className="bn--text">Requisitos</button>
-						<button className="bn--text">Detalles</button>
-					</div> */}
 					<div className="job__details">
 						<div className="job__details__data">
 							<h3>Proyecto</h3>
@@ -254,11 +250,11 @@ export default class job extends Component {
 
 						<div className="job__details__institute">
 							<InstituteName
-								img="leloir_logo.png"
+								logo={job.organization.logo}
 								id={job.organization.instituteId}
 								name={job.organization.instituteName}
-								laboratory={job.organization.labName}
-								laboratoryId={job.organization.labId}
+								labName={job.organization.labName}
+								labId={job.organization.labId}
 								noBackground
 							/>
 							{!!job.organization.instituteDescription &&

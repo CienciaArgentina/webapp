@@ -46,6 +46,9 @@ export default class Index extends Component {
                                     <div className="tipo__content"><p className="tipo">Pasantías</p></div>
                                 </div>
                                 <div>
+                                    <div className="tipo__content"><p className="tipo">Tesinas</p></div>
+                                </div>
+                                <div>
                                     <div className="tipo__content"><p className="tipo">Doctorados</p></div>
                                 </div>
                                 <div>
@@ -75,7 +78,7 @@ export default class Index extends Component {
 
 
 Index.getInitialProps = async function() {
-    const Jobs = await JobsApi.getJobList('last')
+    const Jobs = await JobsApi.getRecentJobs()
     return {
         newJobs: Jobs
     }

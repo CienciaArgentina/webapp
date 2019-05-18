@@ -1,5 +1,3 @@
-
-
 import axiosInstance from './utils/axiosInstance';
 import moment from 'moment';
 
@@ -9,12 +7,12 @@ const jobExample = {
 	'isFav': false,
 	'isOpen': true,
 	'type': 'doctorate',
-	'typeName': 'Doctorado',
+	'typeName': 'Pasantía',
 	'posibleThesis': true,
 	'scholarship': 'CONICET',
 	'salary': 18900,
-	'dateCreated': moment('2018-12-5').unix(),
-	'endOffer': moment('2019-05-15').unix(),
+	'dateCreated': moment('2018-12-5', 'YYYY-MM-DD').unix(),
+	'endOffer': moment('2019-05-15', 'YYYY-MM-DD').unix(),
 	'tags': [
 		'Bioloía',
 		'Plantas',
@@ -38,6 +36,7 @@ const jobExample = {
 		'instituteName': 'Fundación Instituto Leloir',
 		'instituteDescription': 'La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.',
 		'instituteUrl': 'https://www.leloir.org.ar/',
+		'logo': '/static/img/logos-labos/leloir_logo.png',
 		'acronyms': false, //abreviacion
 		'labId': 'gsd789',
 		'labName': 'Biología Celular del RNA',
@@ -82,5 +81,18 @@ export class JobsApi {
 			params
 		});
 		return data;
+	}
+
+	// id: jobId
+	static async setFav(id) {
+		return true;
+		try {
+			const response = await axiosInstance.post(`/jobs/setFav`, {
+				id
+			});
+			return response
+		} catch {
+			return false
+		}
 	}
 }

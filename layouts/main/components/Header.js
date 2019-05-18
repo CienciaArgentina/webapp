@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import MobileMenu from './MobileMenu'
 import MobileNav from './MobileNav'
+import { connect } from 'react-redux'
 
 
 const Header = (props) => (
@@ -17,9 +18,15 @@ const Header = (props) => (
 			<Link href="/">
 				<a>Reclutar</a>
 			</Link>
-			<Link href="/login">
-				<button className="login">Ingresar</button>
-			</Link>
+			{props.isLogged ?
+				<Link href="/login">
+					<button className="login">Perfil</button>
+				</Link>
+			:
+				<Link href="/login">
+					<button className="login">Ingresar</button>
+				</Link>
+			}
 		</nav>
 		<MobileNav
 			showMenu={props.showMenu}
@@ -33,4 +40,11 @@ const Header = (props) => (
 		/>
 	</header>
 );
-export default Header;
+const mapStateToProps = (state) => {
+	return {
+		isLogged: state.isLogged,
+		userData: state.userData
+	}
+}
+
+export default connect(mapStateToProps)(Header);

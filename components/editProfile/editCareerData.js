@@ -73,12 +73,12 @@ export default class EditPersonalData extends React.Component {
 		this.setState((prevState)=>{
 			return({
 				estudios: prevState.estudios.concat({
-					studieType:'grado',
-					estado:'inicial',
-					carrera: undefined,
-					institucion: undefined,
-					desde: undefined,
-					hasta: undefined
+					studieType:'degree',
+					state: 0,
+					career: undefined,
+					institutionName: undefined,
+					dateFrom: undefined,
+					dateTo: undefined
 				})
 			})
 		})
@@ -92,11 +92,11 @@ export default class EditPersonalData extends React.Component {
 		this.setState((prevState)=> ({
 			works: prevState.works.concat({
 				workType:'laboratorio',
-				institute: undefined,
+				instituteName: undefined,
 				rol: undefined,
 				description: undefined,
-				from: undefined,
-				to: undefined
+				dateFrom: undefined,
+				dateTo: undefined
 			})
 		}));
 	}
@@ -126,8 +126,15 @@ export default class EditPersonalData extends React.Component {
 											fullWidth
 											required
 											options={
-												['Primario','Secundario','Grado','Posgrado'].map((o,k)=>(
-													<option key={k} value={o.toLowerCase()}>{o}</option>
+												[ 
+													['primary', 'Primario'],
+													['secondary', 'Secundario'],
+													['degree', 'Grado'],
+													['posgraduate', 'Posgrado'],
+													['doctoral', 'Doctorado'],
+													['postdoctoral', 'Posdoctorado'],
+												].map((o,k)=>(
+													<option key={k} value={o[0]}>{o[1]}</option>
 												))
 											}
 											onChange={(e) => {this.changeFormStudy(e,k)}}
@@ -139,24 +146,24 @@ export default class EditPersonalData extends React.Component {
 									</div>
 									<div className="pl-4 inputsHalf mt-4">
 										<Input
-											label={o.type=='grado'?'Carrera':'Titulo'}
-											name='carrera'
+											label={o.type=='grado'?'Carrera':'Título'}
+											name='career'
 											required
 											onChange={(e)=>this.changeFormStudy(e,k)}
-											value={o.carrera}
-											ref={(ref)=>this.studyInputs[k].carrera = ref}
+											value={o.career}
+											ref={(ref)=>this.studyInputs[k].career = ref}
 										/>
 										<Input
 											label="Institución"
-											name='institucion'
+											name='institutionName'
 											required
 											onChange={(e)=>this.changeFormStudy(e,k)}
-											value={o.institucion}
-											ref={(ref)=>this.studyInputs[k].institucion = ref}
+											value={o.institutionName}
+											ref={(ref)=>this.studyInputs[k].institutionName = ref}
 										/>
 										<Input
 											label={o.type=='grado'?'Estado de la carrera':'Estado'}
-											name='estado'
+											name='state'
 											required
 											type="select"
 											fullWidth
@@ -166,12 +173,12 @@ export default class EditPersonalData extends React.Component {
 												))
 											}
 											onChange={(e) => {this.changeFormStudy(e,k)}}
-											value={o.estado}
-											ref={(ref)=>this.studyInputs[k].estado = ref}
+											value={o.state}
+											ref={(ref)=>this.studyInputs[k].state = ref}
 										/>
 										<Input
 											label="Desde"
-											name='desde'
+											name='dateFrom'
 											required
 											formatInput={
 												{date: true, datePattern: ['m', 'Y']}
@@ -184,12 +191,12 @@ export default class EditPersonalData extends React.Component {
 											}
 											placeholder= 'mm/yyyy'
 											onChange={(e) => {this.changeFormStudy(e,k)}}
-											value={o.desde}
-											ref={(ref)=>this.studyInputs[k].desde = ref}
+											value={o.dateFrom}
+											ref={(ref)=>this.studyInputs[k].dateFrom = ref}
 										/>
 										<Input
 											label="Hasta"
-											name='hasta'
+											name='dateTo'
 											helperText={o.estado!='finalizado'?"Si no finalizaste, podés ingresar una fecha tentativa":false}
 											required={o.estado=='finalizado'}
 											formatInput={
@@ -203,8 +210,8 @@ export default class EditPersonalData extends React.Component {
 											}
 											placeholder= 'mm/yyyy'
 											onChange={(e) => {this.changeFormStudy(e,k)}}
-											value={o.hasta}
-											ref={(ref)=>this.studyInputs[k].hasta = ref}
+											value={o.dateTo}
+											ref={(ref)=>this.studyInputs[k].dateTo = ref}
 										/>
 									</div>
 								</div>
@@ -244,23 +251,31 @@ export default class EditPersonalData extends React.Component {
 												required
 												label='Nombre del instituto'
 												ref={ref => this.workInputs[k].institute = ref}
+												name='instituteName'
+												onChange={(e) => {this.changeFormWork(e,k)}}
+												value={o.instituteName}
 											/>
 											<Input
 												required
 												label={o.workType=='doscencia'? 'Tu rol cómo doscente' :'Tu rol en el laboratorio'}
+												name='rol'
 												ref={ref => this.workInputs[k].rol = ref}
+												onChange={(e) => {this.changeFormWork(e,k)}}
+												value={o.rol}
 											/>
 										</div>
 										<Input
 											label='Descripción'
 											fullWidth
 											name='description'
+											value={o.description}
 											ref={ref => this.workInputs[k].description = ref}
+											onChange={(e) => {this.changeFormWork(e,k)}}
 										/>
 										<div className='mt-4 inputsHalf'>
 											<Input
 												label="Desde"
-												name='desde'
+												name='dateFrom'
 												required
 												formatInput={
 													{date: true, datePattern: ['m', 'Y']}
@@ -273,12 +288,12 @@ export default class EditPersonalData extends React.Component {
 												}
 												placeholder= 'mm/yyyy'
 												onChange={(e) => {this.changeFormWork(e,k)}}
-												value={o.desde}
-												ref={ref => this.workInputs[k].desde = ref}
+												value={o.dateFrom}
+												ref={ref => this.workInputs[k].dateFrom = ref}
 											/>
 											<Input
 												label="Hasta"
-												name='hasta'
+												name='dateTo'
 												helperText={"Si aún trabajas allí, no completes este campo"}
 												required={false}
 												formatInput={
@@ -292,8 +307,8 @@ export default class EditPersonalData extends React.Component {
 												}
 												placeholder= 'mm/yyyy'
 												onChange={(e) => {this.changeFormWork(e,k)}}
-												value={o.hasta}
-												ref={ref => this.workInputs[k].hasta = ref}
+												value={o.dateTo}
+												ref={ref => this.workInputs[k].dateTo = ref}
 												/>
 										</div>
 									</div>

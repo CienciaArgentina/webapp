@@ -24,6 +24,9 @@ button {
 .bn--icon-add {
 	@include bn--icon('\f067');
 }
+.bn--icon-signIn {
+	@include bn--icon('\f2f6');
+}
 .bn--icon-down {
 	@include bn--icon('\f0d7');
 }

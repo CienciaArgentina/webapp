@@ -167,6 +167,9 @@
 		width: 2rem;
 		text-align: center;
 	}
+	&.--beca:before {
+		@include icon-font("\f19d", solid);
+	}
 	&.--persona:before {
 		@include icon-font("\f007", solid);
 	}

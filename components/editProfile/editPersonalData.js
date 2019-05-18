@@ -6,21 +6,24 @@ import {
 } from '../Science'
 
 class EditPersonalData extends React.Component {
-	state = {
-		values: {
-			nombre: false,
-			apellido: false,
-			bday: false,
-			sex: false,
-			country: false,
-			province: false,
-			street: false,
-			stNumber: false,
-			phone: false,
-			altMail: false,
-			facebook: false,
-			twitter: false,
-			website: false
+	constructor(props) {
+		super(props);
+		this.state = {
+			values: {
+				nombre: false,
+				apellido: false,
+				bday: false,
+				sex: false,
+				country: false,
+				province: false,
+				street: false,
+				stNumber: false,
+				phone: false,
+				altMail: false,
+				facebook: false,
+				twitter: false,
+				website: false
+			}
 		}
 	}
 	handleChange = (x) => {
@@ -33,7 +36,7 @@ class EditPersonalData extends React.Component {
 		})
 	}
 	componentDidMount() {
-		this.searchInput.focus(); 
+		// this.searchInput.focus();
 	}
 	render() {
 		return (
@@ -81,9 +84,14 @@ class EditPersonalData extends React.Component {
 						value={this.state.values.sex}
 						type="select"
 						required
-						options={(['Femenino','Masculino','Otro'].map((o,k)=>(
-							<option key={k} value="a">{o}</option>
-						)))}
+						options={([
+								['f','Femenino'],
+								['m','Masculino'],
+								['o','Otro'],
+							].map((o,k)=>(
+								<option key={k} value={o[0]}>{o[1]}</option>
+							))
+						)}
 						onChange={this.handleChange}
 					/>
 				</div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Page from '../layouts/main/main'
+import { connect } from 'react-redux'
 
 import Link from 'next/link'
 
@@ -10,10 +11,24 @@ import EditPersonalData from '../components/editProfile/editPersonalData'
 import EditCareerData from '../components/editProfile/editCareerData'
 import EditPublicationsData from '../components/editProfile/editPublicationsData'
 
+import { UserApi } from '../src/api/api'
+
+import {
+	updateMyData
+} from '../src/actions'
 
 class editProfile extends React.Component {
+	static async getInitialProps(context) {
+		const selectedForm = context.query.section;
+		return {
+			// userData,
+			selectedForm
+		}
+	}
 	constructor(props) {
 		super(props);
+		// props.dispatch(updateMyData())
+		console.log(props);
 		this.state = {
 			selectedForm: props.selectedForm!=undefined ? props.selectedForm : 'basica'
 		}
@@ -22,12 +37,6 @@ class editProfile extends React.Component {
 			'carrera' : ['fas fa-graduation-cap','Carrera'],
 			'publicaciones' : ['fas fa-file-alt','Publicaciones'],
 			'cuenta' : ['fas fa-cog','Cuenta'],
-		}
-	}
-	static async getInitialProps(context) {
-		const section = context.query.section;
-		return {
-			selectedForm: section
 		}
 	}
 	componentDidUpdate() {
@@ -97,4 +106,8 @@ class editProfile extends React.Component {
 		)
 	}
 }
-export default editProfile;
+
+const mapStateToProps = ({ auth }) => ({
+
+});
+export default connect(mapStateToProps)(editProfile);

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { connect } from 'react-redux'
+
 const MobileUser = (props) => (
 	<div className="MobileMenuUser">
 		<div className={`MobileProfilePic`+(props.img ? ' --hasImage':' --noImage')}>
@@ -39,40 +41,69 @@ const MobileMenu = (props) => (
 				<div onClick={props.hideMenu}></div>
 			</div>
 			<div className="mobile-menu__userCont">
-				<MobileUser
-					img={false}
-					fname={`Matias Nahuel`}
-					lname={`Gonzalez Fernandez`}
-					id={`1234`}
-					email={`matias@mail.com`}
-				/>
+				{props.isLogged ?
+					<MobileUser
+						img={props.userData.profileImage}
+						fname={props.userData.fname}
+						lname={props.userData.lname}
+						id={props.userData.id}
+						email={props.userData.email}
+					/>
+				:
+					<button className="bn--green ml-3 bn--w2 bn--icon-signIn">
+						Ingresar
+					</button>
+				}
 			</div>
 			<div className="mobile-menu__options">
 				<div className="mobile-options__list">
 					<MobileOption
-						icon="fas fa-search"		label="Explorar"
+						icon="fas fa-search"
+						label="Explorar"
 					/>
-					<MobileOption
-						icon="far fa-star"			label="Favoritos"
-					/>
-					<MobileOption
-						icon="fas fa-edit"			label="Mis postulaciones"
-					/>
+					{props.isLogged && [
+						<MobileOption key='fav'
+							icon="far fa-star"
+							label="Favoritos"
+						/>,
+						<MobileOption key='misPostulaciones'
+							icon="fas fa-edit"
+							label="Mis postulaciones"
+						/>
+					]}
 				</div>
 				<div className="mobile-options__list">
 					<MobileOption
-						icon="fas fa-question-circle"	label="Ayuda"
+						icon="fas fa-question-circle"
+						label="Ayuda"
 					/>
-					<MobileOption
-						icon="fas fa-cog"				label="Configuración"
-					/>
-					<MobileOption
-						icon="fas fa-sign-out-alt"		label="Cerrar sesión"
-					/>
+					{props.isLogged ? [
+						<MobileOption key='config'
+							icon="fas fa-cog"
+							label="Configuración"
+						/>,
+						<MobileOption key='logout'
+							icon="fas fa-sign-out-alt"
+							label="Cerrar sesión"
+						/>
+					]
+					:
+						<MobileOption
+							icon="fas fa-share-alt"
+							label="Sumá a tu instituto"
+						/>
+					}
 				</div>
 			</div>
 		</div>
 	</div>
 );
 
-export default MobileMenu;
+const mapStateToProps = (state) => {
+	return {
+		isLogged: state.isLogged,
+		userData: state.userData
+	}
+}
+
+export default connect(mapStateToProps)(MobileMenu);

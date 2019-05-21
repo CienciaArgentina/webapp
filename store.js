@@ -19,7 +19,6 @@ export const reducer = (state = exampleInitialState, action) => {
 				isLogged: action.isLogged
 		};
 		case 'SET_USER_DATA':
-			console.log(state);
 			return {
 				...state,
 				userData: action.userData

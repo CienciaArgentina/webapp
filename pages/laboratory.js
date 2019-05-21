@@ -4,6 +4,8 @@ import Page from '../layouts/main/main';
 import Link from 'next/link'; 
 import Router from 'next/router'
 
+import Error from './_error'
+
 import {
 	JobsApi, InstituteApi
 } from '../src/api/api'
@@ -27,15 +29,19 @@ export default class laboratory extends Component {
 	}
 	state = {
 		selected: this.props.projectView==true? 1 : !!this.props.view ? parseInt(this.props.view) : 0,
-		projectView: !!this.props.projectView,
-		jobOffers: this.props.jobOffers
+		projectView: !!this.props.projectView
 	}
 	handleChange = (selected) => {
-		this.setState(() => ({
-			selected
-		}));
 		if(this.state.projectView==true) {
-			Router.push(`/laboratory?id=asd`, `/laboratory/ads`);
+			Router.push(`/laboratory?id=${this.props.labData.labId}`, `/laboratory/${this.props.labData.labId}`);
+			this.setState(() => ({
+				projectView: false,
+				selected
+			}));
+		} else {
+			this.setState(() => ({
+				selected
+			}));
 		}
 	}
 	updateView = () => {
@@ -48,19 +54,24 @@ export default class laboratory extends Component {
 		Router.events.off('routeChangeComplete', this.updateView);
 	}
 	render() {
+		const instituteData = this.props.instituteData
+		const labData = this.props.labData
+		const labJobs = this.props.jobOffers.length > 0 ? this.props.jobOffers.filter(o=> (o.organization.labId==labData.labId)) : false
+		
+		// return (<div></div>)
 		return (
 			<Page contentClass="bg--gray">
 				<div id="laboratory">
 					<InstituteHeader
-						img={`/static/img/logos-labos/leloir_logo.png`}
+						img={instituteData.logo}
 						title={
 							<div className="institute__name">
 								<label>Laboratorio</label>
-								<h1>Biología celular del RNA</h1>
+								<h1>{labData.labName}</h1>
 								<div className="pt-1">
-									<Link href={`/institute?id=asd`} as={`/institute/asd`}>
+									<Link href={`/institute?id=${instituteData.instituteId}`} as={`/institute/${instituteData.instituteId}`}>
 										<a>
-											<label>Instituto Leloir</label>
+											<label>{instituteData.instituteName}</label>
 										</a>
 									</Link>
 								</div>
@@ -87,27 +98,25 @@ export default class laboratory extends Component {
 					</DesktopTabs>
 					{this.state.projectView ?
 						<ProjectPage
-							onBack={() => {this.handleChange(1)}}
+							onBack={this.handleChange}
+							projectData={this.props.projectData}
+							jobs={labJobs.filter(i=>(i.organization.projectId==this.props.projectData.projectId))}
 						/>
 					:
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
 						<div className="textCont container aboutInstitute">
 							<div className="mainAbout">
 								<h3>Sobre el laboratorio</h3>
-								<p className="text">
-									Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular.  Esta reacción se da en todos los organismos y es denominada “respuesta al estrés celular”.
-								</p>
-								<p className="text">
-									El estrés celular es importante en diversas patologías humanas, y la intervención del balance muerte-sobrevida es la base racional de numerosas terapias. Empleando modelos in vitro de estrés celular que recapitulan lo que ocurre en condiciones patológicas, estudiamos cómo la célula detiene la generación de las proteínas que normalmente sintetiza para estimular la producción de proteínas protectivas.
-								</p>
+								{labData.labDescription.split('\r').map((o,k)=><p key={k} className="text">{o}</p>)}
 								<InstituteName
-									img="leloir_logo.png"
-									id="asd"
-									name="Instituto Leloir"
-									location= "Ciudad Autónoma de Buenos Aires"
+									logo={instituteData.logo}
+									id={instituteData.instituteId}
+									name={instituteData.instituteName}
+									city = {instituteData.city}
+									country = {instituteData.country}
 								/>
 							</div>
-							<div className="asideAbout">
+							{/* <div className="asideAbout">
 								<h3>Staff</h3>
 								<div className="institute__staff">
 									{[0,0,0,0,0,0].map((o,k) => (
@@ -118,24 +127,23 @@ export default class laboratory extends Component {
 										</div>
 									))}
 								</div>
-							</div>
-							
+							</div> */}
 						</div>
 						<div className="proyectos container">
-							{[0,0,0,0].map((o,k)=>(
-								<LabList
-									title="Mutaciones y deleciones de genes de interés, y complementación de las mismas."
-									description="Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular."
-									researcher="Lucas Lopez"
-									activeJobs={1}
+							{labData.projects.map((o,k)=>(
+								<LabList //list of projects
+									title={o.projectName}
+									description={o.projectDescription}
+									researcher={o.projectHead}
+									activeJobs={labJobs.filter(i=>(i.organization.projectId==o.projectId)).length}
 									key={k}
-									href={`/laboratory?id=asd&view=project&projectId=asd`}
-									as="/laboratory/ads/project/asd"
+									href={`/laboratory?id=${labData.labId}&view=project&projectId=${o.projectId}`}
+									as={`/laboratory/${labData.labId}/project/${o.projectId}`}
 								/>
 							))}
 						</div>
 						<div className="container instituteJobs">
-							{this.state.jobOffers.map( (o,k)=>(
+							{labJobs && labJobs.map( (o,k)=>(
 								<JobPost key={k}
 									title={o.title}
 									data={o}
@@ -156,18 +164,33 @@ laboratory.getInitialProps = async function (context) {
 	let labData = instituteData.labs.filter((o,k)=>(o.labId==context.query.id));
 	if(labData.length == 1){
 		labData = labData[0]
+	} else {
+		return {
+			error: {
+				statusCode: 404,
+				title: 'Laboratorio no encontrado.'
+			}
+		}
 	}
 	const jobOffers = await JobsApi.getFromInstitute(context.query.id)
-	// console.log(labData);
 	if(context.query.view=='project'){
 		const {id, view, projectId} = context.query;
-		const projectData = labData.proyects.filter(o=>(o.projectId==projectId))
+		let projectData = labData.projects.filter(o=>(o.projectId==projectId))
 		if(projectData.length == 1){
 			projectData = projectData[0]
+		} else {
+			return {
+				error: {
+					statusCode: 404,
+					title: 'Proyecto no encontrado.'
+				}
+			}
 		}
 		return {
 			id,
 			view,
+			instituteData,
+			labData,
 			projectId,
 			projectView:true,
 			projectData,
@@ -177,6 +200,8 @@ laboratory.getInitialProps = async function (context) {
 		const {id, view} = context.query;
 		return {
 			id,
+			instituteData,
+			labData,
 			view,
 			jobOffers
 		}

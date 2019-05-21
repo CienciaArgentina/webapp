@@ -3,6 +3,8 @@ import React from 'react';
 import Page from '../layouts/main/main';
 import Link from 'next/link'; 
 
+import Error from './_error'
+
 import {
 	Tabs,
 	Tab,
@@ -13,19 +15,27 @@ import {
 	DesktopTabs
 } from '../components/Science';
 
-import { JobsApi } from '../src/api/api'
+import { JobsApi, InstituteApi } from '../src/api/api'
 
 export default class institute extends Component {
 	static async getInitialProps(context) {
+		const data = await InstituteApi.getInstitute(context.query.id);
+		if(!data){
+			return {
+				error: {
+					statusCode: 404,
+					title: 'Instituto no encontrado.'
+				}
+			}
+		}
 		const jobOffers = await JobsApi.getFromInstitute(context.query.id)
 		return {
+			data,
 			jobOffers
 		}
 	}
 	constructor(props) {
 		super(props)
-		console.log(props);
-		
 		this.state = {
 			selected: 0,
 			jobOffers: this.props.jobOffers
@@ -45,6 +55,7 @@ export default class institute extends Component {
 		this.setState({selected})
 	}
 	render() {
+		const data = this.props.data
 		return (
 			<Page contentClass= 'bg--gray' customMeta={{
 				title:`Instituto ${this.instituteName}`,
@@ -56,8 +67,8 @@ export default class institute extends Component {
 						img={this.logo}
 						title={
 							<div className="institute__name">
-								<h1>Instituto {this.instituteName}</h1>
-								<label>{this.location}</label>
+								<h1>Instituto {data.instituteName}</h1>
+								<label>{`${data.city}, ${data.country}`}</label>
 							</div>
 						}
 						tabs={
@@ -82,10 +93,14 @@ export default class institute extends Component {
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
 						<div className="container textCont aboutInstitute">
 							<div className="mainAbout">
-								<h3>Sobre el instituto</h3>
-								<p className="text">
-									{this.description}
-								</p>
+								{data.instituteDescription &&
+									<>
+										<h3>Sobre el instituto</h3>
+										<p className="text">
+											{data.instituteDescription}
+										</p>
+									</>
+								}
 								<Link href={`http://leloir.org.ar`}>
 									<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
 								</Link>
@@ -105,15 +120,15 @@ export default class institute extends Component {
 							</div>
 						</div>
 						<div className="container labListCont">
-							{[0,0,0,0].map((o,k)=>(
+							{this.props.data.labs.map((o,k)=>(
 								<LabList
-									title="Biología Celular del RNA"
-									description="Cuando las células se encuentran en condiciones poco favorables o adversas despliegan una respuesta protectiva para ayudar a la supervivencia y evitar la muerte celular."
-									researcher="Graciela L. Boccaccio"
-									activeJobs={5}
-									key={k}
-									href="/laboratory?id=asd"
-									as="/laboratory/ads"
+									title={o.labName}
+									description={o.labDescription}
+									researcher={o.labHead}
+									activeJobs={this.state.jobOffers.filter(i=>(i.organization.labId==o.labId)).length}
+									key={o.labId}
+									href={`/laboratory?id=${o.labId}`}
+									as={`/laboratory/${o.labId}`}
 								/>
 							))}
 						</div>

@@ -14,7 +14,7 @@ const jobExample = {
 	'dateCreated': moment('2018-12-5', 'YYYY-MM-DD').unix(),
 	'endOffer': moment('2019-05-15', 'YYYY-MM-DD').unix(),
 	'tags': [
-		'Bioloía',
+		'Biología',
 		'Plantas',
 		'ADN'
 	],
@@ -40,8 +40,8 @@ const jobExample = {
 		'acronyms': false, //abreviacion
 		'labId': 'gsd789',
 		'labName': 'Biología Celular del RNA',
-		'proyectId': 'asdds789',
-		'proyectName': 'Mutaciones y deleciones de genes de interés, y complementación de las mismas.',
+		'projectId': 'asdds789',
+		'projectName': 'Mutaciones y deleciones de genes de interés, y complementación de las mismas.',
 		'coordinates': [-58.4330264,-34.6020053],
 		'city': 'Buenos Aires',
 		'country': 'Argentina',
@@ -94,5 +94,16 @@ export class JobsApi {
 		} catch {
 			return false
 		}
+	}
+
+	//id: instituteId
+	static async getFromInstitute(id) {
+		return [
+			jobExample,
+			jobExample,
+			jobExample
+		]
+		const response = await axiosInstance.post(`/jobs/getFromInstitute/${id}`);
+		return response
 	}
 }

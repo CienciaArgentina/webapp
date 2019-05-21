@@ -49,4 +49,6 @@ const ProjectPage = (props) => (
 </div>
 );
 
-export default ProjectPage;
+export {
+	ProjectPage
+};

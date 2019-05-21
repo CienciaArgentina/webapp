@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import Cleave from 'cleave.js/react'
 require('cleave.js/dist/addons/cleave-phone.ar');
 
-export default class Input extends React.Component {
+class Input extends React.Component {
 	state = {
 		focused: false,
 		hasValue: this.props.value?true:false,
@@ -172,4 +172,8 @@ export default class Input extends React.Component {
 		)
 
 	}
+}
+
+export {
+	Input
 }

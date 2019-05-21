@@ -22,7 +22,7 @@ if(process.browser){
 	});
 }
 
-export default class MapBox extends React.Component {
+class MapBox extends React.Component {
 	state = {
 		renderMap: false,
 		geoJsonData: {},
@@ -74,4 +74,29 @@ export default class MapBox extends React.Component {
 			</div>
 		)
 	}
+}
+
+const LabMap = (props) => (
+	<MapBox
+		geoJsonData = {{
+			"type": "FeatureCollection",
+			"features": [{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": props.coordinates
+				},
+				"properties": {
+					"title": props.instituteName,
+					"icon": "LabIcon"
+				}
+			}]
+		}}
+		center= {props.coordinates}
+	/>
+)
+
+export {
+	LabMap,
+	MapBox
 }

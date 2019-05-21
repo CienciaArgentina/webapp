@@ -5,6 +5,10 @@ import Link from 'next/link';
 import Router from 'next/router'
 
 import {
+	JobsApi, InstituteApi
+} from '../src/api/api'
+
+import {
 	Tabs,
 	Tab,
 	TabDisplay,
@@ -134,16 +138,7 @@ export default class laboratory extends Component {
 							{this.state.jobOffers.map( (o,k)=>(
 								<JobPost key={k}
 									title={o.title}
-									type={o.type}
-									instituteName={o.instituteName}
-									place={o.place}
-									boss={o.boss}
-									logo={o.logo}
-									earn={o.earn}
-									duration={o.duration}
-									deadline={o.deadline}
-									closeDeadline={o.closeDeadline}
-									favorite={o.favorite}
+									data={o}
 								/>
 							) )}
 						</div>
@@ -157,54 +152,25 @@ export default class laboratory extends Component {
 }
 
 laboratory.getInitialProps = async function (context) {
-	const jobOffers = [
-		{
-			title: "Regulación de la N-glicosilación de proteínas eucariotas",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "10 Ago.",
-			closeDeadline: false,
-			favorite: true
-		},
-		{
-			title: "Inmunoterapia en la tuberculosis de la humana",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "en 2 días",
-			closeDeadline: true,
-			favorite: false
-		},
-		{
-			title: "Nuevos genes de expresión asimétrica temprana y su rol en el establecimineto de ejes corporales",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "6 Oct.",
-			closeDeadline: false,
-			favorite: false
-		},
-	]
+	const instituteData = await InstituteApi.getInstituteFromLab(context.query.id)
+	let labData = instituteData.labs.filter((o,k)=>(o.labId==context.query.id));
+	if(labData.length == 1){
+		labData = labData[0]
+	}
+	const jobOffers = await JobsApi.getFromInstitute(context.query.id)
+	// console.log(labData);
 	if(context.query.view=='project'){
 		const {id, view, projectId} = context.query;
+		const projectData = labData.proyects.filter(o=>(o.projectId==projectId))
+		if(projectData.length == 1){
+			projectData = projectData[0]
+		}
 		return {
 			id,
 			view,
 			projectId,
 			projectView:true,
+			projectData,
 			jobOffers
 		};
 	} else {

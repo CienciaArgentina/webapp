@@ -33,11 +33,21 @@ const TabDisplay = (props) => (
 	<div className={'tabDisplay ' + (props.className&&props.className)}>
 		{
 			Children.map(props.children, (child, i) => {
-				return React.cloneElement(child, {
-					className: (!!child.props.className?child.props.className:'') + (props.selected==i?' selected':' notSelected'),
-				});
+				return child ? //if it has a child, return it
+					React.cloneElement(child, {
+						className: (!!child.props.className?child.props.className:'') + (props.selected==i?' selected':' notSelected'),
+					})
+				:
+					false
 			})
 		}
+	{/*
+		Children.map(props.children, (child, i) => {
+			return React.cloneElement(child, {
+				className: (!!child.props.className?child.props.className:'') + (props.selected==i?' selected':' notSelected'),
+			});
+		})*/
+	}
 	</div>
 )
 

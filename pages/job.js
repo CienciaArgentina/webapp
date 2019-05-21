@@ -8,8 +8,9 @@ import { JobsApi } from '../src/api/api'
 import {
 	InstituteName,
 	Tag,
-	Mapbox,
-	JobPost
+	MapBox,
+	LabMap,
+	JobPost,
 } from '../components/Science';
 
 const Hightlight = (props) => (
@@ -157,11 +158,11 @@ export default class job extends Component {
 									<p>
 											Proyecto:&nbsp;
 											<Link
-												href={`/laboratory?id=${job.organization.labId}&view=project&projectId=${job.organization.proyectId}`}
-												as={`/laboratory/${job.organization.labId}/project/${job.organization.proyectId}`}
+												href={`/laboratory?id=${job.organization.labId}&view=project&projectId=${job.organization.projectId}`}
+												as={`/laboratory/${job.organization.labId}/project/${job.organization.projectId}`}
 											>
 												<a>
-													{job.organization.proyectName}
+													{job.organization.projectName}
 												</a>
 											</Link>
 									</p>
@@ -229,29 +230,16 @@ export default class job extends Component {
 							</ul>
 							<h3>Ubicación</h3>
 							<p>{job.organization.locationName}</p>
-							<Mapbox
-								geoJsonData = {{
-									"type": "FeatureCollection",
-									"features": [{
-										"type": "Feature",
-										"geometry": {
-											"type": "Point",
-											"coordinates": job.organization.coordinates
-										},
-										"properties": {
-											"title": job.organization.instituteName,
-											"icon": "LabIcon"
-										}
-									}]
-								}}
-								center= {job.organization.coordinates}
+							<LabMap
+								instituteName={job.organization.instituteName}
+								coordinates={job.organization.coordinates}
 							/>
 						</div>
 
 						<div className="job__details__institute">
 							<InstituteName
 								logo={job.organization.logo}
-								id={job.organization.instituteId}
+								instituteId={job.organization.instituteId}
 								name={job.organization.instituteName}
 								labName={job.organization.labName}
 								labId={job.organization.labId}

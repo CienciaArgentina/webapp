@@ -12,4 +12,4 @@ const InstituteHeader = (props) => (
 </div>
 );
 
-export default InstituteHeader;
+export { InstituteHeader };

@@ -1,33 +1,15 @@
 // institutes
-import InstituteName from './institutes/InstituteName'
-import InstituteHeader from './institutes/InstituteHeader'
-import LabList from './institutes/LabList'
-import {Tabs, Tab, TabDisplay, DesktopTabs} from './institutes/Tabs'
-import ProjectPage from './institutes/ProjectPage'
+export { InstituteName } from './institutes/InstituteName'
+export { InstituteHeader } from './institutes/InstituteHeader'
+export { LabList } from './institutes/LabList'
+export {Tabs, Tab, TabDisplay, DesktopTabs} from './institutes/Tabs'
+export { ProjectPage } from './institutes/ProjectPage'
 
 // jobs
-import JobPost from './jobs/JobPost'
-import Tag from './jobs/Tag'
+export { JobPost } from './jobs/JobPost'
+export { Tag } from './jobs/Tag'
 
-import Mapbox from './MapBox';
+export {MapBox, LabMap} from './MapBox';
 
 // ui
-import Input from './ui/Input'
-
-const APIBase = 'https://cienciaargentinamicroservices20190313100734.azurewebsites.net/api/';
-
-export {
-	JobPost,
-	Tag,
-	InstituteName,
-	Mapbox,
-	Tabs,
-	Tab,
-	TabDisplay,
-	ProjectPage,
-	LabList,
-	InstituteHeader,
-	DesktopTabs,
-	APIBase,
-	Input
-}
+export { Input } from './ui/Input'

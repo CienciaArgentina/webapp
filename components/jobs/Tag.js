@@ -20,4 +20,6 @@ const Tag = (props) => (
 	</div>
 )
 
-export default Tag
+export {
+	Tag
+}

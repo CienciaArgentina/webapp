@@ -23,4 +23,6 @@ const LabList = (props) => (
 	</div>
 );
 
-export default LabList
+export {
+	LabList
+};

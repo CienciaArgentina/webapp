@@ -33,4 +33,6 @@ const InstituteName = (props) => (
 	</div>
 );
 
-export default InstituteName;
+export {
+	InstituteName
+};

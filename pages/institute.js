@@ -13,7 +13,24 @@ import {
 	DesktopTabs
 } from '../components/Science';
 
+import { JobsApi } from '../src/api/api'
+
 export default class institute extends Component {
+	static async getInitialProps(context) {
+		const jobOffers = await JobsApi.getFromInstitute(context.query.id)
+		return {
+			jobOffers
+		}
+	}
+	constructor(props) {
+		super(props)
+		console.log(props);
+		
+		this.state = {
+			selected: 0,
+			jobOffers: this.props.jobOffers
+		}
+	}
 	instituteName = 'Leloir'
 	location = 'Buenos Aires, Argentina'
 	description = 'La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.'
@@ -24,11 +41,6 @@ export default class institute extends Component {
 	]
 	website = 'http://leloir.org.ar'
 	logo = `/static/img/logos-labos/leloir_logo.png`
-
-	state = {
-		selected: 0,
-		jobOffers: this.props.jobOffers
-	}
 	handleChange = (selected) => {
 		this.setState({selected})
 	}
@@ -105,73 +117,18 @@ export default class institute extends Component {
 								/>
 							))}
 						</div>
-						<div className="container instituteJobs">
-							{this.state.jobOffers.map( (o,k)=>(
-								<JobPost key={k}
-									title={o.title}
-									type={o.type}
-									instituteName={o.instituteName}
-									place={o.place}
-									boss={o.boss}
-									logo={o.logo}
-									earn={o.earn}
-									duration={o.duration}
-									deadline={o.deadline}
-									closeDeadline={o.closeDeadline}
-									favorite={o.favorite}
-								/>
-							) )}
-						</div>
+						{this.state.jobOffers &&
+							<div className="container instituteJobs">
+								{this.state.jobOffers.map( (o,k)=>(
+									<JobPost key={k}
+										data={o}
+									/>
+								) )}
+							</div>
+						}
 					</TabDisplay>
 				</div>
 			</Page>
 		);
-	}
-}
-
-institute.getInitialProps = (context) => {
-	const jobOffers = [
-		{
-			title: "Regulación de la N-glicosilación de proteínas eucariotas",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "10 Ago.",
-			closeDeadline: false,
-			favorite: true
-		},
-		{
-			title: "Inmunoterapia en la tuberculosis de la humana",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "en 2 días",
-			closeDeadline: true,
-			favorite: false
-		},
-		{
-			title: "Nuevos genes de expresión asimétrica temprana y su rol en el establecimineto de ejes corporales",
-			type: "Doctorado",
-			instituteName: "Insituto Leloir",
-			place: "Ciudad Autónoma de Buenos Aires",
-			boss: "Dra. Jeanette Acosta",
-			logo: "leloir_logo.png",
-			earn: "$18.900",
-			duration: "4 años",
-			deadline: "6 Oct.",
-			closeDeadline: false,
-			favorite: false
-		},
-	]
-	return {
-		jobOffers
 	}
 }

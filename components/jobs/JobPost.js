@@ -1,7 +1,10 @@
 import ReactTooltip from 'react-tooltip'
 import Link from 'next/link'
-import InstituteNameCard from '../institutes/InstituteName'
 import moment from 'moment'
+
+import {
+	InstituteName
+} from '../Science'
 
 // import moment from 'moment'
 moment.locale('es')
@@ -22,7 +25,7 @@ const JobPost = (props) => {
 			<div className="jobPost__content">
 				<button className={"bn--reset jobPost__favStar"+(data.isFav ? ' fav' : '')}></button>
 				<div className="jobPost__data">
-					<InstituteNameCard
+					<InstituteName
 						logo={data.organization.logo}
 						name={data.organization.instituteName}
 						instituteId={data.organization.instituteId}
@@ -77,4 +80,6 @@ const JobPost = (props) => {
 	)
 };
 
-export default JobPost;
+export {
+	JobPost
+};

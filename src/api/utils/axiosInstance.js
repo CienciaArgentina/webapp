@@ -3,6 +3,7 @@
 
 import axios from 'axios';
 
+const API_DOMAIN = 'https://cienciaargmicroservices.azurewebsites.net/api'
 
 const axiosInstance = axios.create({
     baseURL: API_DOMAIN,
@@ -63,4 +64,3 @@ const axiosInstance = axios.create({
   );
   
   export default axiosInstance;
-const API_DOMAIN = 'https://cienciaargmicroservices.azurewebsites.net/api'

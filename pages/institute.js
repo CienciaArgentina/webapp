@@ -12,7 +12,8 @@ import {
 	LabList,
 	InstituteHeader,
 	JobPost,
-	DesktopTabs
+	DesktopTabs,
+	LabMap
 } from '../components/Science';
 
 import { JobsApi, InstituteApi } from '../src/api/api'
@@ -58,16 +59,16 @@ export default class institute extends Component {
 		const data = this.props.data
 		return (
 			<Page contentClass= 'bg--gray' customMeta={{
-				title:`Instituto ${this.instituteName}`,
-				description: this.description,
-				ogimage: this.logo
+				title:`${data.instituteName}`,
+				description: data.instituteDescription,
+				ogimage: data.logo
 			}}>
 				<div id="institute">
 					<InstituteHeader
-						img={this.logo}
+						img={data.logo}
 						title={
 							<div className="institute__name">
-								<h1>Instituto {data.instituteName}</h1>
+								<h1>{data.instituteName}</h1>
 								<label>{`${data.city}, ${data.country}`}</label>
 							</div>
 						}
@@ -101,12 +102,22 @@ export default class institute extends Component {
 										</p>
 									</>
 								}
-								<Link href={`http://leloir.org.ar`}>
-									<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
-								</Link>
-								<button className="bn--text bn--icon-world">Argentina</button>
+								{data.instituteUrl&&
+									<Link href={data.instituteUrl}>
+										<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
+									</Link>
+								}
+								<button className="bn--text bn--icon-world">{data.country}</button>
+								{data.coordinates &&
+									<div className='mt-2'>
+										<LabMap
+											coordinates = {data.coordinates}
+											instituteName = {data.instituteName}
+										/>
+									</div>
+								}
 							</div>
-							<div className="asideAbout">
+							{/* <div className="asideAbout">
 								<h3>Staff</h3>
 								<div className="institute__staff">
 									{this.staff.map((o,k) => (
@@ -117,7 +128,7 @@ export default class institute extends Component {
 										</div>
 									))}
 								</div>
-							</div>
+							</div> */}
 						</div>
 						<div className="container labListCont">
 							{this.props.data.labs.map((o,k)=>(

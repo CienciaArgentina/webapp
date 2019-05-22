@@ -48,7 +48,6 @@ export default class EditPublicationsData extends React.Component {
 	addPaperById = (authorType, authorKey) => {
 		const author = this.state.paperByIdResult[authorType][authorKey];
 		const id = this.state.paperByIdResult.id
-		console.log({author, id});
 		this.closeModal();
 		this.setState()
 	}

@@ -2,6 +2,7 @@ import React from 'react';
 import Page from '../layouts/main/main';
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip'
+import { JobsApi } from '../src/api/api'
 
 const OfferCantidates = (props) => (
 	<div className="offerCandidates">
@@ -225,7 +226,9 @@ export default class offerDashboard extends React.Component {
 	}
 }
 
-offerDashboard.getInitialProps = async function() {
+offerDashboard.getInitialProps = async function(context) {
+	const job = JobsApi.getAdminJob(context.query.id);
+	// return job
 	return {
 		candidates: [
 			{

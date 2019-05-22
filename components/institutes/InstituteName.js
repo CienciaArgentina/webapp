@@ -19,7 +19,7 @@ const InstituteName = (props) => (
 			</Link>
 			<div className="__detail">
 				{!!props.city && 
-					<p className="__location">{props.city} - {props.country}</p>
+					<p className="__location">{props.city}, {props.country}</p>
 				}
 				{!!(props.labName&&props.labId) &&
 					<Link href={`/laboratory/${props.labId}`}>

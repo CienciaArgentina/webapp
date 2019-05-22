@@ -3,7 +3,6 @@ import App, { Container } from 'next/app';
 
 import { Provider } from 'react-redux';
 import withReduxStore from '../lib/with-redux-store'
-import withError from 'next-with-error'
 import ErrorPage from './_error'
 import {
 	updateMyData,
@@ -35,7 +34,6 @@ class MyApp extends App {
 	}
 	render() {
 		const { Component, pageProps, reduxStore } = this.props
-		console.log(pageProps);
 		
 		return (
 			<Container>

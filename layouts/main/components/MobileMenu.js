@@ -43,9 +43,9 @@ const MobileMenu = (props) => (
 			<div className="mobile-menu__userCont">
 				{props.isLogged ?
 					<MobileUser
-						img={props.userData.profileImage}
-						fname={props.userData.fname}
-						lname={props.userData.lname}
+						img={props.userData.personalData.profileImage}
+						fname={props.userData.personalData.fname}
+						lname={props.userData.personalData.lname}
 						id={props.userData.id}
 						email={props.userData.email}
 					/>

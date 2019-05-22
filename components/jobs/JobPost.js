@@ -53,7 +53,7 @@ const JobPost = (props) => {
 									}
 								</a>
 							</Link>&nbsp;-&nbsp;
-							<Link href={`/institute?id=${data.organization.instituteId}`} as={`/institute/${data.organization.instituteId}`}>
+							<Link href={`/laboratory?id=${data.organization.labId}`} as={`/laboratory/${data.organization.labId}`}>
 								<a>{data.organization.labName}</a>
 							</Link>
 							

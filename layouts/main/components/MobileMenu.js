@@ -47,7 +47,7 @@ const MobileMenu = (props) => (
 						fname={props.userData.personalData.fname}
 						lname={props.userData.personalData.lname}
 						id={props.userData.id}
-						email={props.userData.email}
+						email={props.userData.personalData.email}
 					/>
 				:
 					<button className="bn--green ml-3 bn--w2 bn--icon-signIn">

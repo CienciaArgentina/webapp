@@ -11,7 +11,7 @@ export const jobExample = {
 	scholarship: 'CONICET',
 	salary: 18900,
 	dateCreated: moment('2018-12-5', 'YYYY-MM-DD').unix(),
-	endOffer: moment('2019-05-15', 'YYYY-MM-DD').unix(),
+	endOffer: moment().add('3', 'd').unix(),
 	tags: [
 		'Biología',
 		'Plantas',

@@ -6,9 +6,7 @@ import { userDataExample } from './responseExamples'
 export class UserApi {
 	static async getMyData() {
 		return userDataExample;
-		const { data } = await axiosInstance.get(`/user/me`, {
-			params
-		});
+		const { data } = await axiosInstance.get(`/user/me`);
 		return data;
 	}
 }

@@ -110,7 +110,7 @@ export default class laboratory extends Component {
 								{labData.labDescription.split('\r').map((o,k)=><p key={k} className="text">{o}</p>)}
 								<InstituteName
 									logo={instituteData.logo}
-									id={instituteData.instituteId}
+									instituteId={instituteData.instituteId}
 									name={instituteData.instituteName}
 									city = {instituteData.city}
 									country = {instituteData.country}

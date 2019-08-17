@@ -51,9 +51,6 @@ class editProfile extends React.Component {
 			[name]: value
 		}))
 	}
-	_submit = (e) => {
-		e.preventDefault();
-	}
 	render() {
 		return (
 			<Page contentClass="bg--gray">
@@ -85,20 +82,18 @@ class editProfile extends React.Component {
 						</div>
 					</div>
 					<div className="mainEdit">
-						<form className="profileForm" onSubmit={this._submit}>
-							{this.state.selectedForm == 'basica' ?
-								<EditPersonalData handleChange={this.handleChange} /> : false
-							}
-							{this.state.selectedForm == 'carrera' ?
-								<EditCareerData handleChange={this.handleChange} /> : false
-							}
-							{this.state.selectedForm == 'publicaciones' ?
-								<EditPublicationsData handleChange={this.handleChange} /> : false
-							}
-							{this.state.selectedForm == 'cuenta' ?
-								<EditPersonalData handleChange={this.handleChange} /> : false
-							}
-						</form>
+						{this.state.selectedForm == 'basica' ?
+							<EditPersonalData handleChange={this.handleChange} /> : false
+						}
+						{this.state.selectedForm == 'carrera' ?
+							<EditCareerData handleChange={this.handleChange} /> : false
+						}
+						{this.state.selectedForm == 'publicaciones' ?
+							<EditPublicationsData handleChange={this.handleChange} /> : false
+						}
+						{this.state.selectedForm == 'cuenta' ?
+							<EditPersonalData handleChange={this.handleChange} /> : false
+						}
 					</div>
 				</div>
 			</Page>

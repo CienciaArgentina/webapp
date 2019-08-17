@@ -5,24 +5,43 @@ import {
 	Input
 } from '../Science'
 
+import {
+	UserApi
+} from '../../src/api/api'
+
 class EditPersonalData extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			values: {
-				nombre: false,
-				apellido: false,
-				bday: false,
+				firstName: false,
+				lastName: false,
+				birthday: false,
 				sex: false,
 				country: false,
 				province: false,
 				street: false,
 				stNumber: false,
 				phone: false,
-				altMail: false,
 				facebook: false,
 				twitter: false,
 				website: false
+			}
+		}
+	}
+	countries = {
+		arg: {
+			name: 'Argentina',
+			provinces: {
+				bue: 'Buenos Aires',
+				cor: 'Córdoba'
+			}
+		},
+		chi: {
+			name: 'Chile',
+			provinces: {
+				ciud: 'Ciudad de Chile',
+				otr: 'Otra ciudad'
 			}
 		}
 	}
@@ -38,158 +57,208 @@ class EditPersonalData extends React.Component {
 	componentDidMount() {
 		// this.searchInput.focus();
 	}
+	_submit = e => {
+		e.preventDefault();
+		let validForm = true;
+		Object.keys(this.state.values).map((o,k)=>{
+			if(this[o].validate().valid == false) {
+				validForm = false
+			}
+		})
+		if(validForm) {
+			const toSend = {
+				firstName: this.state.firstName,
+				lastName: this.state.lastName,
+				birthday: this.state.birthday,
+				sex: this.state.sex,
+				place: {
+					country: this.state.country,
+					province: this.state.province,
+					street: this.state.street,
+					stNumber: this.state.stNumber,
+				},
+				contact: {
+					phone: this.state.phone,
+					facebook: this.state.facebook,
+					twitter: this.state.twitter,
+					website: this.state.website
+				},
+			}
+			UserApi.editBasicProfile(toSend);
+		}
+	}
 	render() {
 		return (
-			<div className="formBody">
-				<h3>Datos</h3>
-				<div className="formSection inputsHalf">
-					<Input
-						label="Nombre"
-						name="nombre"
-						value={this.state.values.nombre}
-						// helperText="Tu nombre aquí"
-						required
-						onChange={this.handleChange}
-						ref={ (input) => {this.searchInput = input} }
+			<form className="profileForm" onSubmit={this._submit}>
+				<div className="formBody">
+					<h3>Datos</h3>
+					<div className="formSection inputsHalf">
+						<Input
+							label="Nombre"
+							name="firstName"
+							value={this.state.values.firstName}
+							// helperText="Tu nombre aquí"
+							required
+							onChange={this.handleChange}
+							ref={ (input) => {this.firstName = input} }
 						/>
-					<Input
-						label="Apellido"
-						name='apellido'
-						value={this.state.values.apellido}
-						required
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Fecha de nacimiento"
-						name='bday'
-						value={this.state.values.bday}
-						required
-						formatInput={
-							{date: true, datePattern: ['d', 'm', 'Y']}
-						}
-						validation={
-							[
-								v => /^\d\d\/\d\d\/\d\d\d\d$/.test(v)
-									? true : 'Completa tu fecha de nacimiento.',
-								v => moment().diff(moment(v,'DD/MM/YYYY'),'Years') >= 18
-									? true : 'Debes ser mayor de 18.',
-							]
-						}
-						placeholder= 'dd/mm/yyyy'
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Sexo"
-						name='sex'
-						value={this.state.values.sex}
-						type="select"
-						required
-						options={([
-								['f','Femenino'],
-								['m','Masculino'],
-								['o','Otro'],
-							].map((o,k)=>(
-								<option key={k} value={o[0]}>{o[1]}</option>
-							))
-						)}
-						onChange={this.handleChange}
-					/>
+						<Input
+							label="Apellido"
+							name='lastName'
+							value={this.state.values.lastName}
+							required
+							onChange={this.handleChange}
+							ref={ (input) => {this.lastName = input} }
+						/>
+						<Input
+							label="Fecha de nacimiento"
+							name='birthday'
+							value={this.state.values.birthday}
+							required
+							formatInput={
+								{date: true, datePattern: ['d', 'm', 'Y']}
+							}
+							validation={
+								[
+									v => /^\d\d\/\d\d\/\d\d\d\d$/.test(v)
+										? true : 'Completa tu fecha de nacimiento.',
+									v => moment().diff(moment(v,'DD/MM/YYYY'),'Years') >= 18
+										? true : 'Debes ser mayor de 18.',
+								]
+							}
+							placeholder= 'dd/mm/yyyy'
+							onChange={this.handleChange}
+							ref={ (input) => {this.birthday = input} }
+						/>
+						<Input
+							label="Sexo"
+							name='sex'
+							value={this.state.values.sex}
+							type="select"
+							required
+							options={[
+									[0,'Femenino'],
+									[1,'Masculino'],
+									[2,'Otro'],
+								].map((o,k)=>(
+									<option key={k} value={o[0]}>{o[1]}</option>
+								))
+							}
+							onChange={this.handleChange}
+							ref={ (input) => {this.sex = input} }
+						/>
+					</div>
+					<h3>Dirección</h3>
+					<p className="label--s--gray">No compartiremos tu dirección exacta con nadie.</p>
+					<div className="formSection inputsHalf">
+						<Input
+							label='País'
+							name='country'
+							type='select'
+							required
+							options={
+								Object.keys(this.countries).map((o,k)=>(
+									<option key={o} value={o}>{this.countries[o].name}</option>
+								))
+							}
+							value={this.state.values.country}
+							onChange={this.handleChange}
+							ref={ (input) => {this.country = input} }
+						/>
+						<Input
+							label='Provincia'
+							name='province'
+							type='select'
+							required
+							options={
+								this.state.values.country ?
+									Object.keys(this.countries[this.state.values.country].provinces).map((o,k)=>(
+										<option key={o} value={o}>
+											{this.countries[this.state.values.country].provinces[o]}
+										</option>
+									))
+								: false
+							}
+							value={this.state.values.province}
+							onChange={this.handleChange}
+							ref={ (input) => {this.province = input} }
+						/>
+						<Input
+							label='Calle'
+							name='street'
+							value={this.state.values.street}
+							onChange={this.handleChange}
+							ref={ (input) => {this.street = input} }
+						/>
+						<Input
+							label='Altura'
+							name='stNumber'
+							value={this.state.values.stNumber}
+							onChange={this.handleChange}
+							ref={ (input) => {this.stNumber = input} }
+						/>
+					</div>
+					<h3>Contacto</h3>
+					<div className="formSection inputsHalf">
+						<Input
+							label="Celular"
+							name='phone'
+							value={this.state.values.phone}
+							placeholder="+54 11 2222 2222"
+							formatInput={
+								{phone:true,phoneRegionCode: 'AR'}
+							}
+							onChange={this.handleChange}
+							ref={ (input) => {this.phone = input} }
+						/>
+						<Input
+							label="Facebook"
+							name='facebook'
+							value={this.state.values.facebook}
+							placeholder="tuPerfil"
+							preInput="fb.com/"
+							onChange={this.handleChange}
+							ref={ (input) => {this.facebook = input} }
+						/>
+						<Input
+							label="Instagram"
+							name='instagram'
+							value={this.state.values.instagram}
+							placeholder="tuPerfil"
+							validation={[
+								v => /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(v)
+								? true : 'Ingresa un usuario válido.'
+							]}
+							preInput="@"
+							onChange={this.handleChange}
+							ref={ (input) => {this.instagram = input} }
+						/>
+						<Input
+							label="Twitter"
+							name='twitter'
+							value={this.state.values.twitter}
+							placeholder="tuPerfil"
+							validation={[
+								v => /^([a-zA-Z0-9_]{1,20})$/.test(v)
+								? true : 'Ingresa un usuario válido.'
+							]}
+							preInput="@"
+							onChange={this.handleChange}
+							ref={ (input) => {this.twitter = input} }
+						/>
+						<Input
+							label="Sitio web"
+							name='website'
+							value={this.state.values.website}
+							onChange={this.handleChange}
+							ref={ (input) => {this.website = input} }
+						/>
+					</div>
+					<button type='submit' className="bn--green">
+						Guardar
+					</button>
 				</div>
-				<h3>Dirección</h3>
-				<p className="label--s--gray">No compartiremos tu dirección exacta con nadie.</p>
-				<div className="formSection inputsHalf">
-					<Input
-						label='País'
-						name='country'
-						value={this.state.values.country}
-						onChange={this.handleChange}
-					/>
-					<Input
-						label='Provincia'
-						name='province'
-						value={this.state.values.province}
-						onChange={this.handleChange}
-					/>
-					<Input
-						label='Calle'
-						name='street'
-						value={this.state.values.street}
-						onChange={this.handleChange}
-					/>
-					<Input
-						label='Altura'
-						name='stNumber'
-						value={this.state.values.stNumber}
-						onChange={this.handleChange}
-					/>
-				</div>
-				<h3>Contacto</h3>
-				<div className="formSection inputsHalf">
-					<Input
-						label="Celular"
-						name='phone'
-						value={this.state.values.phone}
-						placeholder="+54 11 2222 2222"
-						formatInput={
-							{phone:true,phoneRegionCode: 'AR'}
-						}
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Correo electrónico de contacto"
-						name='altMail'
-						value={this.state.values.altMail}
-						type="mail"
-						placeholder="ejemplo@mail.com"
-						validation = {[
-							v => /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(v)
-							? true : 'Ingresa un correo válido'
-						]}
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Facebook"
-						name='facebook'
-						value={this.state.values.facebook}
-						placeholder="tuPerfil"
-						preInput="fb.com/"
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Instagram"
-						name='instagram'
-						value={this.state.values.instagram}
-						placeholder="tuPerfil"
-						validation={[
-							v => /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(v)
-							? true : 'Ingresa un usuario válido.'
-						]}
-						preInput="@"
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Twitter"
-						name='twitter'
-						value={this.state.values.twitter}
-						placeholder="tuPerfil"
-						validation={[
-							v => /^([a-zA-Z0-9_]{1,20})$/.test(v)
-							? true : 'Ingresa un usuario válido.'
-						]}
-						preInput="@"
-						onChange={this.handleChange}
-					/>
-					<Input
-						label="Sitio web"
-						name='website'
-						value={this.state.values.website}
-						onChange={this.handleChange}
-					/>
-				</div>
-				<button className="bn--green">
-					Guardar
-				</button>
-			</div>
+			</form>
 		)
 	}
 }

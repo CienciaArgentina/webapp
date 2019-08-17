@@ -1,18 +1,23 @@
 import axiosInstance from './utils/axiosInstance'
+import axios from 'axios';
 
 export class AuthApi {
-	static async login(email, password) {
-		return { //fakeReturn
-			'access_token': 'asdkbhadsbjdasbjalbda',
-			'refresh_token ': 'ZALALAAAAAA'
-		}
-		const { data } = await axiosInstance.post('/Accounts/Login', {
-			email,
-			password
-		});
-		axiosInstance.defaults.headers['X-Access-Token'] = data.jwt;
+	static async login(userName, password) {
+		// return { //fakeReturn
+		// 	'access_token': 'asdkbhadsbjdasbjalbda',
+		// 	'refresh_token ': 'ZALALAAAAAA'
+		// }
 
-		return data;
+		await axiosInstance.post('/Accounts/Login', {
+			userName,
+			password
+		}).then(res => {
+			console.log(res);
+			// axiosInstance.defaults.headers['X-Access-Token'] = data.jwt;
+			return 200
+		}).catch((error) => {
+			return Promise.resolve(error.response);
+		});
 	}
 	static async logout() {
 		return { //fakeReturn
@@ -22,6 +27,20 @@ export class AuthApi {
 		
 		return axiosInstance.delete('/access-tokens', {
 			data: { refresh_token }
+		});
+	}
+	static async register(userName, email, password) {
+		await axiosInstance.post('/Accounts', {
+			userName,
+			email,
+			password
+		}).then(res => {
+			console.log(res);
+			// axiosInstance.defaults.headers['X-Access-Token'] = data.jwt;
+			return 200
+		}).catch((error) => {
+			console.log(error.response);
+			return Promise.reject(error.response.status);
 		});
 	}
 	static async getUserInfo() {

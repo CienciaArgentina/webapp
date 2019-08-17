@@ -111,7 +111,7 @@ class Input extends React.Component {
 					{type != 'select' ?
 						props.formatInput ?
 							<Cleave
-								className="SUI-input-input SUI-input-main" 
+								className="SUI-input-input SUI-input-main"
 								type={type}
 								value={props.value?props.value:''}
 								onFocus={()=>(this._focus(true))}

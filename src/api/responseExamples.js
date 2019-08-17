@@ -6,7 +6,6 @@ export const jobExample = {
 	isFav: false,
 	isOpen: true,
 	type: 'doctorate',
-	typeName: 'Pasantía',
 	posibleThesis: true,
 	scholarship: 'CONICET',
 	salary: 18900,
@@ -25,6 +24,7 @@ export const jobExample = {
 	
 	//requirements
 	careerState: 3,
+	dateCareerFinish: moment().add('3', 'd').unix(), // terminar la carrera antes de
 	labExperience: true,	// true=obligatorio,  false=preferente,  null=no pedir
 	presentationLetter: false,
 	requirements: 'Tener buena predisposicion.\nTener visa para viajar a la luna.',
@@ -37,14 +37,18 @@ export const jobExample = {
 		instituteUrl: 'https://www.leloir.org.ar/',
 		logo: '/static/img/logos-labos/leloir_logo.png',
 		acronyms: false, //abreviacion
-		labId: 'gsd789',
-		labName: 'Biología Celular del RNA',
-		projectId: 'asdds789',
-		projectName: 'Mutaciones y deleciones de genes de interés, y complementación de las mismas.',
 		coordinates: [-58.4330264,-34.6020053],
 		city: 'Buenos Aires',
 		country: 'Argentina',
-		locationName: 'Callao 86, Ciudad Autónoma de Buenos Aires, Argentina'
+		locationName: 'Callao 86, Ciudad Autónoma de Buenos Aires, Argentina',
+
+		//labo
+		labId: 'gsd789',
+		labName: 'Biología Celular del RNA',
+
+		//project
+		projectId: 'asdds789',
+		projectName: 'Mutaciones y deleciones de genes de interés, y complementación de las mismas.',
 	}
 }
 

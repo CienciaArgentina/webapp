@@ -5,8 +5,12 @@ import { userDataExample } from './responseExamples'
 
 export class UserApi {
 	static async getMyData() {
-		return userDataExample;
+		// return userDataExample;
 		const { data } = await axiosInstance.get(`/user/me`);
 		return data;
+	}
+
+	static async editBasicProfile(data) {
+		console.log(data);
 	}
 }

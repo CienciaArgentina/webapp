@@ -28,9 +28,10 @@ const Hightlight = (props) => (
 export default class job extends Component {
 	static async getInitialProps(context) {
 		const job = JobsApi.getJob(context.query.id);
+		console.log(job);
 		return job
 	}
-	state= {
+	state = {
 		isFav: this.props.isFav,
 	};
 	switchInterest = () => {

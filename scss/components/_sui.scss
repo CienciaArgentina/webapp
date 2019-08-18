@@ -30,12 +30,29 @@ $baseColor: #e8e8e8;
 			background-color: white;
 		}
 	}
+	$space-top: 2.3rem;
+	$space-bottom: .7rem;
+	$space-left: 1.2rem;
+	$space-right: 1.2rem;
 	& #{$N}-container {
 		position: relative;
 		transition: background-color $transition-curve;
 		background-color: $baseColor;
 		border-radius: .5rem;
-		color: rgba(0, 0, 0, 0.87)
+		color: rgba(0, 0, 0, 0.87);
+		overflow: hidden;
+		&:before {
+			content: '';
+			width: calc(100% - 1.2rem);
+			height: 2.3rem;
+			position: absolute;
+			background-color: $baseColor;
+			z-index: 9;
+			pointer-events: none;
+		}
+		#{$N}-inputContainer {
+			position: relative;
+		}
 	}
 	& #{$N}-label {
 		position: absolute;
@@ -45,9 +62,9 @@ $baseColor: #e8e8e8;
 		transform-origin: top left;
 		color: rgba(0, 0, 0, 0.54);
 		font-weight: 500;
-		// display: none;
+		z-index: 10;
 	}
-	#{$N}-input, #{$N}-select {
+	#{$N}-input, #{$N}-select, #{$N}-textarea {
 		font: inherit;
 		color: currentColor;
 		width: 100%;
@@ -58,10 +75,10 @@ $baseColor: #e8e8e8;
 		box-sizing: border-box;
 		background: none;
 		-webkit-tap-highlight-color: transparent;
-		padding-top: 2.3rem;
-		padding-bottom: .7rem;
-		padding-left: 1.2rem;
-		padding-right: 1.2rem;
+		padding-top: $space-top;
+		padding-bottom: $space-bottom;
+		padding-left: $space-left;
+		padding-right: $space-right;
 		font-weight: 500;
 		width: 20.594rem;
 		height: 4.6rem;
@@ -74,6 +91,10 @@ $baseColor: #e8e8e8;
 		padding-top: 2rem;
 		padding-bottom: 0.7rem;
 		padding-left: .8rem;
+	}
+	#{$N}-textarea {
+		resize: none;
+		height: 4.6rem * 2;
 	}
 	.SUI-helper, .SUI-errorMsg {
 		color: rgba(0, 0, 0, 0.54);
@@ -120,6 +141,9 @@ $baseColor: #e8e8e8;
 	&#{$N}-invalid {
 		#{$N}-container {
 			background-color: #fbe9e7;
+			&:before {
+				background-color: #fbe9e7;
+			}
 		}
 		#{$N}-label {
 			color: $error;
@@ -139,4 +163,65 @@ $baseColor: #e8e8e8;
 // colors
 .SUI-input-color-white {
 
+}
+
+.SUI-checkbox {
+	margin-right: 1.6rem;
+	$N: '.SUI-checkbox';
+	cursor: pointer;
+	$transition-curve: .18s cubic-bezier(.4,0,.6,1) 0ms;
+	display: inline-flex;
+	align-items: center;
+	#{$N}-input-root {
+		#{$N}-container{
+			box-sizing: border-box;
+			$sizeBox: 4.2rem;
+			$sizePadding: 1.2rem;
+			padding: $sizePadding;
+			width: $sizeBox;
+			height: $sizeBox;
+			position: relative;
+			input {
+				width: $sizeBox;
+				height: $sizeBox;
+				position: absolute;
+				top: 0;
+				left: 0;
+				opacity: 0;
+				cursor: pointer;
+			}
+			#{$N}-background {
+				pointer-events: none;
+				width: $sizeBox - $sizePadding * 2;
+				height: $sizeBox - $sizePadding * 2;
+				border: solid .2rem;
+				// padding: .2rem;
+				box-sizing: border-box;
+				border-radius: .2rem;
+				border-color: $gray-600;
+				background-color: rgba(0,0,0,0);
+				transition: background-color $transition-curve, border-color $transition-curve;
+				svg {
+					stroke-width: 3.12px;
+					stroke-dashoffset: 29.7833385;
+					stroke-dasharray: 29.7833385;
+				}
+			}
+		}
+	}
+	#{$N}-label {
+		font-weight: 500;
+	}
+	&#{$N}--selected {
+		#{$N}-container{
+			#{$N}-background {
+				border-color: $lblue;
+				background-color: $lblue;
+				svg {
+					stroke-dashoffset: 0;
+					transition: stroke-dashoffset $transition-curve;
+				}
+			}
+		}
+	}
 }

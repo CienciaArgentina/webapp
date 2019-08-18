@@ -103,32 +103,65 @@ class Input extends React.Component {
 					{props.label ?
 						<label className="SUI-input-label">{props.label}{props.required?'*':''}</label>
 					: false}
-					{props.preInput ?
-						<div ref={this.preInput} className="SUI-input-pre">
-							<label>{props.preInput}</label>
-						</div>
-					: false}
-					{type != 'select' ?
-						props.formatInput ?
-							<Cleave
-								className="SUI-input-input SUI-input-main"
-								type={type}
-								value={props.value?props.value:''}
+					<div className='SUI-input-inputContainer'>
+						{props.preInput ?
+							<div ref={this.preInput} className="SUI-input-pre">
+								<label>{props.preInput}</label>
+							</div>
+						: false}
+						{type == 'select' &&
+							<select
+								className="SUI-input-select SUI-input-main" 
+								value={props.value ? props.value : 'undefined'}
 								onFocus={()=>(this._focus(true))}
 								onBlur={()=>(this._focus(false))}
 								onChange={this._change}
 								name={props.name}
-								{...inputProps}
-								placeholder={(this.state.focused||props.labelUp)?placeholder:undefined}
-								options={props.formatInput}
-								style={{paddingLeft:this.state.preInputWidth}}
+								{...props.inputProps}
 								ref={this.inputBase}
+								>
+								{!props.value?
+									<option value="undefined" disabled></option>
+								:false}
+								{props.options}
+							</select>
+						}
+						{type == 'text' && (
+							props.formatInput ?
+								<Cleave
+									className="SUI-input-input SUI-input-main"
+									type={type}
+									value={props.value?props.value:''}
+									onFocus={()=>(this._focus(true))}
+									onBlur={()=>(this._focus(false))}
+									onChange={this._change}
+									name={props.name}
+									{...inputProps}
+									placeholder={(this.state.focused||props.labelUp)?placeholder:undefined}
+									options={props.formatInput}
+									style={{paddingLeft:this.state.preInputWidth}}
+									ref={this.inputBase}
 								/>
-						:
-							<input
-								className="SUI-input-input SUI-input-main" 
-								type={type}
-								value={props.value?props.value:''}
+							:
+								<input
+									className="SUI-input-input SUI-input-main" 
+									type={type}
+									value={props.value?props.value:''}
+									onFocus={()=>(this._focus(true))}
+									onBlur={()=>(this._focus(false))}
+									onChange={this._change}
+									name={props.name}
+									{...inputProps}
+									placeholder={(this.state.focused||props.labelUp)?placeholder:undefined}
+									style={{paddingLeft:this.state.preInputWidth}}
+									ref={this.inputBase}
+								/>
+						)
+						}
+						{type == 'textarea' &&
+							<textarea
+								className="SUI-input-textarea SUI-input-main"
+								value={props.value!==undefined ? props.value : undefined}
 								onFocus={()=>(this._focus(true))}
 								onBlur={()=>(this._focus(false))}
 								onChange={this._change}
@@ -138,24 +171,8 @@ class Input extends React.Component {
 								style={{paddingLeft:this.state.preInputWidth}}
 								ref={this.inputBase}
 							/>
-						
-					:
-						<select
-							className="SUI-input-select SUI-input-main" 
-							value={props.value ? props.value : 'undefined'}
-							onFocus={()=>(this._focus(true))}
-							onBlur={()=>(this._focus(false))}
-							onChange={this._change}
-							name={props.name}
-							{...props.inputProps}
-							ref={this.inputBase}
-							>
-							{!props.value?
-								<option value="undefined" disabled></option>
-							:false}
-							{props.options}
-						</select>
-					}
+						}
+					</div>
 					<div className="SUI-input-selector"></div>
 				</div>
 				{props.helperText ?

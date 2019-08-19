@@ -106,6 +106,11 @@ class Page extends Component {
 					{this.props.children}
 				</div>
 				<Footer />
+				{this.props.loading &&
+					<div className='__fullLoading'>
+						<p>Cargando...</p>
+					</div>
+				}
 			</div>
 		);
 	}

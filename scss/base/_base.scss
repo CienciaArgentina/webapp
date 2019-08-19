@@ -89,3 +89,32 @@ $container-w-m: 80rem + $cont_padding;
     -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.14),inset -1px 0 0 rgba(0,0,0,.07);
     box-shadow: inset 1px 0 0 rgba(0,0,0,.14),inset -1px 0 0 rgba(0,0,0,.07)
 }
+
+#app {
+    .__fullLoading{
+        z-index: $z-loading;
+        background: rgba(255,255,255,.8);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+            font-weight: 500;
+            color: $lblue;
+        }
+        animation: fullLoadingAnimation .3s ease;
+    }
+}
+
+@keyframes fullLoadingAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

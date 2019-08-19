@@ -1,0 +1,39 @@
+.register-root {
+	display: flex;
+}
+#register {
+	flex-grow: 1;
+	position: relative;
+	.__confirmEmail {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		padding: $s-6;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: $gradient-b;
+		p {
+			position: relative;
+			text-align: center;
+			font-size: 1.5rem;
+			line-height: 3rem;
+			color: white;
+			animation: register-success .4s ease-in-out;
+		}
+	}
+}
+
+@keyframes register-success {
+	from {
+		top: 3rem;
+		opacity: 0;
+	}
+	to {
+		top: 0;
+		opacity: 1;
+	}
+}

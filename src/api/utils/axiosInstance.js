@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const API_DOMAIN = 'https://cienciaargentinadesa.azurewebsites.net/api'
+const API_DOMAIN = 'https://cienciadesa.azurewebsites.net/api/'
 
 const axiosInstance = axios.create({
 		baseURL: API_DOMAIN,

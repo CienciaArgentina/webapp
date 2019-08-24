@@ -73,6 +73,26 @@ const equipoLista = [
 			facebook: "aldanois",
 		}
 	},
+	{
+		photo: "debo.jpg",
+		nombre: "Débora",
+		apellido: "Villalobo",
+		social: {
+			linkedin: "debora-villalobo",
+			twitter: "debora537",
+			instagram: "deborav.12",
+			facebook: "debora.villalobo"
+		}
+	},
+	{
+		photo: "ale.jpg",
+		nombre: "Alejandro",
+		apellido: "Banzas",
+		social: {
+			github: "AleBanzas",
+			linkedin: "alebanzas"
+		}
+	}
 ];
 const socialIcons = {
 	researchGate: {

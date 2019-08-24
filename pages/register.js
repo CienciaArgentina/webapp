@@ -23,7 +23,7 @@ export default class login extends React.Component {
 	sendRegister = (event) => {
 		event.preventDefault();
 
-		if(this.userInput.validate().valid && this.emailInput.validate().valid && this.passwordInput.validate().valid || true) {
+		if(this.userInput.validate().valid && this.emailInput.validate().valid && this.passwordInput.validate().valid) {
 			this.setState(()=>({loading:true}))
 			AuthApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
 				const registeredEmail = response.email
@@ -109,7 +109,7 @@ export default class login extends React.Component {
 										onChange={this.handleChange}
 										value={this.state.password}
 										validation = {[
-											v => /[A-Z]/.test(v) ? true : 'Debe contener una mayuscula',
+											v => /[A-Z]/.test(v) ? true : 'Debe contener una mayúscula',
 											v => /[a-z]/.test(v) ? true : 'Debe contener una minúscula',
 											v => /[0-9]/.test(v) ? true : 'Debe contener un número',
 											v => v.length > 5 ? true : 'Debe contener al menos 6 caracteres'

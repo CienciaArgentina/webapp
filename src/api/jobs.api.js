@@ -3,6 +3,11 @@ import moment from 'moment';
 
 import { jobExample, jobWithCandidates } from './responseExamples'
 
+const paseJobs = job => ({
+	...job,
+	typeName: {doctorate:'Dotorado', thesis:'Tesis', posdoctorate:'Posdoctorado'}[job.type]
+})
+
 export class JobsApi {
 	// id: int
 	static async getJob(id) {

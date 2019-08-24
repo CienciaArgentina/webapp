@@ -26,7 +26,7 @@ export class AuthApi {
 		});
 	}
 	static async register(userName, email, password) {
-		let {data} = await axiosInstance.post('/Accounts', {
+		const {data} = await axiosInstance.post('/Accounts', {
 			userName,
 			email,
 			password

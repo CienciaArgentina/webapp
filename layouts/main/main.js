@@ -108,7 +108,8 @@ class Page extends Component {
 				<Footer />
 				{this.props.loading &&
 					<div className='__fullLoading'>
-						<p>Cargando...</p>
+						<img src='/static/img/loading_adn.gif' />
+						<p>Cargando</p>
 					</div>
 				}
 			</div>

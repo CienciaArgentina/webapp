@@ -91,7 +91,7 @@ $container-w-m: 80rem + $cont_padding;
 }
 
 #app {
-    .__fullLoading{
+    .__fullLoading {
         z-index: $z-loading;
         background: rgba(255,255,255,.8);
         position: fixed;
@@ -100,11 +100,19 @@ $container-w-m: 80rem + $cont_padding;
         width: 100vw;
         height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        img {
+            width: 7rem;
+            height: 7rem;
+            user-select: none;
+            pointer-events: none;
+        }
         p {
             font-weight: 500;
             color: $lblue;
+            user-select: none;
         }
         animation: fullLoadingAnimation .3s ease;
     }

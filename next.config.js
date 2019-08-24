@@ -20,10 +20,14 @@ const options = {
 				// 		}
 				// 	}
 				// }
+			},
+			{
+				urlPattern: /.+/,
+				handler: 'networkFirst'
 			}
 		]
 	}
 }
 
 
-module.exports = withCSS(withSass(withOffline(options)))
+module.exports = withCSS(withSass(withOffline()))

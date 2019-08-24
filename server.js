@@ -24,6 +24,8 @@ app
 	// 	res.render(req, res, path)
 	// })
 	server.get('/service-worker.js', (req, res) => {
+		res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+		res.set("Content-Type", "application/javascript");
 		const parsedUrl = parse(req.url, true)
 		const path = join(__dirname, '.next', '/service-worker.js');
 		app.serveStatic(req, res, path);
@@ -81,6 +83,11 @@ app
 		const queryParams = { id: req.params.id } 
 		app.render(req, res, actualPage, queryParams)
 	});
+	server.get('/', (req,res) => {
+		res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+		const actualPage = '/index'
+		app.render(req, res, actualPage)
+	})
 	server.get('*', (req, res) => {
 		return handle(req, res);
 	});

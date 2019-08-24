@@ -103,9 +103,7 @@ export default class institute extends Component {
 									</>
 								}
 								{data.instituteUrl&&
-									<Link href={data.instituteUrl}>
-										<a target="_blank" className="bn--text bn--icon-link">Sitio web</a>
-									</Link>
+									<a href={data.instituteUrl} target="_blank" className="bn--text bn--icon-link">Sitio web</a>
 								}
 								<button className="bn--text bn--icon-world">{data.country}</button>
 								{data.coordinates &&

@@ -27,7 +27,7 @@ const Hightlight = (props) => (
 
 export default class job extends Component {
 	static async getInitialProps(context) {
-		const job = JobsApi.getJob(context.query.id);
+		const job = await JobsApi.getJob(context.query.id);
 		console.log(job);
 		return job
 	}

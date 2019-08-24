@@ -36,7 +36,7 @@ const JobPost = (props) => {
 						<p className="jobPost__type">
 							{data.typeName}{data.posibleThesis?' / tesina':false}
 						</p>
-						<Link href={`/job/${data.id}`}>
+						<Link href={`/job?id=${data.id}`} as={`/job/${data.id}`}>
 							<a>
 								<h3 className="jobPost__title">{data.title}</h3>
 							</a>

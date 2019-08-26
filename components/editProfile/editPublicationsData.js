@@ -3,6 +3,7 @@ import {
 } from "../Science";
 import React from 'react'
 import Modal from 'react-modal'
+import { UserApi } from '../../src/api/api'
 
 Modal.setAppElement('#app')
 
@@ -13,18 +14,7 @@ export default class EditPublicationsData extends React.Component {
 	state = {
 		paperModalOpen: false,
 		paperInputId: '',
-		paperByIdResult: {
-			id: '30886393',
-			title: 'Visualizing DNA folding and RNA in embryos at single-cell resolution.',
-			description: 'The establishment of cell types during development requires precise interactions between genes and distal regulatory sequences. We have a limited understanding of how these interactions look in three dimensions, vary across cell types in complex tissue, and relate to transcription. Here we describe optical reconstruction of chromatin architecture (ORCA),',
-			authors: [
-				'Mateo'
-			],
-			coauthors: [
-				'Murphy', 'Hafner', 'Cinquini', 'Walker'
-			],
-			corresponding: ['Boettiger']
-		},
+		paperByIdResult: false,
 		showResultsById: false
 	}
 	openModalPapers = () => {
@@ -41,9 +31,13 @@ export default class EditPublicationsData extends React.Component {
 		console.log(this.paperInputId);
 		if(this.paperInputId.validate().valid) {
 			const id = this.state.paperInputId;
-			this.setState(()=>({
-				showResultsById: true
-			}))
+			UserApi.getArticleByPMID(id).then(response=>{
+				console.log(response);
+				this.setState(()=>({
+					showResultsById: true,
+					paperByIdResult: response.data
+				}))
+			})
 		}
 	}
 	addPaperById = (authorType, authorKey) => {
@@ -54,7 +48,6 @@ export default class EditPublicationsData extends React.Component {
 	}
 	handleChange = x => {
 		console.log(x.target.name);
-		
 		const name = x.target.name;
 		const value = x.target.value;
 		this.setState(()=>({
@@ -93,11 +86,15 @@ export default class EditPublicationsData extends React.Component {
 								<div>
 									<h3>{this.state.paperByIdResult.title}</h3>
 									<p className='mt-1'>
-									{[this.state.paperByIdResult.authors,this.state.paperByIdResult.coauthors,this.state.paperByIdResult.corresponding].map((o,k)=>{
-										return o.map((oo,kk)=>{
-											return(<label key={k+'-'+kk}>{k!=0||kk!=0 ? ', ':''} {oo}</label>)
-
-										})
+									{[this.state.paperByIdResult.authors,
+									this.state.paperByIdResult.coauthors,
+									this.state.paperByIdResult.corresponding].map((o,k)=>{
+										if(Array.isArray(o)){
+											return o.map((oo,kk)=>{
+												return(<label key={k+'-'+kk}>{k!=0||kk!=0 ? ', ':''} {oo}</label>)
+	
+											})
+										}
 									})}
 									</p>
 									<p className='text mt-2'>{this.state.paperByIdResult.description}</p>
@@ -107,15 +104,17 @@ export default class EditPublicationsData extends React.Component {
 									{[this.state.paperByIdResult.authors,
 									this.state.paperByIdResult.coauthors,
 									this.state.paperByIdResult.corresponding].map((o,k)=>{
-										return o.map((oo,kk)=>(
-											<div key={k+'-'+kk} className='mb-1 mt-1'>
-												<button
-													onClick={()=>{this.addPaperById(['authors', 'coauthors', 'corresponding'][k], kk)}} 
-													className='bn--text'>
-														{oo}
-												</button>
-											</div>
-										))
+										if(Array.isArray(o)){
+											return o.map((oo,kk)=>(
+												<div key={k+'-'+kk} className='mb-1 mt-1'>
+													<button
+														onClick={()=>{this.addPaperById(['authors', 'coauthors', 'corresponding'][k], kk)}} 
+														className='bn--text'>
+															{oo}
+													</button>
+												</div>
+											))
+										}
 									})}
 								</div>
 							</div>

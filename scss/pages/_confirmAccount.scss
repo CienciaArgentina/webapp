@@ -1,0 +1,16 @@
+.confirmAccount-root {
+	display: flex;
+}
+#pageConfirmAccount {
+	flex-grow: 1;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	p {
+		font-size: 2rem;
+		font-weight: 300;
+		color: $gray-700;
+	}
+}

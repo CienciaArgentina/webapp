@@ -15,10 +15,11 @@ export default class login extends React.Component {
 		user: '',
 		email: '',
 		password: '',
+		repeatPassword: '',
 		errorMsg: false,
 		registerConfirmed: false,
 		registeredEmail: false,
-		loading: false
+		loading: false,
 	}
 	sendRegister = (event) => {
 		event.preventDefault();
@@ -116,6 +117,18 @@ export default class login extends React.Component {
 										]}
 										required
 										ref={ (input) => {this.passwordInput = input} }
+									/>
+									<Input
+										label="Repeti tu contraseña"
+										type='password'
+										name="repeatPassword"
+										onChange={this.handleChange}
+										value={this.state.repeatPassword}
+										validation = {[
+											v => v==this.state.password ? true : 'Las contraseñas deben coincidir.',
+										]}
+										required
+										ref={ (input) => {this.repeatPasswordInput = input} }
 									/>
 								</div>
 								<div className="mt-4 ml-2">

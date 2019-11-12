@@ -5,6 +5,7 @@ import {
 
 import { AuthApi } from '../src/api/api'
 import Router from 'next/router'
+import Link from 'next/link'
 
 
 export default class login extends React.Component {
@@ -15,7 +16,7 @@ export default class login extends React.Component {
 		user: '',
 		email: '',
 		password: '',
-		repeatPassword: '',
+		repeatEmail: '',
 		errorMsg: false,
 		registerConfirmed: false,
 		registeredEmail: false,
@@ -24,7 +25,12 @@ export default class login extends React.Component {
 	sendRegister = (event) => {
 		event.preventDefault();
 
-		if(this.userInput.validate().valid && this.emailInput.validate().valid && this.passwordInput.validate().valid) {
+		if(
+			this.userInput.validate().valid &&
+			this.emailInput.validate().valid &&
+			this.passwordInput.validate().valid &&
+			this.repeatEmailInput.validate().valid
+		) {
 			this.setState(()=>({loading:true}))
 			AuthApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
 				const registeredEmail = response.email
@@ -67,7 +73,7 @@ export default class login extends React.Component {
 	render() {
 		return (
 			<Page loading={this.state.loading} contentClass='register-root'>
-				<div id='register'>
+				<div id='register' className='container pt-6 pb-4'>
 					{this.state.registerConfirmed ?
 						<div className='__confirmEmail'>
 							<p>
@@ -75,10 +81,15 @@ export default class login extends React.Component {
 							</p>
 						</div>
 					:
-						<div className="__registerForm container pt-6">
+						<div className="__logForm">
+							<h2 className='mb-2'>Registrate en Ciencia Argentina</h2>
+							<p className='mb-4'>
+								¿Ya tenés cuenta? <Link href='/login'><a className='link'>Ingresar</a></Link>
+							</p>
 							<form onSubmit={this.sendRegister}>
-								<div>
+								<div className='__inputs'>
 									<Input
+										fullWidth
 										label="Correo electrónico"
 										name="email"
 										onChange={this.handleChange}
@@ -93,17 +104,33 @@ export default class login extends React.Component {
 										ref={ (input) => {this.emailInput = input} }
 									/>
 									<Input
+										fullWidth
+										label="Repetí tu correo"
+										type='mail'
+										name="repeatEmail"
+										onChange={this.handleChange}
+										value={this.state.repeatEmail}
+										validation = {[
+											v => v==this.state.email ? true : 'El correo electronico debe coincidir.',
+										]}
+										required
+										ref={ (input) => {this.repeatEmailInput = input} }
+									/>
+									<Input
+										fullWidth
 										label="Nombre de usuario"
 										name="user"
 										onChange={this.handleChange}
 										value={this.state.user}
 										required
 										preInput='@'
+										helperText='Solo letras (a-z), números (0-9) y guiones ( -_ )'
 										inputProps={{autoComplete:'off'}}
 										placeholder='usuario'
 										ref={ (input) => {this.userInput = input} }
 									/>
 									<Input
+										fullWidth
 										label="Contraseña"
 										type='password'
 										name="password"
@@ -117,18 +144,6 @@ export default class login extends React.Component {
 										]}
 										required
 										ref={ (input) => {this.passwordInput = input} }
-									/>
-									<Input
-										label="Repeti tu contraseña"
-										type='password'
-										name="repeatPassword"
-										onChange={this.handleChange}
-										value={this.state.repeatPassword}
-										validation = {[
-											v => v==this.state.password ? true : 'Las contraseñas deben coincidir.',
-										]}
-										required
-										ref={ (input) => {this.repeatPasswordInput = input} }
 									/>
 								</div>
 								<div className="mt-4 ml-2">

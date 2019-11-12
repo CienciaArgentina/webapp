@@ -2,6 +2,14 @@ import axiosInstance from './utils/axiosInstance'
 import axios from 'axios';
 
 export class AuthApi {
+	static async sendConfirmationRegisterMail(email) {
+		const { data } = await axiosInstance.get('/Accounts/SendConfirmationRegisterMail', {
+			email
+		}).catch(error => {
+			return Promise.reject(error.response)
+		})
+		return data
+	}
 	static async login(userName, password) {
 		const {data} = await axiosInstance.post('/Accounts/Login', {
 			userName,

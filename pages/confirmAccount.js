@@ -1,6 +1,7 @@
 import React from 'react'
 import Page from '../layouts/main/main'
 import { UserApi } from '../src/api/api'
+import Link from 'next/link'
 
 export default class confirmAccount extends React.Component  {
 	static async getInitialProps(context) {
@@ -62,8 +63,8 @@ export default class confirmAccount extends React.Component  {
 							<p></p>
 						:
 							<div>
-								<p>Cuenta confirmada correctamente.</p>
-								<button className='mt-3'>Iniciar sesión</button>
+								<p className='mb-3'>¡Cuenta confirmada correctamente!</p>
+								<Link href='/login' className='mt-3'><button>Iniciar sesión</button></Link>
 							</div>
 						)
 					}

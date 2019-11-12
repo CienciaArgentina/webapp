@@ -2,10 +2,13 @@ import Page from '../layouts/main/main'
 import {
 	Input
 } from '../components/Science'
+import Link from 'next/link'
 
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { AuthApi } from '../src/api/api'
 import Router, { withRouter } from 'next/router'
+import Modal from 'react-modal'
+Modal.setAppElement('#app');
 
 export default class login extends React.Component {
 	constructor(props) {
@@ -13,7 +16,12 @@ export default class login extends React.Component {
 	}
 	state = {
 		user: '',
-		password: ''
+		password: '',
+		errorMsg: '',
+		emailNotConfirmed: false,
+		emailToConfirm: 'matiasngf@hotmail.com',
+		emailResended: false,
+		loadig: false
 	}
 	// static async getInitialProps(ctx) {
 	// 	// Parse
@@ -24,15 +32,43 @@ export default class login extends React.Component {
 	// }
 	sendLogin = (event) => {
 		event.preventDefault();
-
+		if(this.state.loadig || this.state.emailNotConfirmed || this.state.emailResended) {
+			return false
+		}
 		if(this.userInput.validate().valid && this.passwordInput.validate().valid) {
+			this.setState(()=>({
+				errorMsg: '',
+				loading: true
+			}))
 			AuthApi.login(this.state.user, this.state.password).then(response => {
-				console.log('Salio todo bien');
+				console.log('Login OK');
+				console.log(response);
 				Router.push('/');
 			}).catch(err => {
 				const status = err.status;
 				//TODO: chequear si el error es por usuario / contraseña incorrecto
-				Router.push('/error?code='+status,'/error');
+				console.log(err, err.status);
+				let error_know = false;
+				if(status==400) {
+					if(err.data[0].code == 'PasswordOrUserIncorrect') {
+						error_know = true
+						this.setState(()=>({
+							errorMsg: 'Usuario o contraseña incorrectos.',
+							loading: false
+						}))
+					} else if(err.data[0].code == 'EmailNotConfirmed') {
+						//falta confirmar email
+						this.setState(()=>({
+							emailNotConfirmed:true,
+							loading: false,
+							emailToConfirm: 'matiasngf+10@hotmail.com'
+						}))
+						error_know = true
+					}
+				}
+				if(!error_know) {
+					Router.push('/error?code='+status,'/error');
+				}
 			})
 		}
 		// setCookie(false, 'loginName', user, {
@@ -47,32 +83,96 @@ export default class login extends React.Component {
 			[name]: val
 		}));
 	}
+	resendConfirmation = () => {
+		this.setState(()=>({
+			loading:true,
+			emailNotConfirmed: false
+		}))
+		AuthApi.sendConfirmationRegisterMail(this.state.emailToConfirm).then(response=>{
+			console.log(response);
+			this.setState(()=>({
+				loading:false,
+				emailResended: true
+			}))
+		}).catch(err=>{
+			console.log(err);
+		})
+	}
 	render() {
 		return (
-			<Page>
-				<div className="container pt-6">
-					<form onSubmit={this.sendLogin}>
-						<Input
-							label="Nombre de usuario"
-							name="user"
-							onChange={this.handleChange}
-							value={this.state.user}
-							required
-							ref={ (input) => {this.userInput = input} }
-						/>
-						<Input
-							label="Contraseña"
-							type='password'
-							name="password"
-							onChange={this.handleChange}
-							value={this.state.password}
-							required
-							ref={ (input) => {this.passwordInput = input} }
-						/>
-						<div className="mt-4 ml-2">
-							<button type='submit'>Ingresar</button>
+			<Page loading={this.state.loading}>
+				<div className="container pt-6 pb-4">
+					<Modal
+						isOpen={this.state.emailResended}
+						className='defaultModal --adviceModal --s'
+					>
+						<div className='__notConfirmed'>
+							<h2>Email reenviado correctamente.</h2>
+							<p>Te enviamos un link a <b>{this.state.emailToConfirm}</b> para confirmar tu cuenta.</p>
 						</div>
-					</form>
+					</Modal>
+					<Modal
+						isOpen={this.state.emailNotConfirmed}
+						className='defaultModal --adviceModal --s'
+					>
+						<div className='__notConfirmed'>
+							<h2>Debes confirmar tu email.</h2>
+							<p>Cuándo te registraste, te enviamos un correo a <b>{this.state.emailToConfirm}</b> con un enlace para confirmar tu cuenta.</p>
+							<div className='__resendEmail mt-3'>
+								<p>¿No encontrás el correo?</p>
+								<button onClick={this.resendConfirmation}>
+									Reenviar correo de confirmación
+								</button>
+							</div>
+						</div>
+					</Modal>
+					<div className='__logForm'>
+						<h2 className='mb-2'>Ingresá a Ciencia Argentina</h2>
+						<p className='mb-4'>
+							¿No tenés cuenta? <Link href='/register'><a className='link'>Registrate acá</a></Link>
+						</p>
+						<form onSubmit={this.sendLogin}>
+							<div className='__inputs'>
+								<Input
+									fullWidth
+									label="Nombre de usuario"
+									name="user"
+									onChange={this.handleChange}
+									value={this.state.user}
+									required
+									preInput='@'
+									placeholder='usuario'
+									ref={ (input) => {this.userInput = input} }
+								/>
+								<Input
+									fullWidth
+									label="Contraseña"
+									type='password'
+									name="password"
+									onChange={this.handleChange}
+									value={this.state.password}
+									required
+									ref={ (input) => {this.passwordInput = input} }
+								/>
+							</div>
+							<div className="mt-4">
+								<button type='submit'>Ingresar</button>
+							</div>
+							{!!this.state.errorMsg &&
+								<div>
+									<p>
+										{this.state.errorMsg}
+									</p>
+								</div>
+							}
+						</form>
+						<div className='mt-5'>
+							<Link href='/forgotpassword'>
+								<p className='link'>Olvidé mi contraseña</p>
+							</Link>
+							<p className='link mt-2'>Olvidé mi usuario</p>
+						</div>
+					</div>
 				</div>
 			</Page>
 		)

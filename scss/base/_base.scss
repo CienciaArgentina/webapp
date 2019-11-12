@@ -28,6 +28,7 @@ a {
 $container-w-xl: 120rem + $cont_padding;
 $container-w-l: 100rem + $cont_padding;
 $container-w-m: 80rem + $cont_padding;
+$container-w-s: 60rem + $cont_padding;
 @mixin container($s: l) {
     width: 100%;
     padding: 0 $cont_padding;
@@ -39,6 +40,8 @@ $container-w-m: 80rem + $cont_padding;
         max-width: $container-w-m;
     } @else if ($s == xl) {
         max-width: $container-w-xl;
+    } @else if ($s == s) {
+        max-width: $container-w-s;
     }
 }
 

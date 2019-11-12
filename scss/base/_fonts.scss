@@ -87,3 +87,9 @@ h4 {
 .label--m--gray {
 	@include label(m, gray)
 }
+
+.link {
+	color: $lblue;
+	text-decoration: underline;
+	cursor: pointer;
+}

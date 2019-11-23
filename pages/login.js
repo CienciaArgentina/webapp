@@ -89,13 +89,11 @@ export default class login extends React.Component {
 			emailNotConfirmed: false
 		}))
 		AuthApi.sendConfirmationRegisterMail(this.state.emailToConfirm).then(response=>{
-			console.log(response);
 			this.setState(()=>({
 				loading:false,
 				emailResended: true
 			}))
 		}).catch(err=>{
-			console.log(err);
 		})
 	}
 	render() {
@@ -170,7 +168,9 @@ export default class login extends React.Component {
 							<Link href='/forgotpassword'>
 								<p className='link'>Olvidé mi contraseña</p>
 							</Link>
-							<p className='link mt-2'>Olvidé mi usuario</p>
+							<Link href='/forgotUser'>
+								<p className='link mt-2'>Olvidé mi usuario</p>
+							</Link>
 						</div>
 					</div>
 				</div>

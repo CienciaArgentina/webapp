@@ -84,11 +84,11 @@ export default class newJobOffer extends React.Component {
 								/>
 								<Checkbox
 									label='Química'
-									checked={false}
+									// checked={false}
 								/>
 								<Checkbox
 									label='Biología'
-									required
+									// required
 								/>
 							</div>
 						</form>

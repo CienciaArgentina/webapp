@@ -36,15 +36,18 @@ class Input extends React.Component {
 	}
 	_checkValid = (value) => {
 		// return if valid or not
+		if(this.props.type == 'select') {
+			value = value==='undefined' ? undefined : value
+		}
 		const {validation} = this.props;
 		const hasValue = !!value;
 		this.setState(()=>({hasValue}))
 
-		if(!value && !this.props.required) {
+		if(!hasValue && !this.props.required) {
 			return this._setInvalid(false, false)
 		}
 
-		if(!value && this.props.required) {
+		if(!hasValue && this.props.required) {
 			return this._setInvalid(true, false)
 		}
 
@@ -88,7 +91,7 @@ class Input extends React.Component {
 		const {placeholder} = props;
 		return (
 			<div className={classnames(
-				'SUI-input',`SUI-input-${variant}`,`SUI-input-color-${color}`,
+				'SUI', 'SUI-input',`SUI-input-${variant}`,`SUI-input-color-${color}`,
 				{
 					'SUI-input-focused': this.state.focused,
 					'SUI-input-hasValue': this.state.hasValue,

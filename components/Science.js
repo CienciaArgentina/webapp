@@ -14,3 +14,4 @@ export {MapBox, LabMap} from './MapBox';
 // ui
 export { Input } from './ui/Input'
 export { Checkbox } from './ui/Checkbox'
+export { CheckboxGroup } from './ui/CheckboxGroup'

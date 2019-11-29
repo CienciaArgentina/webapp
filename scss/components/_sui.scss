@@ -1,4 +1,49 @@
 // Science UI styles
+.SUI {
+	.SUI-helper, .SUI-errorMsg {
+		color: rgba(0, 0, 0, 0.54);
+		font-size: 1rem;
+		font-weight: 600;
+		text-align: left;
+		min-height: 1em;
+		line-height: 1em;
+		margin: 0;
+		margin-top: .8rem;
+		margin-left: .8rem;
+		margin-right: .8rem;
+	}
+	.SUI-errorMsg {
+		color: $error;
+	}
+}
+
+.SUI-checkboxGroup {
+	.SUI-checkboxGroup-label {
+		color: rgba(0, 0, 0, 0.54);
+		font-weight: 500;
+	}
+	&.SUI-checkboxGroup-invalid {
+		.SUI-checkbox {
+			$N: '.SUI-checkbox';
+			#{$N}-container{
+				#{$N}-background {
+					border-color: $error;
+				}
+			}
+			&#{$N}--selected {
+				#{$N}-container{
+					#{$N}-background {
+						border-color: $error;
+						background-color: $error;
+					}
+				}
+			}
+			#{$N}-label {
+				color: $error;
+			}
+		}
+	}
+}
 
 .SUI-input {
     margin: 0;
@@ -100,21 +145,6 @@ $baseColor: #e8e8e8;
 		resize: none;
 		height: 4.6rem * 2;
 	}
-	.SUI-helper, .SUI-errorMsg {
-		color: rgba(0, 0, 0, 0.54);
-		font-size: 1rem;
-		font-weight: 600;
-		text-align: left;
-		min-height: 1em;
-		line-height: 1em;
-		margin: 0;
-		margin-top: .8rem;
-		margin-left: .8rem;
-		margin-right: .8rem;
-	}
-	.SUI-errorMsg {
-		color: $error;
-	}
 	.SUI-input-pre {
 		position: absolute;
 		top: 50%;
@@ -215,6 +245,7 @@ $baseColor: #e8e8e8;
 	}
 	#{$N}-label {
 		font-weight: 500;
+		user-select: none;
 	}
 	&#{$N}--selected {
 		#{$N}-container{

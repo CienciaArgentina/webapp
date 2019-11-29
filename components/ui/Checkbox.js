@@ -25,7 +25,7 @@ class Checkbox extends React.Component {
 			<label className={classnames('SUI-checkbox', {'SUI-checkbox--selected':checked})}>
 				<div className='SUI-checkbox-input-root'>
 					<div className='SUI-checkbox-container'>
-						<input checked={checked} onChange={this._change} type='checkbox' className='SUI-checkbox-input'/>
+						<input value={this.props.value} checked={checked} onChange={this._change} type='checkbox' className='SUI-checkbox-input'/>
 						<div className='SUI-checkbox-background'>
 							<svg className="SUI-checkbox-checkmark" viewBox="0 0 24 24">
 								<path className="SUI-checkbox-checkmark-path"fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>

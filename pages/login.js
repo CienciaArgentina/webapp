@@ -19,7 +19,7 @@ export default class login extends React.Component {
 		password: '',
 		errorMsg: '',
 		emailNotConfirmed: false,
-		emailToConfirm: 'matiasngf@hotmail.com',
+		emailToConfirm: '',
 		emailResended: false,
 		loadig: false
 	}
@@ -43,25 +43,31 @@ export default class login extends React.Component {
 			AuthApi.login(this.state.user, this.state.password).then(response => {
 				console.log('Login OK');
 				console.log(response);
+				setCookie(false, 'jwtToken', response.data.jwtToken.token, {
+					maxAge: 2 * 24 * 60 * 60,
+					path: '/',
+				});
+				setCookie(false, 'logged', true, {
+					maxAge: 2 * 24 * 60 * 60,
+					path: '/',
+				})
 				Router.push('/');
 			}).catch(err => {
 				const status = err.status;
-				//TODO: chequear si el error es por usuario / contraseña incorrecto
-				console.log(err, err.status);
 				let error_know = false;
 				if(status==400) {
-					if(err.data[0].code == 'PasswordOrUserIncorrect') {
+					if(err.data.error[0].code == 'PasswordOrUserIncorrect') {
 						error_know = true
 						this.setState(()=>({
 							errorMsg: 'Usuario o contraseña incorrectos.',
 							loading: false
 						}))
-					} else if(err.data[0].code == 'EmailNotConfirmed') {
+					} else if(err.data.error[0].code == 'EmailNotConfirmed') {
 						//falta confirmar email
 						this.setState(()=>({
 							emailNotConfirmed:true,
 							loading: false,
-							emailToConfirm: 'matiasngf+10@hotmail.com'
+							emailToConfirm: err.data.data.email
 						}))
 						error_know = true
 					}
@@ -94,6 +100,8 @@ export default class login extends React.Component {
 				emailResended: true
 			}))
 		}).catch(err=>{
+			alert('ERROR')
+			console.error(err)
 		})
 	}
 	render() {

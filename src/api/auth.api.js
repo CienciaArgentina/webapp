@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export class AuthApi {
 	static async sendForgotUser(email) {
-		const { data } = await axiosInstance.get('/Accounts/SendForgotUser', {
+		const { data } = await axiosInstance.get('/Accounts/SendForgotUsername', {
 			params: {
 				email
 			}
@@ -13,7 +13,7 @@ export class AuthApi {
 		return data
 	}
 	static async sendForgotPassword(email) {
-		const { data } = await axiosInstance.get('/Accounts/SendForgotPassword', {
+		const { data } = await axiosInstance.get('/Accounts/SendPasswordReset', {
 			params: {
 				email
 			}

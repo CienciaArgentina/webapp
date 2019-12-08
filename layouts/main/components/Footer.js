@@ -3,7 +3,7 @@ import Link from 'next/link';
 const Footer = (props) => (
 	<footer>
 		<div className="footer__logo">
-			<img src="/static/img/logos/icon-white.svg" />
+			<img alt='Logo Ciencia Argentina' src="/static/img/logos/icon-white.svg" />
 			Ciencia Argentina
 		</div>
 		<div className="footer__link">

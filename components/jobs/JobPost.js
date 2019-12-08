@@ -23,7 +23,7 @@ const JobPost = (props) => {
 				</div>
 			}
 			<div className="jobPost__content">
-				<button className={"bn--reset jobPost__favStar"+(data.isFav ? ' fav' : '')}></button>
+				<button aria-label='Favoritos' className={"bn--reset jobPost__favStar"+(data.isFav ? ' fav' : '')}></button>
 				<div className="jobPost__data">
 					<InstituteName
 						logo={data.organization.logo}

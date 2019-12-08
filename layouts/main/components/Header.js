@@ -7,8 +7,8 @@ import { connect } from 'react-redux'
 const Header = (props) => (
 	<header>
 		<Link href="/">
-			<a>
-				<img className="logo" src="/static/img/logos/logo-color.svg" />
+			<a aria-label='Logo Ciencia Argentina'>
+				<img alt='Logo Ciencia Argentina' className="logo" src="/static/img/logos/logo-color.svg" />
 			</a>
 		</Link>
 		<nav>

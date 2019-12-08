@@ -3,228 +3,277 @@ import { AuthApi } from '../src/api/api'
 
 const userCredentials = {
 	userName: 'matiasgf9',
+	email: 'matiasngf+9@hotmail.com',
 	password: 'Test1234*'
 }
 
 const userNotConfirmed = {
 	userName: 'matiasgf10',
+	email: 'matiasngf+10@hotmail.com',
 	password: 'Test1234*'
 }
 
-export const authTest = () => {
+const AsyncTest = props => {
+	const done = props.done
+	props.f(...props.args)
+	.then( response => {
+		if(props.expect=='then') {
+			try {
+				props.test(response)
+				done()
+			} catch(e) {
+				done(new Error(e))
+			}
+		} else {
+			done(new Error('Response is 200'))
+		}
+	})
+	.catch( response => {
+		if(props.expect=='catch') {
+			try {
+				props.test(response)
+				done()
+			} catch(e) {
+				done(new Error(e))
+			}
+		} else {
+			const e = response.data.error
+			done(new Error(e))
+		}
+	} )
+}
 
+export const authTest = () => {
 	describe('Register test', () => {
 
-		it('Invalid Password', done => {
-			//TEST 26 STORY 6
-			AuthApi.register('matiasgf15', 'matiasngf+15@hotmail.com', 'a').then( response => {
-				done(new Error('Response is 200'))
-			}).catch( error =>{
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error.map(x => x.code))
+		//TEST 26	STORY 6
+		it('Invalid password', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.register,
+				args: ['matiasgf15', 'matiasngf+15@hotmail.com', 'a'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error).to.be.an('array')
+					expect(response.data.error.map(x => x.code))
 					.to.have.members([
 						'PasswordTooShort',
 						'PasswordRequiresNonAlphanumeric',
 						'PasswordRequiresDigit',
 						'PasswordRequiresUpper'
 					])
-					done()
-				} catch (e) {
-					done(e)
 				}
 			})
 		})
 
+		//TEST 26	STORY 6
 		it('Invalid password undercase', done => {
-			//TEST 26 STORY 6
-			AuthApi.register('matiasgf15', 'matiasngf+15@hotmail.com', 'A1*1A11A').then( response => {
-				done(new Error('Response is 200'))
-			}).catch( error => {
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).to.equal('PasswordRequiresLower')
-					done()
-				} catch (e) {
-					done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.register,
+				args: ['matiasgf15', 'matiasngf+15@hotmail.com', 'A1*1A11A'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error).to.be.an('array')
+					expect(response.data.error[0].code).to.equal('PasswordRequiresLower')
+				}
+			})
+		})
+
+		//TEST 25	STORY 6
+		it('Username taken', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.register,
+				args: ['matiasgf10', 'matiasgf+15@hotmail.com', 'A1a1A1*'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error).to.be.an('array')
+					expect(response.data.error[0].code).to.equal('DuplicateUserName')
+				}
+			})
+		})
+
+		//TEST 3	STORY 6
+		it('Email taken', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.register,
+				args: ['matiasgf150', 'matiasngf+10@hotmail.com', 'A1a1A1*'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error).to.be.an('array')
+					expect(response.data.error[0].code).equals('DuplicateEmail')
+				}
+			})
+		})
+
+		//TEST X	STORY X
+		// it('Success register', done => {
+		// 	AsyncTest({
+		// 		done,
+		// 		f: AuthApi.register,
+		// 		args: ['matiasgf16', 'matiasgf+16@hotmail.com', 'A1a1A1*'],
+		// 		expect: 'then',
+		// 		test: response => {
+		// 			expect(response.success).to.equal(true)
+		// 		}
+		// 	})
+		// })
+
+
+	})
+
+	describe('Login test', () => {
+
+		//TEST 5	STORY 9
+		it('Login successful', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.login,
+				args: ['matiasgf9', 'Test1234*'],
+				expect: 'then',
+				test: response => {
+					expect(response.data).to.have.keys(['jwtToken', 'email'])
+					expect(response.data.email).is.equal('matiasngf+9@hotmail.com')
+				}
+			})
+		})
+
+		//TEST 6	STORY 9
+		it('Email not confirmed', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.login,
+				args: [userNotConfirmed.userName, userNotConfirmed.password],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('EmailNotConfirmed')
+					expect(response.data.data.email).to.equal('matiasngf+10@hotmail.com')
+				}
+			})
+		})
+
+		//TEST 7	STORY 9
+		it('User incorrect', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: ['usuarioFalso', userCredentials.password],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
+				}
+			})
+		})
+
+		//TEST 10	STORY 9
+		it('Password incorrect', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: [userCredentials.userName, 'incorrectPassword'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
 				}
 			})
 		})
 		
-		it('Username taken', done => {
-			//TEST 25 STORY 6 
-			AuthApi.register('matiasgf10', 'matiasgf+15@hotmail.com', 'A1a1A1*').then( () => {
-				done(new Error('Response is 200'))
-			}).catch( error => {
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).to.equal('DuplicateUserName')
-					done()
-				} catch (e) {
-					done(e)
-				}
-			})
-		})
-
-		it('Email taken', done => {
-			//TEST 3	STORY 6
-			AuthApi.register('matiasgf150', 'matiasngf+10@hotmail.com', 'A1a1A1*').then( () => {
-				done(new Error('Response is 200'))
-			}).catch( error => {
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).equals('DuplicateEmail')
-					done()
-				} catch (e) {
-					done(e)
-				}
-			})
-		})
-		/*
-		it('Success register', done => {
-			AuthApi.register('matiasgf16', 'matiasgf+16@hotmail.com', 'A1a1A1*').then( response => {
-				expect(response.data).to.be.an('array')
-				expect(response.data.response.errors[0].code).to.equal('EmailNotConfirmed')
-				done()
-			}).catch( error => {
-				done(new Error(error.data.error))
-			})
-		})
-
-		*/
 	})
-	
-	describe('Login test', () => {
 
-		it('Email not confirmed', done => {
-			//TEST 6	STORY 9
-			AuthApi.login(userCredentials.userName, userCredentials.password).then(response => {
-				done(new Error("Response is 200"));
-			}).catch( error => {
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).to.equal('EmailNotConfirmed')
-					expect(error.data.data.email).to.equal('matiasngf+10@hotmail.com')
-					done()
-				} catch (e) {
-					done(e)
-				}
-			})
-		})
+	describe('Request change', () => {
 
+		//TEST 27	STORY 6
 		it('Request resend confirm account', done => {
-			AuthApi.sendConfirmationRegisterMail('matiasngf+10@hotmail.com').then( response => {
-				expect(response.success).to.equal(true)
-				done()
-			}).catch( error => {
-				const e = error
-				done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.sendConfirmationRegisterMail,
+				args: [userNotConfirmed.email],
+				expect: 'then',
+				test: response => {
+					expect(response.success).to.equal(true)
+				}
 			})
 		})
 
+		//TEST 28	STORY 6
 		it('Request resend confirm account, not found', done => {
-			AuthApi.sendConfirmationRegisterMail('aaaa').then( response => {
-				done(new Error('Response is 200'))
-			}).catch( error => {
-				try {
-					expect(error.data.success).to.equal(false)
-					expect(error.data.error[0].code).to.equal('PasswordOrUserIncorrect')
-					done()
-				} catch(e) {
-					done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.sendConfirmationRegisterMail,
+				args: ['aaa'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
 				}
 			})
 		})
 
+		//TEST 29	STORY 29
 		it('Send mail forgot password', done => {
-			AuthApi.sendForgotPassword('lucaslopezf+98@gmail.com').then( response => {
-				expect(response.success).equals(true)
-				done()
-			}).catch( error => {
-				done(error)
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: [userCredentials.email],
+				expect: 'then',
+				test: response => {
+					expect(response.success).equals(true)
+				}
 			})
 		})
 
+		//TEST 30	STORY 29
 		it('Send mail forgot password, not found', done => {
-			AuthApi.sendForgotPassword('aaaaa').then( response => {
-				done(new Error('Response is 200'))
-			}).catch(error => {
-				try {
-					expect(error.data.success).to.equal(false)
-					expect(error.data.error[0].code).to.equal('PasswordOrUserIncorrect')
-					done()
-				} catch(e) {
-					done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: ['aaa'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
 				}
 			})
 		})
 
+		//TEST 31	STORY 29
 		it('Send mail forgot password, not confirmed', done => {
-			AuthApi.sendForgotPassword('matiasngf+10@hotmail.com').then( response => {
-				done(new Error('Response is 200'))
-			}).catch(error => {
-				try {
-					expect(error.data.success).to.equal(false)
-					expect(error.data.error[0].code).to.equal('EmailNotConfirmed')
-					done()
-				} catch(e) {
-					done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: [userNotConfirmed.email],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('EmailNotConfirmed')
 				}
 			})
 		})
 
+		//TEST 32	STORY 30
 		it('Send mail forgot user', done => {
-			AuthApi.sendForgotUser('matiasngf+10@hotmail.com').then( response => {
-				expect(response.success).equals(true)
-				done()
-			}).catch(error => {
-				done(error)
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: [userCredentials.email],
+				expect: 'then',
+				test: response => {
+					expect(response.success).equals(true)
+				}
 			})
 		})
 
+		//TEST 33	STORY 30
 		it('Send mail forgot user, not found', done => {
-			AuthApi.sendForgotUser('aaaaa').then( response => {
-				done(new Error('Response is 200'))
-			}).catch(error => {
-				try {
-					expect(error.data.success).to.equal(false)
-					expect(error.data.error[0].code).to.equal('PasswordOrUserIncorrect')
-					done()
-				} catch(e) {
-					done(e)
+			AsyncTest({
+				done,
+				f: AuthApi.sendForgotPassword,
+				args: ['aaa'],
+				expect: 'catch',
+				test: response => {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
 				}
 			})
 		})
 
-		it('User incorrect', done => {
-			//TEST 7	STORY 9
-			AuthApi.login('UserFalopa', userCredentials.password).then( response => {
-				done(new Error("Response is 200"));
-			}).catch( error =>{
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).to.equal('PasswordOrUserIncorrect');
-					done()
-				} catch (e) {
-					done(e)
-				}
-			})
-		});
-
-		it('Password incorrect', done => {
-			//TEST 10	STORY 9
-			AuthApi.login(userCredentials.userName, 'passwordFalopa').then( response => {
-				done(new Error("Response is 200"));
-			}).catch( error =>{
-				try {
-					expect(error.data.error).to.be.an('array')
-					expect(error.data.error[0].code).to.equal('PasswordOrUserIncorrect');
-					done()
-				} catch (e) {
-					done(e)
-				}
-			})
-		});
-
-	});
+	})
 }

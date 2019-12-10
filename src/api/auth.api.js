@@ -1,5 +1,4 @@
 import axiosInstance from './utils/axiosInstance'
-import axios from 'axios';
 
 export class AuthApi {
 	static async sendForgotUser(email) {

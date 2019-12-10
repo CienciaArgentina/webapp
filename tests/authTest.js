@@ -1,47 +1,7 @@
 import { expect } from 'chai'
 import { AuthApi } from '../src/api/api'
-
-const userCredentials = {
-	userName: 'matiasgf9',
-	email: 'matiasngf+9@hotmail.com',
-	password: 'Test1234*'
-}
-
-const userNotConfirmed = {
-	userName: 'matiasgf10',
-	email: 'matiasngf+10@hotmail.com',
-	password: 'Test1234*'
-}
-
-const AsyncTest = props => {
-	const done = props.done
-	props.f(...props.args)
-	.then( response => {
-		if(props.expect=='then') {
-			try {
-				props.test(response)
-				done()
-			} catch(e) {
-				done(new Error(e))
-			}
-		} else {
-			done(new Error('Response is 200'))
-		}
-	})
-	.catch( response => {
-		if(props.expect=='catch') {
-			try {
-				props.test(response)
-				done()
-			} catch(e) {
-				done(new Error(e))
-			}
-		} else {
-			const e = response.data.error
-			done(new Error(e))
-		}
-	} )
-}
+import {AsyncTest, user} from './testTools'
+import axiosInstance from '../src/api/utils/axiosInstance'
 
 export const authTest = () => {
 	describe('Register test', () => {
@@ -51,7 +11,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.register,
-				args: ['matiasgf15', 'matiasngf+15@hotmail.com', 'a'],
+				args: ['newUser', 'new@email.com', 'a'],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error).to.be.an('array')
@@ -71,7 +31,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.register,
-				args: ['matiasgf15', 'matiasngf+15@hotmail.com', 'A1*1A11A'],
+				args: ['newUser', 'new@email.com', 'A1*1A11A'],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error).to.be.an('array')
@@ -85,7 +45,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.register,
-				args: ['matiasgf10', 'matiasgf+15@hotmail.com', 'A1a1A1*'],
+				args: [user.user.userName, 'new@email.com', user.user.password],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error).to.be.an('array')
@@ -99,7 +59,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.register,
-				args: ['matiasgf150', 'matiasngf+10@hotmail.com', 'A1a1A1*'],
+				args: ['newUser', user.user.email, user.user.password],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error).to.be.an('array')
@@ -108,18 +68,32 @@ export const authTest = () => {
 			})
 		})
 
-		//TEST X	STORY X
-		// it('Success register', done => {
-		// 	AsyncTest({
-		// 		done,
-		// 		f: AuthApi.register,
-		// 		args: ['matiasgf16', 'matiasgf+16@hotmail.com', 'A1a1A1*'],
-		// 		expect: 'then',
-		// 		test: response => {
-		// 			expect(response.success).to.equal(true)
-		// 		}
-		// 	})
-		// })
+		it('Delete user', done => {
+			axiosInstance.delete(`/Accounts/${user.notConfirmed.userName}`).then(response => {
+				done()
+			}).catch(response => {
+				try {
+					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
+					done()
+				} catch(err) {
+					const e = JSON.stringify(err)
+					done(new Error(e))
+				}
+			})
+		})
+
+		// TEST X	STORY X
+		it('Success register', done => {
+			AsyncTest({
+				done,
+				f: AuthApi.register,
+				args: [user.notConfirmed.userName, user.notConfirmed.email, user.notConfirmed.password],
+				expect: 'then',
+				test: response => {
+					expect(response.success).to.equal(true)
+				}
+			})
+		})
 
 
 	})
@@ -131,11 +105,11 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.login,
-				args: ['matiasgf9', 'Test1234*'],
+				args: [user.user.userName, user.user.password],
 				expect: 'then',
 				test: response => {
 					expect(response.data).to.have.keys(['jwtToken', 'email'])
-					expect(response.data.email).is.equal('matiasngf+9@hotmail.com')
+					expect(response.data.email).is.equal(user.user.email)
 				}
 			})
 		})
@@ -145,11 +119,11 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.login,
-				args: [userNotConfirmed.userName, userNotConfirmed.password],
+				args: [user.notConfirmed.userName, user.notConfirmed.password],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error[0].code).to.equal('EmailNotConfirmed')
-					expect(response.data.data.email).to.equal('matiasngf+10@hotmail.com')
+					expect(response.data.data.email).to.equal(user.notConfirmed.email)
 				}
 			})
 		})
@@ -159,7 +133,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendForgotPassword,
-				args: ['usuarioFalso', userCredentials.password],
+				args: ['usuarioFalso', user.user.password],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
@@ -172,7 +146,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendForgotPassword,
-				args: [userCredentials.userName, 'incorrectPassword'],
+				args: [user.user.userName, 'incorrectPassword'],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error[0].code).to.equal('PasswordOrUserIncorrect')
@@ -189,7 +163,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendConfirmationRegisterMail,
-				args: [userNotConfirmed.email],
+				args: [user.notConfirmed.email],
 				expect: 'then',
 				test: response => {
 					expect(response.success).to.equal(true)
@@ -215,7 +189,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendForgotPassword,
-				args: [userCredentials.email],
+				args: [user.user.email],
 				expect: 'then',
 				test: response => {
 					expect(response.success).equals(true)
@@ -241,7 +215,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendForgotPassword,
-				args: [userNotConfirmed.email],
+				args: [user.notConfirmed.email],
 				expect: 'catch',
 				test: response => {
 					expect(response.data.error[0].code).to.equal('EmailNotConfirmed')
@@ -254,7 +228,7 @@ export const authTest = () => {
 			AsyncTest({
 				done,
 				f: AuthApi.sendForgotPassword,
-				args: [userCredentials.email],
+				args: [user.user.email],
 				expect: 'then',
 				test: response => {
 					expect(response.success).equals(true)

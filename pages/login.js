@@ -51,6 +51,10 @@ export default class login extends React.Component {
 					maxAge: 2 * 24 * 60 * 60,
 					path: '/',
 				})
+				setCookie(false, 'email', response.data.email, {
+					maxAge: 2 * 24 * 60 * 60,
+					path: '/',
+				})
 				Router.push('/');
 			}).catch(err => {
 				const status = err.status;

@@ -33,17 +33,18 @@ export default class login extends React.Component {
 		) {
 			this.setState(()=>({loading:true}))
 			AuthApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
-				const registeredEmail = response.email
+				const registeredEmail = response.data.email
 				this.setState(()=>({
 					loading:false,
 					registerConfirmed: true,
 					registeredEmail
 				}))
 			}).catch(err=>{
-				let status = err.status;
-				if(status) {
-					if(status==400) {
-						const error = err.data[0].code;
+				console.log(err);
+				let statusCode = err.status;
+				if(statusCode) {
+					if(statusCode==400) {
+						const error = err.data.error[0].code;
 						const errorMsg = {
 							InvalidEmail: 'Ingresá un correo válido.',
 							DuplicateUserName: 'Nombre de usuario no disponible.',
@@ -55,7 +56,7 @@ export default class login extends React.Component {
 					}
 				}
 				this.setState(()=>({loading:false}))					
-				Router.push('/error?code='+status,'/error');
+				Router.push('/error?code='+statusCode,'/error');
 			});
 		}
 		// setCookie(false, 'loginName', user, {

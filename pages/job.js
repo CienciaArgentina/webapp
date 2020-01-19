@@ -1,7 +1,10 @@
 import Page from '../layouts/main/main'
 import Link from 'next/link'
 import { Component } from 'react'
+import { connect } from 'react-redux'
 import moment from 'moment'
+import Modal from 'react-modal'
+Modal.setAppElement('#app')
 
 import { JobsApi } from '../src/api/api'
 
@@ -25,25 +28,58 @@ const Hightlight = (props) => (
 	</div>
 );
 
-export default class job extends Component {
+class job extends Component {
 	static async getInitialProps(context) {
 		const job = await JobsApi.getJob(context.query.id);
-		console.log(job);
 		return job
 	}
 	state = {
 		isFav: this.props.isFav,
+		modalApply: false
 	};
 	switchInterest = () => {
 		const isFav = !this.state.isFav;
 		this.setState( () => ({isFav}) );
-		const response = JobsApi.setFav(this.props.id)
+		JobsApi.setFav(this.props.id).then(response => {}).catch(e=>{})
+	}
+	apply = () => {
+		if(this.props.isLogged) {
+			this.setState(()=>({
+				modalApply:true
+			}))
+		} else {
+			this.setState(()=>({
+				modalApply:true
+			}))
+		}
+	}
+	closeModal = () => {
+		this.setState(()=>({modalApply:false}))
 	}
 	render(){
 		const job = this.props;
 		return (
 		<Page contentClass="bg--gray">
 			<div className="jobPage">
+				<Modal onRequestClose={this.closeModal} isOpen={this.state.modalApply} className='defaultModal --m --adviceModal'>
+					<label className='label--s--gray'>
+						Aplicar a <b>{{doctorate:'doctorado', posdoctorate:'posdoctorado'}[this.props.type]}</b>
+					</label>
+					<h2 className='mt-2'>
+						{this.props.title}
+					</h2>
+					<div>
+						<div>
+							<button className='mt-4'>¡Aplicar!</button>
+							<Link href='/editprofile?section=basica' as='/editProfile/basica'>
+								<button className='mt-2 ml-2 bn--blue--outline'>Revisar mi perfil</button>
+							</Link>
+						</div>
+						<div className='mt-2'>
+							<label className='label--s--gray'>Asegurate de tener tu perfil completo antes de aplicar.</label><br/>
+						</div>
+					</div>
+				</Modal>
 				<div className="job__mobilApply">
 					<Link href="/aplicar">
 						<a>
@@ -86,7 +122,7 @@ export default class job extends Component {
 							}
 							</div>
 							<div className="job__actions">
-								<button className="bn--green mr-4 bn--w2">Postularme</button>
+								<button onClick={this.apply} className="bn--green mr-4 bn--w2">Postularme</button>
 								{this.state.isFav ?
 								<button onClick={this.switchInterest} className="bn--blue bn--icon-star-filled">Te interesa</button>
 								:
@@ -254,11 +290,9 @@ export default class job extends Component {
 							<div className="mt-2 institute__actions">
 								{!!job.organization.instituteUrl && 
 									<div>
-										<Link href={job.organization.instituteUrl}>
-											<a className="bn--text bn--icon-link" target="_blank">
-												Sitio web
-											</a>
-										</Link>
+										<a href={job.organization.instituteUrl} className="bn--text bn--icon-link" target="_blank">
+											Sitio web
+										</a>
 									</div>
 								}
 								<div>
@@ -277,3 +311,10 @@ export default class job extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	isLogged: state.user.isLogged,
+	userData: state.user.userData
+})
+
+export default connect(mapStateToProps)(job)

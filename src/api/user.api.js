@@ -11,7 +11,10 @@ export class UserApi {
 	}
 
 	static async editBasicProfile(data) {
-		console.log(data);
+		const response = await axiosInstance.post('/Accounts/editProfile/basicData', {
+			...data
+		}).catch(e=> Promise.reject(e.response ? e.response : e))
+		return response
 	}
 
 	static async confirmAccount(email, token) {

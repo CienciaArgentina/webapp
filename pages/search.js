@@ -30,7 +30,7 @@ export default class serch extends React.Component {
 	render() {
 		return (
 			<Page contentClass="bg--gray">
-				<div id='buscador' className='mt-5'>
+				<div id='seachPage' className='mt-5'>
 					<div className='__filters'>
 						<div></div>
 					</div>
@@ -42,6 +42,7 @@ export default class serch extends React.Component {
 									color='white'
 									onChange={this.changeSearch}
 									value={this.state.searchStr}
+									label='¿Qué buscas?'
 								/>
 							</div>
 							<div className='__controlls'>
@@ -56,8 +57,13 @@ export default class serch extends React.Component {
 									</div>
 									<div className='__resultCount'></div>
 								</div>
-								<div className='_rControll'>
-									<Input
+								<div className='__rControll'>
+									<select className='__selectOrder'>
+										<option>Relevancia</option>
+										<option>Cercanía</option>
+										<option>Nuevos</option>
+									</select>
+									{/* <Input
 										type='select'
 										label='Ordenar por'
 										name='sortBy'
@@ -67,7 +73,7 @@ export default class serch extends React.Component {
 										value='0'
 										variant='filled'
 										color='white'
-									/>
+									/> */}
 								</div>
 							</div>
 						</div>

@@ -99,6 +99,8 @@ class Input extends React.Component {
 					'SUI-input-labelUp': this.state.focused||this.state.hasValue||props.labelUp,
 					'SUI-input-hasPreInput':props.preInput,
 					'SUI-width-full': props.fullWidth,
+					'SUI-width-half': props.halfWidth,
+					'SUI-disabled': props.inputProps&&props.inputProps.disabled,
 					'SUI-input-textarea-root': type=='textarea'
 				},
 				props.className
@@ -130,7 +132,7 @@ class Input extends React.Component {
 								{props.options}
 							</select>
 						}
-						{(type == 'text' || type=='mail' || type=='password') && (
+						{(type == 'text' || type=='mail' || type=='password' || type=='number') && (
 							props.formatInput ?
 								<Cleave
 									className="SUI-input-input SUI-input-main"

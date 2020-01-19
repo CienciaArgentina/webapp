@@ -55,12 +55,12 @@
 	}
 	.mainEdit {
 		flex-grow: 1;
-		.profileForm {
-			background-color: #fff;
-			padding: $s-6 $s-5;
-		}
 	}
-	form {
+}
+.profileForm {
+	background-color: #fff;
+	padding: $s-6 $s-5;
+	// &form {
 		h3 {
 			margin-top: $s-3;
 			&:first-child {
@@ -73,7 +73,7 @@
 				margin-top: 0;
 			}
 		}
-	}
+	// }
 }
 #formEditCareer {
 	.__study, .__work {
@@ -108,7 +108,7 @@
 }
 
 .addPaperModal {
-	@include abs-center();
+	// @include abs-center();
 	background-color: #fff;
 	padding: $s-5;
 	box-shadow: $elevation--z2;

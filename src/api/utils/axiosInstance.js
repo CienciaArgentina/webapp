@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const API_DOMAIN = 'https://cienciadesa.azurewebsites.net/api/'
+const API_DOMAIN = 'http://45.236.130.98:8080/api/'
 
 const axiosInstance = axios.create({
 		baseURL: API_DOMAIN,

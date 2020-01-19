@@ -24,9 +24,9 @@ import { connect } from 'react-redux'
 
 
 class Page extends Component {
-	static async getInitialProps({ reduxStore, req }) {
+	static async getInitialProps({ store, req }) {
     const isServer = !!req
-    // reduxStore.dispatch(serverRenderClock(isServer))
+    // store.dispatch(serverRenderClock(isServer))
 		// --- Uso alguna funcion cuando cargo --- //
     return {}
 	}

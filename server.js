@@ -26,12 +26,10 @@ app
 	server.get('/service-worker.js', (req, res) => {
 		res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
 		res.set("Content-Type", "application/javascript");
-		const parsedUrl = parse(req.url, true)
 		const path = join(__dirname, '.next', '/service-worker.js');
 		app.serveStatic(req, res, path);
 	});
 	server.get('/manifest.json', (req, res) => {
-		const parsedUrl = parse(req.url, true)
 		const path = join(__dirname, 'static', '/manifest.json')
 		app.serveStatic(req, res, path);
 	});
@@ -73,7 +71,7 @@ app
 		const queryParams = { id: req.params.id } 
 		app.render(req, res, actualPage, queryParams)
 	});
-	server.get(['/editProfile/:section', '/editProfile/', '/editProfile'],(req,res) => {
+	server.get(['/editprofile/:section', '/editprofile/', '/editprofile'],(req,res) => {
 		const actualPage = '/editProfile'
 		const queryParams = { section: req.params.section } 
 		app.render(req, res, actualPage, queryParams)

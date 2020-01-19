@@ -67,8 +67,8 @@ class editProfile extends React.Component {
 										'__menuItem':true
 									})}>
 										<Link
-										href={`/editProfile?section=${k}`}
-										as={`/editProfile/${k}`}>
+										href={`/editprofile?section=${k}`}
+										as={`/editprofile/${k}`}>
 											<a>
 												<div>
 													<i className={o[0]}></i>

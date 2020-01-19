@@ -1,5 +1,9 @@
 .__logForm {
 	border: $grayBorder-400;
+	@media (max-width:$device-mobileLarge) {
+		border: none;
+		padding: $s-1;
+	}
 	@include container(s);
 	max-width: 50rem;
 	padding: $s-5 $s-4;

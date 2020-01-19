@@ -42,8 +42,8 @@ const Header = (props) => (
 );
 const mapStateToProps = (state) => {
 	return {
-		isLogged: state.isLogged,
-		userData: state.userData
+		isLogged: state.user.isLogged,
+		userData: state.user.userData
 	}
 }
 

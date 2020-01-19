@@ -52,7 +52,7 @@ export default class forgotUser extends React.Component {
 	render() {
 		return (
 			<Page>
-				<div className='pt-6 pb-4'>
+				<div className='pt-6 pb-4 container'>
 					<Modal
 						isOpen={this.state.error}
 						className='defaultModal --adviceModal --s'

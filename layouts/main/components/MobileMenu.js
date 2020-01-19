@@ -50,9 +50,11 @@ const MobileMenu = (props) => (
 						email={props.userData.personalData.email}
 					/>
 				:
-					<button className="bn--green ml-3 bn--w2 bn--icon-signIn">
-						Ingresar
-					</button>
+					<Link href='/login'>
+						<button className="bn--green ml-3 bn--w2 bn--icon-signIn">
+							Ingresar
+						</button>
+					</Link>
 				}
 			</div>
 			<div className="mobile-menu__options">
@@ -101,8 +103,8 @@ const MobileMenu = (props) => (
 
 const mapStateToProps = (state) => {
 	return {
-		isLogged: state.isLogged,
-		userData: state.userData
+		isLogged: state.user.isLogged,
+		userData: state.user.userData
 	}
 }
 

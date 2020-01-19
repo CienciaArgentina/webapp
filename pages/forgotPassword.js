@@ -53,7 +53,7 @@ export default class ForgotPassword extends React.Component {
 	render() {
 		return (
 			<Page loading={this.state.loading}>
-				<div className='pt-6 pb-4'>
+				<div className='pt-6 pb-4 container'>
 					<Modal
 						isOpen={this.state.error}
 						className='defaultModal --adviceModal --s'

@@ -15,6 +15,11 @@
 	.SUI-errorMsg {
 		color: $error;
 	}
+	&.SUI-disabled {
+		pointer-events: none;
+		user-select: none;
+		opacity: .7;
+	}
 }
 
 .SUI-checkboxGroup {
@@ -129,7 +134,7 @@ $baseColor: #e8e8e8;
 		padding-left: $space-left;
 		padding-right: $space-right;
 		font-weight: 500;
-		width: 20.594rem;
+		min-width: 20.594rem;
 		height: 4.6rem;
 		&:focus {
 			outline: none
@@ -187,6 +192,16 @@ $baseColor: #e8e8e8;
 	//sizes
 	&.SUI-width-full {
 		width: 100% !important;
+		margin: 0;
+		.SUI-input-main {
+			width: 100% !important;
+		}
+	}
+	&.SUI-width-half {
+		&:nth-child(even) {
+			margin-right: $s-3;
+		}
+		width: calc(50% - #{$s-3}/2) !important;
 		margin: 0;
 		.SUI-input-main {
 			width: 100% !important;

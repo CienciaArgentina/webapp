@@ -26,7 +26,8 @@
 @import './components/logForm';
 
 //pages
-@import './/pages/confirmAccount';
+@import './pages/confirmAccount';
+@import './pages/createProfile';
 @import './pages/editProfile';
 @import './pages/index';
 @import './pages/institute';
@@ -37,4 +38,5 @@
 @import './pages/errorPage';
 @import './pages/job';
 @import './pages/newJobOffer';
-@import './pages/register'
+@import './pages/register';
+@import './pages/seachPage';

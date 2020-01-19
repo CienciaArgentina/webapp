@@ -12,6 +12,7 @@ import {
 class EditPersonalData extends React.Component {
 	constructor(props) {
 		super(props);
+		this.inputRefs = {}
 		this.state = {
 			values: {
 				firstName: false,
@@ -60,31 +61,37 @@ class EditPersonalData extends React.Component {
 	_submit = e => {
 		e.preventDefault();
 		let validForm = true;
-		Object.keys(this.state.values).map((o,k)=>{
-			if(this[o].validate().valid == false) {
+		Object.keys(this.inputRefs).map( o => {
+			if(this.inputRefs[o].validate().valid == false) {
 				validForm = false
 			}
 		})
 		if(validForm) {
 			const toSend = {
-				firstName: this.state.firstName,
-				lastName: this.state.lastName,
-				birthday: this.state.birthday,
-				sex: this.state.sex,
+				firstName: this.state.values.firstName,
+				lastName: this.state.values.lastName,
+				birthday: this.state.values.birthday,
+				sex: this.state.values.sex,
 				place: {
-					country: this.state.country,
-					province: this.state.province,
-					street: this.state.street,
-					stNumber: this.state.stNumber,
+					country: this.state.values.country,
+					province: this.state.values.province,
+					street: this.state.values.street,
+					stNumber: this.state.values.stNumber,
 				},
 				contact: {
-					phone: this.state.phone,
-					facebook: this.state.facebook,
-					twitter: this.state.twitter,
-					website: this.state.website
+					phone: this.state.values.phone,
+					facebook: this.state.values.facebook,
+					twitter: this.state.values.twitter,
+					website: this.state.values.website
 				},
 			}
-			UserApi.editBasicProfile(toSend);
+			UserApi.editBasicProfile(toSend).then(response => {
+				if(this.props.afterSend) {
+					this.props.afterSend()
+				}
+			}).catch(e => {
+				console.log(e);
+			})
 		}
 	}
 	render() {
@@ -100,7 +107,7 @@ class EditPersonalData extends React.Component {
 							// helperText="Tu nombre aquí"
 							required
 							onChange={this.handleChange}
-							ref={ (input) => {this.firstName = input} }
+							ref={ (input) => {this.inputRefs.firstName = input} }
 						/>
 						<Input
 							label="Apellido"
@@ -108,7 +115,7 @@ class EditPersonalData extends React.Component {
 							value={this.state.values.lastName}
 							required
 							onChange={this.handleChange}
-							ref={ (input) => {this.lastName = input} }
+							ref={ (input) => {this.inputRefs.lastName = input} }
 						/>
 						<Input
 							label="Fecha de nacimiento"
@@ -128,7 +135,7 @@ class EditPersonalData extends React.Component {
 							}
 							placeholder= 'dd/mm/yyyy'
 							onChange={this.handleChange}
-							ref={ (input) => {this.birthday = input} }
+							ref={ (input) => {this.inputRefs.birthday = input} }
 						/>
 						<Input
 							label="Sexo"
@@ -145,7 +152,7 @@ class EditPersonalData extends React.Component {
 								))
 							}
 							onChange={this.handleChange}
-							ref={ (input) => {this.sex = input} }
+							ref={ (input) => {this.inputRefs.sex = input} }
 						/>
 					</div>
 					<h3>Dirección</h3>
@@ -163,7 +170,7 @@ class EditPersonalData extends React.Component {
 							}
 							value={this.state.values.country}
 							onChange={this.handleChange}
-							ref={ (input) => {this.country = input} }
+							ref={ (input) => {this.inputRefs.country = input} }
 						/>
 						<Input
 							label='Provincia'
@@ -181,79 +188,83 @@ class EditPersonalData extends React.Component {
 							}
 							value={this.state.values.province}
 							onChange={this.handleChange}
-							ref={ (input) => {this.province = input} }
+							ref={ (input) => {this.inputRefs.province = input} }
 						/>
 						<Input
 							label='Calle'
 							name='street'
 							value={this.state.values.street}
 							onChange={this.handleChange}
-							ref={ (input) => {this.street = input} }
+							ref={ (input) => {this.inputRefs.street = input} }
 						/>
 						<Input
 							label='Altura'
 							name='stNumber'
 							value={this.state.values.stNumber}
 							onChange={this.handleChange}
-							ref={ (input) => {this.stNumber = input} }
+							ref={ (input) => {this.inputRefs.stNumber = input} }
 						/>
 					</div>
-					<h3>Contacto</h3>
-					<div className="formSection inputsHalf">
-						<Input
-							label="Celular"
-							name='phone'
-							value={this.state.values.phone}
-							placeholder="+54 11 2222 2222"
-							formatInput={
-								{phone:true,phoneRegionCode: 'AR'}
-							}
-							onChange={this.handleChange}
-							ref={ (input) => {this.phone = input} }
-						/>
-						<Input
-							label="Facebook"
-							name='facebook'
-							value={this.state.values.facebook}
-							placeholder="tuPerfil"
-							preInput="fb.com/"
-							onChange={this.handleChange}
-							ref={ (input) => {this.facebook = input} }
-						/>
-						<Input
-							label="Instagram"
-							name='instagram'
-							value={this.state.values.instagram}
-							placeholder="tuPerfil"
-							validation={[
-								v => /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(v)
-								? true : 'Ingresa un usuario válido.'
-							]}
-							preInput="@"
-							onChange={this.handleChange}
-							ref={ (input) => {this.instagram = input} }
-						/>
-						<Input
-							label="Twitter"
-							name='twitter'
-							value={this.state.values.twitter}
-							placeholder="tuPerfil"
-							validation={[
-								v => /^([a-zA-Z0-9_]{1,20})$/.test(v)
-								? true : 'Ingresa un usuario válido.'
-							]}
-							preInput="@"
-							onChange={this.handleChange}
-							ref={ (input) => {this.twitter = input} }
-						/>
-						<Input
-							label="Sitio web"
-							name='website'
-							value={this.state.values.website}
-							onChange={this.handleChange}
-							ref={ (input) => {this.website = input} }
-						/>
-					</div>
+					{!this.props.ignoreContact &&
+						<>
+							<h3>Contacto</h3>
+							<div className="formSection inputsHalf">
+								<Input
+									label="Celular"
+									name='phone'
+									value={this.state.values.phone}
+									placeholder="+54 11 2222 2222"
+									formatInput={
+										{phone:true,phoneRegionCode: 'AR'}
+									}
+									onChange={this.handleChange}
+									ref={ (input) => {this.inputRefs.phone = input} }
+								/>
+								<Input
+									label="Facebook"
+									name='facebook'
+									value={this.state.values.facebook}
+									placeholder="tuPerfil"
+									preInput="fb.com/"
+									onChange={this.handleChange}
+									ref={ (input) => {this.inputRefs.facebook = input} }
+								/>
+								<Input
+									label="Instagram"
+									name='instagram'
+									value={this.state.values.instagram}
+									placeholder="tuPerfil"
+									validation={[
+										v => /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(v)
+										? true : 'Ingresa un usuario válido.'
+									]}
+									preInput="@"
+									onChange={this.handleChange}
+									ref={ (input) => {this.inputRefs.instagram = input} }
+								/>
+								<Input
+									label="Twitter"
+									name='twitter'
+									value={this.state.values.twitter}
+									placeholder="tuPerfil"
+									validation={[
+										v => /^([a-zA-Z0-9_]{1,20})$/.test(v)
+										? true : 'Ingresa un usuario válido.'
+									]}
+									preInput="@"
+									onChange={this.handleChange}
+									ref={ (input) => {this.inputRefs.twitter = input} }
+								/>
+								<Input
+									label="Sitio web"
+									name='website'
+									value={this.state.values.website}
+									onChange={this.handleChange}
+									ref={ (input) => {this.inputRefs.website = input} }
+								/>
+							</div>
+						</>
+					}
 					<button type='submit' className="bn--green">
 						Guardar
 					</button>

@@ -1,0 +1,13 @@
+#createProfile {
+	@include container(m);
+	background-color: white;
+	padding: $s-3;
+	margin: $s-6 auto;
+	.__header {
+		text-align: center;
+		h1 {
+			color: $lblue;
+			font-weight: 400;
+		}
+	}
+}

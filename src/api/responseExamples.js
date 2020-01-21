@@ -1,5 +1,39 @@
 import moment from 'moment'
 
+export const filtersExample = [
+	{
+		title: 'Tipo',
+		values: {
+			doctorate: {
+				text: 'Doctorado',
+			},
+			posdoctorate: {
+				text: 'Posdoctorado',
+			},
+			thesis: {
+				text: 'Tesis',
+			},
+			internship: {
+				text: 'Pasantía',
+			},
+		}
+	},
+	{
+		title: 'Provincia',
+		values: {
+			filter_province_123asda3s54: {
+				text: 'CABA',
+			},
+			filter_province_asdasdsa556: {
+				text: 'Córdoba',
+			},
+			filter_province_44ads456das6: {
+				text: 'Bariloche',
+			},
+		}
+	}
+]
+
 export const jobExample = {
 	id: 'ZALALAAAAA',
 	title: 'Regulación de la N-glicosilación de proteínas eucariotas',
@@ -24,7 +58,7 @@ export const jobExample = {
 	
 	//requirements
 	careerState: 3,
-	dateCareerFinish: moment().add('3', 'd').unix(), // terminar la carrera antes de
+	// dateCareerFinish: moment().add('3', 'd').unix(), // terminar la carrera antes de
 	labExperience: true,	// true=obligatorio,  false=preferente,  null=no pedir
 	presentationLetter: false,
 	requirements: 'Tener buena predisposicion.\nTener visa para viajar a la luna.',

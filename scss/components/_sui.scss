@@ -224,11 +224,24 @@ $baseColor: #e8e8e8;
 	#{$N}-input-root {
 		#{$N}-container{
 			box-sizing: border-box;
-			$sizeBox: 4.2rem;
+			$inputSize: 3rem;
 			$sizePadding: 1.2rem;
+			$sizeBox: $inputSize + $sizePadding;
 			padding: $sizePadding;
 			width: $sizeBox;
 			height: $sizeBox;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			&.--noPadding{
+				height: $inputSize /2;
+				// width: $inputSize /2;
+				padding: 0;
+				input {
+					// width: $inputSize /2;
+					height: $inputSize /2;
+				}
+			}
 			position: relative;
 			input {
 				width: $sizeBox;

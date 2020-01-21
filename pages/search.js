@@ -1,15 +1,34 @@
 import Page from '../layouts/main/main'
 import { Input, Tag } from '../components/Science'
+import { SearchApi } from '../src/api/search.api'
+import Router from 'next/router'
 
-export default class serch extends React.Component {
-	state = {
-		searchStr: '',
-		tags:[
-			'leloir',
-			'virus',
-			'CABA'
-		]
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+import SearchFilters from '../components/search/SearchFilters'
+import SearchTags from '../components/search/SearchTags'
+
+export default class Search extends React.Component {
+	constructor(props) {
+		super(props)
+		let filters = props.filters
+		let tagsFilters = props.searchTerms.tags ? props.searchTerms.tags.split(',') : []
+		filters.map((o, section) => Object.entries(o.values).map((obj, k)=>{
+			if(tagsFilters.includes(obj[0])){
+				filters[section].values[obj[0]].selected = true
+			} else {
+				filters[section].values[obj[0]].selected = false
+			}
+		}))
+		this.state = {
+			searchStr: props.searchTerms.q ? props.searchTerms.q : '',
+			// tags:[],
+			filters,
+			sort:'auto'
+		}
 	}
+	inputRefs = {}
 	changeSearch= (x) => {
 		const str = x.target.value;
 		this.setState(()=>({
@@ -20,19 +39,71 @@ export default class serch extends React.Component {
 	deleteSearchStr = () => {
 		this.setState(()=>({
 			searchStr: ''
-		}))
+		}), this.inputRefs.searchBar.validate)
 	}
-	deleteTag = (key)=>{
-		this.setState(prevState=>({
-			tags: prevState.tags.filter((o,k)=>(k!=key))
-		}))
+	deleteTag = (sec, key)=>{
+		this.setState(prevState => {
+			let filters = prevState.filters
+			filters[sec].values[key].selected = false
+			// tags: prevState.tags.filter((o,k)=>(k!=key))
+			return {
+				filters
+			}
+		})
+	}
+	encodeQueryData = data => {
+		const ret = [];
+		for (let d in data)
+			if(!!data[d]) {
+				ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+			}
+		return ret.join('&');
+	 }
+	buildUrlQuery = () => {
+		let activeFilters = []
+		Object.values(this.state.filters).map(sec=>{
+			Object.entries(sec.values).filter(o=>o[1].selected).map(o=>{
+				activeFilters.push(o[0])
+			})
+		})
+		activeFilters = activeFilters.flat().join(',')
+		const url = '/search?'+this.encodeQueryData({
+			q: this.state.searchStr,
+			tags: activeFilters,
+			sort: this.state.sort
+		})
+		window.history.replaceState('','',url)
+	}
+	componentDidMount() {
+		this.buildUrlQuery()
+	}
+	componentDidUpdate(prevProps, prevState){
+		if(prevState != this.state) {
+			this.buildUrlQuery()
+		}
+	}
+	selectFilter = (e, obj) => {
+		const checked = e.target.checked
+		const value = e.target.value
+		const section = obj.props.__custom__section
+		this.setState(prevState => {
+			let filters = prevState.filters
+			filters[section].values[value].selected = checked
+			return {
+				filters
+			}
+		})
+		
 	}
 	render() {
 		return (
 			<Page contentClass="bg--gray">
 				<div id='seachPage' className='mt-5'>
 					<div className='__filters'>
-						<div></div>
+						<SearchFilters
+							filters = {this.state.filters}
+							onChange = {this.selectFilter}
+						/>
 					</div>
 					<div className='__main'>
 						<div className='searchBox'>
@@ -43,6 +114,7 @@ export default class serch extends React.Component {
 									onChange={this.changeSearch}
 									value={this.state.searchStr}
 									label='¿Qué buscas?'
+									ref={ref=>this.inputRefs.searchBar = ref}
 								/>
 							</div>
 							<div className='__controlls'>
@@ -51,9 +123,13 @@ export default class serch extends React.Component {
 										{this.state.searchStr ?
 											<Tag delete={this.deleteSearchStr}>"{this.state.searchStr}"</Tag>
 										: false}
-										{this.state.tags.map((o,k)=>(
+										<SearchTags
+											filters = {this.state.filters}
+											delete={this.deleteTag}
+										/>
+										{/* {this.state.tags.map((o,k)=>(
 											<Tag key={k} delete={(()=>{this.deleteTag(k)})}>{o}</Tag>
-										))}
+										))} */}
 									</div>
 									<div className='__resultCount'></div>
 								</div>
@@ -63,17 +139,6 @@ export default class serch extends React.Component {
 										<option>Cercanía</option>
 										<option>Nuevos</option>
 									</select>
-									{/* <Input
-										type='select'
-										label='Ordenar por'
-										name='sortBy'
-										options={['Relevancia', 'Cercanía', 'Nuevos'].map((o,k)=>(
-											<option value={k} key={k}>{o}</option>
-										))}
-										value='0'
-										variant='filled'
-										color='white'
-									/> */}
 								</div>
 							</div>
 						</div>
@@ -82,4 +147,12 @@ export default class serch extends React.Component {
 			</Page>
 		)
 	}
+}
+
+Search.getInitialProps = async function(context) {
+	const filters = await SearchApi.getFilters()
+    return {
+		filters,
+		searchTerms: context.query
+    }
 }

@@ -10,7 +10,7 @@ class Checkbox extends React.Component {
 	_change = (e) => {
 		if(this.props.checked!==undefined) {
 			if(this.props.onChange){
-				this.props.onChange(event)
+				this.props.onChange(event, this)
 			} else {
 				console.error('onChange not defined in Checkbox')
 			}
@@ -24,7 +24,10 @@ class Checkbox extends React.Component {
 		return(
 			<label className={classnames('SUI-checkbox', {'SUI-checkbox--selected':checked})}>
 				<div className='SUI-checkbox-input-root'>
-					<div className='SUI-checkbox-container'>
+					<div className={classnames(
+						'SUI-checkbox-container',
+						{'--noPadding':this.props.noPadding}
+					)}>
 						<input value={this.props.value} checked={checked} onChange={this._change} type='checkbox' className='SUI-checkbox-input'/>
 						<div className='SUI-checkbox-background'>
 							<svg className="SUI-checkbox-checkmark" viewBox="0 0 24 24">

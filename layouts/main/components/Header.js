@@ -12,7 +12,7 @@ const Header = (props) => (
 			</a>
 		</Link>
 		<nav>
-			<Link href="/">
+			<Link href="/search">
 				<a>Trabajos</a>
 			</Link>
 			<Link href="/">

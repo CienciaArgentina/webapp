@@ -1,12 +1,17 @@
 #seachPage {
-	@include container();
+	@include container(xl);
 	margin-top: $s-4;
+	display: flex;
 	@media (max-width: $device-tabletLandscape) {
 		.__filters {
 			display: none;
 		}
 	}
+	.__filters {
+		width: 20rem;
+	}
 	.__main {
+		flex-grow: 1;
 		.searchBox {
 			.__input {
 			}

@@ -2,6 +2,8 @@ import Page from '../layouts/main/main'
 import { Input, Tag } from '../components/Science'
 import { SearchApi } from '../src/api/search.api'
 import Router from 'next/router'
+import Modal from 'react-modal'
+Modal.setAppElement('#app')
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
@@ -21,11 +23,17 @@ export default class Search extends React.Component {
 				filters[section].values[obj[0]].selected = false
 			}
 		}))
+		let sort = ''
+		if(props.searchTerms.sort){
+			sort = props.searchTerms.sort
+		} else {
+			sort = 'relevance'
+		}
 		this.state = {
 			searchStr: props.searchTerms.q ? props.searchTerms.q : '',
-			// tags:[],
 			filters,
-			sort:'auto'
+			sort,
+			isMobileFiltersOpen: false
 		}
 	}
 	inputRefs = {}
@@ -95,11 +103,35 @@ export default class Search extends React.Component {
 		})
 		
 	}
+	changeSort = e => {
+		const value = e.target.value
+		this.setState(()=>({sort:value}))
+	}
+	closeMobileFilters = () => {
+		this.setState(()=>({
+			isMobileFiltersOpen:false
+		}))
+	}
+	openMobileFilters = () => {
+		this.setState(()=>({
+			isMobileFiltersOpen:true
+		}))
+	}
 	render() {
 		return (
 			<Page contentClass="bg--gray">
+				<Modal
+					isOpen={this.state.isMobileFiltersOpen}
+					className='__mobileFilters'
+				>
+					<i onClick={this.closeMobileFilters} className="fas fa-times __closeButton"></i>
+					<SearchFilters
+						filters = {this.state.filters}
+						onChange = {this.selectFilter}
+					/>
+				</Modal>
 				<div id='seachPage' className='mt-5'>
-					<div className='__filters'>
+					<div className='__filters'>	
 						<SearchFilters
 							filters = {this.state.filters}
 							onChange = {this.selectFilter}
@@ -134,11 +166,15 @@ export default class Search extends React.Component {
 									<div className='__resultCount'></div>
 								</div>
 								<div className='__rControll'>
-									<select className='__selectOrder'>
-										<option>Relevancia</option>
-										<option>Cercanía</option>
-										<option>Nuevos</option>
+									<select value={this.state.sort} className='__selectOrder' onChange={this.changeSort}>
+										<option value='relevance'>Relevancia</option>
+										<option value='closest'>Cercanía</option>
+										<option value='newest'>Nuevos</option>
 									</select>
+									<div onClick={this.openMobileFilters} className='__mobileFilters'>
+										<i className="fas fa-filter mr-1"></i>
+										Filtros
+									</div>
 								</div>
 							</div>
 						</div>

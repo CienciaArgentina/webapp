@@ -145,7 +145,7 @@ export default class Search extends React.Component {
 									color='white'
 									onChange={this.changeSearch}
 									value={this.state.searchStr}
-									label='¿Qué buscas?'
+									label='¿Qué buscás?'
 									ref={ref=>this.inputRefs.searchBar = ref}
 								/>
 							</div>

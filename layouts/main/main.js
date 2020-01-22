@@ -24,6 +24,7 @@ import { connect } from 'react-redux'
 
 
 class Page extends Component {
+	_isMounted = false
 	static async getInitialProps({ store, req }) {
     const isServer = !!req
     // store.dispatch(serverRenderClock(isServer))
@@ -45,10 +46,14 @@ class Page extends Component {
 		}, 10);
 	}
 	hideMenu = () => {
-		this.setState( () => ({mobile_menu_show: false, noscroll: false}) );
 		document.querySelector('body').classList.remove('noScroll')
+		if(this._isMounted) {
+			this.setState( () => ({mobile_menu_show: false, noscroll: false}) );
+		}
 		setTimeout( () => {
-			this.setState( () => ({mobile_menu_display: false}) );
+			if(this._isMounted) {
+				this.setState( () => ({mobile_menu_display: false}) );
+			}
 		}, 300);
 	}
 	handleInstallApp = () => {
@@ -71,7 +76,8 @@ class Page extends Component {
 		});
 	}
 	componentDidMount() {
-    const { dispatch } = this.props
+		const { dispatch } = this.props
+		this._isMounted = true;
 		// this.timer = startClock(dispatch)
 		// --- Uso alguna funcion cuando cargo local --- //
 		
@@ -85,6 +91,10 @@ class Page extends Component {
 		  }))
 		  return false;
 		});
+	}
+	componentWillUnmount() {
+		this._isMounted = false
+		document.querySelector('body').classList.remove('noScroll')
 	}
 	render() {
 		return (

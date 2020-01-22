@@ -38,9 +38,11 @@ export default class Index extends Component {
 						<div className="background-desktop" style={backgroundStyle}></div>
 						<div className="container--m">
 							<h1>Encontrá tu lugar en la ciencia</h1>
-							<div className="whiteSearchBar">
-								¿Qué estas buscando?
-							</div>
+							<Link href='search'>
+								<div className="whiteSearchBar">
+									¿Qué estas buscando?
+								</div>
+							</Link>
 							<div className="tipoDeBusquedas">
 								<Link href={`/search?tags=internship`}>
 									<div>

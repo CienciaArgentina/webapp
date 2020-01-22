@@ -8,7 +8,9 @@ const MobileNav = (props) => (
 				<img alt='Logo Ciencia Argentina' src="/static/img/logos/icon-color.svg" />
 			</Link>
 		</div>
-		<div className="search-mobile"></div>
+		<Link href='search'>
+			<div className="search-mobile"></div>
+		</Link>
 	</div>
 );
 

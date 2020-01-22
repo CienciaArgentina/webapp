@@ -17,10 +17,12 @@ const MobileUser = (props) => (
 	</div>
 );
 const MobileOption = (props) => (
-	<div className="mobile-option">
-		<i className={props.icon}></i>
-		<span>{props.label}</span>
-	</div>
+	<Link href={props.href}>
+		<div onClick={props.hideMenu} className="mobile-option">
+			<i className={props.icon}></i>
+			<span>{props.label}</span>
+		</div>
+	</Link>
 )
 
 const MobileMenu = (props) => (
@@ -51,7 +53,7 @@ const MobileMenu = (props) => (
 					/>
 				:
 					<Link href='/login'>
-						<button className="bn--green ml-3 bn--w2 bn--icon-signIn">
+						<button onClick={props.hideMenu} className="bn--green ml-3 bn--w2 bn--icon-signIn">
 							Ingresar
 						</button>
 					</Link>
@@ -60,15 +62,21 @@ const MobileMenu = (props) => (
 			<div className="mobile-menu__options">
 				<div className="mobile-options__list">
 					<MobileOption
+						hideMenu={props.hideMenu}
+						href='/search'
 						icon="fas fa-search"
 						label="Explorar"
 					/>
 					{props.isLogged && [
 						<MobileOption key='fav'
+							hideMenu={props.hideMenu}
+							href='/search'
 							icon="far fa-star"
 							label="Favoritos"
 						/>,
 						<MobileOption key='misPostulaciones'
+							hideMenu={props.hideMenu}
+							href='/search'
 							icon="fas fa-edit"
 							label="Mis postulaciones"
 						/>
@@ -76,21 +84,29 @@ const MobileMenu = (props) => (
 				</div>
 				<div className="mobile-options__list">
 					<MobileOption
+						hideMenu={props.hideMenu}
+						href='/'
 						icon="fas fa-question-circle"
 						label="Ayuda"
 					/>
 					{props.isLogged ? [
 						<MobileOption key='config'
+							hideMenu={props.hideMenu}
+							href='/editprofile'
 							icon="fas fa-cog"
 							label="Configuración"
 						/>,
 						<MobileOption key='logout'
+							hideMenu={props.hideMenu}
+							href='/search'
 							icon="fas fa-sign-out-alt"
 							label="Cerrar sesión"
 						/>
 					]
 					:
 						<MobileOption
+							hideMenu={props.hideMenu}
+							href='/search'
 							icon="fas fa-share-alt"
 							label="Sumá a tu instituto"
 						/>

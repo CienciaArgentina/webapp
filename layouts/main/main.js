@@ -39,17 +39,17 @@ class Page extends Component {
 	}
 	showMenu = () => {
 		this.setState( () => ({mobile_menu_display: true, noscroll: true}) );
+		document.querySelector('body').classList.add('noScroll')
 		setTimeout( () => {
 			this.setState( () => ({mobile_menu_show: true}) );
 		}, 10);
-		document.querySelector('body').classList.add('noScroll')
 	}
 	hideMenu = () => {
 		this.setState( () => ({mobile_menu_show: false, noscroll: false}) );
+		document.querySelector('body').classList.remove('noScroll')
 		setTimeout( () => {
 			this.setState( () => ({mobile_menu_display: false}) );
 		}, 300);
-		document.querySelector('body').classList.remove('noScroll')
 	}
 	handleInstallApp = () => {
 		let deferredPrompt = this.state.installApp;

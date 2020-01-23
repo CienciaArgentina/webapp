@@ -27,7 +27,6 @@ class editProfile extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		// props.dispatch(updateMyData())
 		this.state = {
 			selectedForm: props.selectedForm!=undefined ? props.selectedForm : 'basica'
 		}

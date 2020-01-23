@@ -25,12 +25,19 @@ import { connect } from 'react-redux'
 
 class Page extends Component {
 	_isMounted = false
-	static async getInitialProps({ store, req }) {
-    const isServer = !!req
-    // store.dispatch(serverRenderClock(isServer))
-		// --- Uso alguna funcion cuando cargo --- //
-    return {}
-	}
+	// static async getInitialProps({ store, req }) {
+	// 	console.log('DONDE MIERDA ESTOY');
+		
+	// 	const isServer = !!req
+	// 	if(isServer) {
+	// 		console.log('This is server');
+	// 	}
+	// 	console.log(isServer);
+		
+	// 	// await store.dispatch(serverRenderClock(isServer))
+	// 		// --- Uso alguna funcion cuando cargo --- //
+	// 	return {}
+	// }
 	state = {
 		mobile_menu_display: false,
 		mobile_menu_show: false,

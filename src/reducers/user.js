@@ -8,7 +8,7 @@ const userReducer = (state = defaultState, action) => {
 		case 'SET_LOGGED':
 			return {...state,
 				isLogged: action.isLogged
-		};
+			};
 		case 'SET_USER_DATA':
 			return {
 				...state,

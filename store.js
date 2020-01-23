@@ -41,8 +41,29 @@ import userReducer from './src/reducers/user'
 // 	)
 // }
 
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './src/reducers/root-saga'
 
-export default () => {
+function configureStore(preloadedState, {isServer, req = null}) {
+	const sagaMiddleware = createSagaMiddleware()
+	const store = createStore(
+		combineReducers({
+			user: userReducer,
+			page: pageReducer
+		}),
+		preloadedState,
+    	composeWithDevTools(applyMiddleware(sagaMiddleware))
+	)
+	if (req || !isServer) {
+		store.sagaTask = sagaMiddleware.run(rootSaga)
+	}
+	
+	return store
+}
+
+export default configureStore
+
+const before_configureStore = () => {
 	const store = createStore(
 		combineReducers({
 			user: userReducer,

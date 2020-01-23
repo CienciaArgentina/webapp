@@ -86,8 +86,9 @@ export default class Index extends Component {
 	}
 }
 
+import {updateMyData} from '../src/actions/index'
 
-Index.getInitialProps = async function() {
+Index.getInitialProps = async function(ctx) {
 	const Jobs = await JobsApi.getRecentJobs()
 	return {
 		newJobs: Jobs

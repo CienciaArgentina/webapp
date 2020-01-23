@@ -3,12 +3,12 @@ import App from 'next/app';
 
 import { Provider } from 'react-redux';
 import withRedux from "next-redux-wrapper";
-import makeStore from '../store'
+import withReduxSaga from 'next-redux-saga'
+import configureStore from '../store'
 
 import ErrorPage from './_error'
 import {
-	updateMyData,
-	setLogged
+	updateMyData
 } from '../src/actions'
 
 import 'normalize.css/normalize.css';
@@ -19,9 +19,13 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
+
+		updateMyData(ctx.store.dispatch)
+		
 		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 		const cookies = parseCookies(ctx);
 		if(!process.browser) {
+			//this is server side
 			// console.log('Server execution');
 			if(cookies.logged) {
 				//TOOODOOOOO
@@ -29,7 +33,6 @@ class MyApp extends App {
 			//TODO: ver si hay un jwt guardado en una cookie y
 			//		usarlo para hacer request con la info de la persona.
 			//		(y guardarlo en redux)
-			ctx.store.dispatch(updateMyData())
 		}
 		return { pageProps }
 	}
@@ -48,4 +51,4 @@ class MyApp extends App {
 	}
 }
 
-export default withRedux(makeStore)(MyApp)
+export default withRedux(configureStore)(withReduxSaga(MyApp))

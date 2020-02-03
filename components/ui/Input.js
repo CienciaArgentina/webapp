@@ -28,6 +28,11 @@ class Input extends React.Component {
 			this.props.onChange(event)
 		}
 	}
+	_forceChange = () => {
+		let ev = new Event('change', { bubbles: true});	
+		ev.simulated = true;
+		this.inputBase.current.dispatchEvent(ev);
+	}
 	validate = () => {
 		//validate function
 		let input = this.props.formatInput ? this.inputBase.current.element : this.inputBase.current

@@ -1,0 +1,101 @@
+#profileMobile {
+	background: $gradient-b;
+	padding-top: 8rem;
+	.__main {
+		background-color: white;
+		border-radius: 3rem 3rem 0 0;
+		border-bottom: solid .1rem white;
+		animation: profileMobileContainer .5s $ease;
+		&>*:not(.__header) {
+			animation: profileMobileFirst .5s $ease;
+		}
+		.__header {
+			$profileSize: 8rem;
+			position: relative;
+			.__profileImg {
+				top: -$profileSize / 2;
+				width: 100%;
+				position: absolute;
+				display: flex;
+				justify-content: center;
+				.__container {
+					width: $profileSize;
+					height: $profileSize;
+					background-color: $green-500;
+					border-radius: 50%;
+					border: solid .3rem white;
+					box-sizing: border-box;
+					position: relative;
+					label {
+						@include abs-center();
+						color: white;
+						font-size: 2rem;
+					}
+				}
+			}
+			.__data {
+				padding-top: $profileSize / 2 + $s-3;
+				text-align: center;
+				h2 {
+					font-size: 2rem;
+					font-weight: 400;
+					margin-bottom: $s-1;
+				}
+				label {
+					@include label();
+				}
+			}
+		}
+		.__shortcuts {
+			display: flex;
+			justify-content: space-evenly;
+			padding: $s-5 0;
+			div {
+				flex: 1;
+				text-align: center;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				i {
+					font-size: 2rem;
+					color: $gray-600;
+					margin-bottom: $s-2;
+				}
+				label {
+					color: $lblue;
+					text-transform: uppercase;
+					font-size: 1.2rem;
+					font-weight: 500;
+				}
+			}
+		}
+		.__options {
+			padding-bottom: $s-4;
+			div {
+				padding: $s-4;
+				font-size: 1.7rem;
+				box-sizing: border-box;
+				&.--red {
+					color: $red-500;
+				}
+			}
+		}
+	}
+}
+@keyframes profileMobileContainer {
+	from {
+		transform: translateY(7rem);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes profileMobileFirst {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

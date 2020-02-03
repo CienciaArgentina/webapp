@@ -1,7 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Page from '../layouts/main/main'
-import { connect } from 'react-redux'
 
 import Link from 'next/link'
 
@@ -11,44 +9,25 @@ import EditPersonalData from '../components/editProfile/editPersonalData'
 import EditCareerData from '../components/editProfile/editCareerData'
 import EditPublicationsData from '../components/editProfile/editPublicationsData'
 
-import { UserApi } from '../src/api/api'
-
-import {
-	updateMyData
-} from '../src/actions'
-
-class editProfile extends React.Component {
+export default class editprofile extends React.Component {
 	static async getInitialProps(context) {
-		const selectedForm = context.query.section;
+		let selectedForm = context.query.section
+		if(!selectedForm){
+			selectedForm = 'basic'
+		}
 		return {
 			// userData,
 			selectedForm
 		}
 	}
 	constructor(props) {
-		super(props);
-		this.state = {
-			selectedForm: props.selectedForm!=undefined ? props.selectedForm : 'basica'
-		}
+		super(props)
 		this.formParams = {
-			'basica' : ['fas fa-user','Información básica'],
-			'carrera' : ['fas fa-graduation-cap','Carrera'],
-			'publicaciones' : ['fas fa-file-alt','Publicaciones'],
-			'cuenta' : ['fas fa-cog','Cuenta'],
+			'basic' : ['fas fa-user','Información básica'],
+			'career' : ['fas fa-graduation-cap','Carrera'],
+			'publications' : ['fas fa-file-alt','Publicaciones'],
+			'account' : ['fas fa-cog','Cuenta'],
 		}
-	}
-	componentDidUpdate() {
-		const selectedForm = this.props.selectedForm!=undefined ? this.props.selectedForm : 'basica'
-		if(this.state.selectedForm != selectedForm) {
-			this.setState(()=>({selectedForm}))
-		}
-	}
-	handleChange = (e) => {
-		const name = e.target.name
-		const value = e.target.value
-		this.setState(()=>({
-			[name]: value
-		}))
 	}
 	render() {
 		return (
@@ -56,51 +35,44 @@ class editProfile extends React.Component {
 				<div id="editProfile">
 					<div className="editProfile__menu">
 						<div className="__menuMain">
-							{Object.keys(this.formParams).map( (k,i) => {
-								const o = this.formParams[k]
-								return(
-									<div
-									key={k}
+							{Object.entries(this.formParams).map(o=>(
+								<div
+									key={o[0]}
 									className={className({
-										selectedLink: this.state.selectedForm==k,
-										'__menuItem':true
-									})}>
-										<Link
-										href={`/editprofile?section=${k}`}
-										as={`/editprofile/${k}`}>
+										selectedLink: this.props.selectedForm==o[0],
+										__menuItem:true
+									})}
+								>
+									<Link
+										href={`/editprofile?section=${o[0]}`}
+										as={`/editprofile/${o[0]}`}>
 											<a>
 												<div>
-													<i className={o[0]}></i>
-													<span>{o[1]}</span>
+													<i className={o[1][0]}></i>
+													<span>{o[1][1]}</span>
 												</div>
 											</a>
 										</Link>
-									</div>
-								)
-							})}
+								</div>
+							))}
 						</div>
 					</div>
 					<div className="mainEdit">
-						{this.state.selectedForm == 'basica' ?
-							<EditPersonalData handleChange={this.handleChange} /> : false
+						{this.props.selectedForm == 'basic' ?
+							<EditPersonalData /> : false
 						}
-						{this.state.selectedForm == 'carrera' ?
-							<EditCareerData handleChange={this.handleChange} /> : false
+						{this.props.selectedForm == 'career' ?
+							<EditCareerData /> : false
 						}
-						{this.state.selectedForm == 'publicaciones' ?
-							<EditPublicationsData handleChange={this.handleChange} /> : false
+						{this.props.selectedForm == 'publications' ?
+							<EditPublicationsData /> : false
 						}
-						{this.state.selectedForm == 'cuenta' ?
-							<EditPersonalData handleChange={this.handleChange} /> : false
+						{this.props.selectedForm == 'account' ?
+							<EditPersonalData /> : false
 						}
 					</div>
 				</div>
 			</Page>
 		)
 	}
-}
-
-const mapStateToProps = ({ auth }) => ({
-
-});
-export default connect(mapStateToProps)(editProfile);
+} 

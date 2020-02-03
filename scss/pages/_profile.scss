@@ -1,0 +1,18 @@
+#profilePage {
+	@media (max-width: $device-tablet) {
+		#profileMobile {
+			display: block;
+		}
+		#profileDesktop {
+			display: none;
+		}
+	}
+	@media (min-width: $device-tablet) {
+		#profileMobile {
+			display: none;
+		}
+		#profileDesktop {
+			display: block;
+		}
+	}
+}

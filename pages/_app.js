@@ -19,21 +19,28 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
-
-		updateMyData(ctx.store.dispatch)
-		
-		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 		const cookies = parseCookies(ctx);
 		if(!process.browser) {
-			//this is server side
-			// console.log('Server execution');
-			if(cookies.logged) {
-				//TOOODOOOOO
+			// this is server side
+			if(cookies.userData) {
+				// console.log('USER DATA:');
+				// console.log(JSON.parse(cookies.userData));
+				const error = await updateMyData(ctx.store.dispatch, JSON.parse(cookies.userData).userName)
+				if(error === 'profileIncomplete' && router.route!='/createProfile') {
+					router.push('/createProfile')
+					ctx.res.writeHead(302, {
+						Location: '/createProfile'
+					});
+					ctx.res.end();
+				}
 			}
-			//TODO: ver si hay un jwt guardado en una cookie y
-			//		usarlo para hacer request con la info de la persona.
-			//		(y guardarlo en redux)
+		} else {
+			// client side
+			if(cookies.userData && !ctx.store.getState().user.isLogged && ctx.pathname!='/createProfile') {
+				router.push('/createProfile')
+			}
 		}
+		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 		return { pageProps }
 	}
 	render() {

@@ -3,16 +3,20 @@ import {
 	Input
 } from '../components/Science'
 import Link from 'next/link'
-
+import {
+	updateMyData
+} from '../src/actions'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import { AuthApi } from '../src/api/api'
+import { AuthApi, InstituteApi } from '../src/api/api'
 import Router, { withRouter } from 'next/router'
 import Modal from 'react-modal'
+import { connect } from 'react-redux'
 Modal.setAppElement('#app');
 
-export default class login extends React.Component {
+class login extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(props);
 	}
 	state = {
 		user: '',
@@ -41,21 +45,23 @@ export default class login extends React.Component {
 				loading: true
 			}))
 			AuthApi.login(this.state.user, this.state.password).then(response => {
-				console.log('Login OK');
-				console.log(response);
-				setCookie(false, 'jwtToken', response.data.jwtToken.token, {
-					maxAge: 2 * 24 * 60 * 60,
-					path: '/',
-				});
-				setCookie(false, 'logged', true, {
-					maxAge: 2 * 24 * 60 * 60,
-					path: '/',
+				setCookie(false, 'userData',
+					JSON.stringify({
+						jwtToken: response.data.jwtToken.token,
+						email: response.data.email,
+						userName: this.state.user
+					}),
+					{
+						maxAge: 2 * 24 * 60 * 60,
+						path: '/',
+
+					}
+				)
+				const cookies = parseCookies()
+				console.log('BACK COOKIES');
+				updateMyData(this.props.dispatch, JSON.parse(cookies.userData).userName).then(()=>{
+					Router.push('/');
 				})
-				setCookie(false, 'email', response.data.email, {
-					maxAge: 2 * 24 * 60 * 60,
-					path: '/',
-				})
-				Router.push('/');
 			}).catch(err => {
 				const status = err.status;
 				let error_know = false;
@@ -190,3 +196,12 @@ export default class login extends React.Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		isLogged: state.user.isLogged,
+		userData: state.user.userData
+	}
+}
+
+export default connect(mapStateToProps)(login);

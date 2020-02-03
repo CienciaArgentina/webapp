@@ -1,20 +1,29 @@
 import axiosInstance from './utils/axiosInstance';
 import moment from 'moment';
 
-import { userDataExample } from './responseExamples'
+import { userDataExample, mapUserResponse } from './responseExamples'
 
 export class UserApi {
-	static async getMyData() {
-		return userDataExample;
-		const { data } = await axiosInstance.get(`/user/me`);
-		return data;
+	static async logOut() {
+		return true
+	}
+	static async getMyData(userName) {
+		// return userDataExample;
+		const { data } = await axiosInstance.get(`/Users/${userName}`)
+		.catch(e => {
+			return Promise.reject(e)
+		});
+
+		return mapUserResponse(data);
 	}
 
 	static async editBasicProfile(data) {
-		const response = await axiosInstance.post('/Accounts/editProfile/basicData', {
-			...data
-		}).catch(e=> Promise.reject(e.response ? e.response : e))
-		return response
+		console.log(data);
+		return true
+		// const response = await axiosInstance.post('/Accounts/editprofile/basicData', {
+		// 	...data
+		// }).catch(e=> Promise.reject(e.response ? e.response : e))
+		// return response
 	}
 
 	static async confirmAccount(email, token) {

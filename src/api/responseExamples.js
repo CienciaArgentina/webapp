@@ -1,5 +1,26 @@
 import moment from 'moment'
 
+export const mapUserResponse = data => ({
+	organizations: data.userOrganization,
+	workExperience: data.workExperience,
+	account: {
+		...data.user
+	},
+	personalData: {
+		name: data.name,
+		lastName: data.lastName,
+		identifierType: data.identifierType,
+		identifier: data.identifier,
+		sex: data.sex.id,
+		sexDescription: data.sex.description,
+		address: data.address,
+		nationality: data.nationality.id,
+		nationalityName: data.nationality.name,
+		birthday: data.birthday,
+		telephone: data.telephone
+	}
+})
+
 export const filtersExample = [
 	{
 		title: 'Tipo',

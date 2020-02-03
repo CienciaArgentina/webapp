@@ -43,6 +43,10 @@ $container-w-s: 60rem + $cont_padding;
     } @else if ($s == s) {
         max-width: $container-w-s;
     }
+    @media (max-width: $device-tablet) {
+        padding-left: ($cont_padding / 2);
+        padding-right: ($cont_padding / 2);
+    }
 }
 
 .container {

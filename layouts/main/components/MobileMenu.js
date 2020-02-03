@@ -1,23 +1,27 @@
 import Link from 'next/link';
 import { connect } from 'react-redux'
 
+import { logOut } from '../../../src/actions'
+
 const MobileUser = (props) => (
-	<div className="MobileMenuUser">
-		<div className={`MobileProfilePic`+(props.img ? ' --hasImage':' --noImage')}>
-			{props.img ?
-				<img src={props.img} />
-				:
-				<span>{props.fname[0]}</span>
-			}
-		</div>
-		<div className="MobileMenuName">
-			<span className="__name">{props.fname} {props.lname}</span>
-			<span className="__email">{props.email}</span>
-		</div>
-	</div>
-);
+	<Link href='/profile'>
+		<div className="MobileMenuUser">
+			<div className={`MobileProfilePic`+(props.img ? ' --hasImage':' --noImage')}>
+				{props.img ?
+					<img src={props.img} />
+					:
+					<span>{props.name[0]}</span>
+				}
+			</div>
+			<div className="MobileMenuName">
+				<span className="__name">{props.name} {props.lastName}</span>
+				<span className="__email">@{props.userName}</span>
+			</div>
+		</div>	
+	</Link>
+)
 const MobileOption = (props) => (
-	<Link href={props.href}>
+	<Link href={props.href} as={props.as ? props.as : props.href}>
 		<div onClick={props.hideMenu} className="mobile-option">
 			<i className={props.icon}></i>
 			<span>{props.label}</span>
@@ -46,10 +50,11 @@ const MobileMenu = (props) => (
 				{props.isLogged ?
 					<MobileUser
 						img={props.userData.personalData.profileImage}
-						fname={props.userData.personalData.fname}
-						lname={props.userData.personalData.lname}
-						id={props.userData.id}
-						email={props.userData.personalData.email}
+						name={props.userData.personalData.name}
+						lastName={props.userData.personalData.lastName}
+						id={props.userData.account.id}
+						email={props.userData.account.email}
+						userName={props.userData.account.userName}
 					/>
 				:
 					<Link href='/login'>
@@ -68,15 +73,23 @@ const MobileMenu = (props) => (
 						label="Explorar"
 					/>
 					{props.isLogged && [
+						<MobileOption key='profile'
+							hideMenu={props.hideMenu}
+							href='/profile'
+							icon="fas fa-user"
+							label="Perfil"
+						/>,
 						<MobileOption key='fav'
 							hideMenu={props.hideMenu}
-							href='/search'
+							href='/myJobs?section=favorites'
+							as='/myJobs/favorites'
 							icon="far fa-star"
 							label="Favoritos"
 						/>,
 						<MobileOption key='misPostulaciones'
 							hideMenu={props.hideMenu}
-							href='/search'
+							href='/myJobs?section=applications'
+							as='/myJobs/applications'
 							icon="fas fa-edit"
 							label="Mis postulaciones"
 						/>
@@ -90,18 +103,23 @@ const MobileMenu = (props) => (
 						label="Ayuda"
 					/>
 					{props.isLogged ? [
-						<MobileOption key='config'
+						<MobileOption key='recruit'
 							hideMenu={props.hideMenu}
-							href='/editprofile'
-							icon="fas fa-cog"
-							label="Configuración"
+							href='/newJobOffer'
+							icon="fas fa-handshake"
+							label="Reclutá"
 						/>,
-						<MobileOption key='logout'
-							hideMenu={props.hideMenu}
-							href='/search'
-							icon="fas fa-sign-out-alt"
-							label="Cerrar sesión"
-						/>
+						<div
+							key='logout'
+							onClick={()=>{
+								props.hideMenu()
+								logOut(props.dispatch)
+							}}
+							className="mobile-option"
+						>
+							<i className='fas fa-sign-out-alt'></i>
+							<span>Cerrar sesión</span>
+						</div>
 					]
 					:
 						<MobileOption

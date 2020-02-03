@@ -5,14 +5,18 @@ import EditPersonalData from '../components/editProfile/editPersonalData'
 
 export default class CreateProfile extends React.Component {
 	state = {
-		welcomeMessage: false
+		welcomeMessage: false,
+		loading: false
 	}
 	afterSend = () => {
 		this.setState(()=>({welcomeMessage:true}))
 	}
+	setLoading = loading => {
+		this.setState(()=>({loading}))
+	}
 	render() {
 		return (
-			<Page contentClass="bg--gray">
+			<Page contentClass="bg--gray" loading={this.state.loading}>
 				{this.state.welcomeMessage?
 					<div id='welcomePageMessage'>
 						<h1>Holis</h1>
@@ -25,7 +29,11 @@ export default class CreateProfile extends React.Component {
 						</div>
 
 						<div className='mt-5'>
-							<EditPersonalData afterSend={this.afterSend} ignoreContact={true}/>
+							<EditPersonalData
+								afterSend={this.afterSend}
+								ignoreContact={true}
+								setLoading={this.setLoading}
+							/>
 						</div>
 					</div>
 				}

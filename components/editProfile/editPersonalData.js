@@ -6,43 +6,36 @@ import {
 } from '../Science'
 
 import {
-	UserApi
+	UserApi,
+	GeoApi
 } from '../../src/api/api'
 
 class EditPersonalData extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.inputRefs = {}
 		this.state = {
+			submitDisabled: true,
+			countries: false,
+			provinces: false,
+			cities: false,
+			localities: false,
+			nationalityId: false,
 			values: {
 				firstName: false,
 				lastName: false,
 				birthday: false,
-				sex: false,
+				sexId: false,
 				country: false,
 				province: false,
+				city: false,
+				locality: false,
 				street: false,
 				stNumber: false,
 				phone: false,
 				facebook: false,
 				twitter: false,
 				website: false
-			}
-		}
-	}
-	countries = {
-		arg: {
-			name: 'Argentina',
-			provinces: {
-				bue: 'Buenos Aires',
-				cor: 'Córdoba'
-			}
-		},
-		chi: {
-			name: 'Chile',
-			provinces: {
-				ciud: 'Ciudad de Chile',
-				otr: 'Otra ciudad'
 			}
 		}
 	}
@@ -53,10 +46,108 @@ class EditPersonalData extends React.Component {
 			let copy = prevState;
 			copy.values[name] = value;
 			return copy;
+		}, () => {
+			switch(name){
+				case 'country':
+					this.updateProvinces()
+					break;
+				case 'province':
+					this.updateCities()
+					break;
+				case 'city':
+					this.updateLocalities()
+					break;
+			}
+		})
+	}
+	countryChanged = () => {
+		this.setState(prevState => {
+			let { values } = prevState
+			values.province = false
+			values.city = false
+			values.locality = false
+			return {
+				values, provinces: false, cities: false, localities: false
+			}
+		}, this.updateProvinces)
+	}
+	updateProvinces2 = () => {
+		GeoApi.getProvinces(this.state.values.country).then(provinces => {
+			this.setState(()=>({provinces}))
+		})
+	}
+	updateProvinces = () => {
+		GeoApi.getProvinces(this.state.values.country).then(provinces => {
+			this.setState( prevState => {
+				return {
+					provinces,
+					values: {
+						...prevState.values,
+						// Si solo tengo una provincia la selecciono
+						province: provinces.length==1 ? provinces[0].id : false,
+						city: false, locality: false
+					}
+				}
+			}, () => { provinces.length==1 ? this.inputRefs.province._forceChange() : false })
+		})
+	}
+	updateCities = () => {
+		GeoApi.getCities(this.state.values.province).then(cities => {
+			this.setState( prevState => {
+				return {
+					cities,
+					values: {
+						...prevState.values,
+						// Si solo tengo una provincia la selecciono
+						city: cities.length==1 ? cities[0].id : false,
+						locality: false
+					}
+				}
+			}, () => { cities.length==1 ? this.inputRefs.city._forceChange() : false })
+		})
+	}
+	provinceChanged = () => {
+		this.setState(prevState => {
+			let { values } = prevState
+			values.city = false
+			values.locality = false
+			return {
+				values, cities: false, localities: false
+			}
+		}, this.updateCities)
+	}
+	updateCities2 = () => {
+		GeoApi.getCities(this.state.values.province).then(cities => {
+			this.setState(()=>({cities}))
+		})
+	}
+	updateLocalities = () => {
+		GeoApi.getLocalities(this.state.values.city).then(localities => {
+			this.setState( prevState => {
+				return {
+					localities,
+					values: {
+						...prevState.values,
+						locality: localities.length==1 ? localities[0].id : false
+					}
+				}
+			}, () => { localities.length==1 ? this.inputRefs.locality._forceChange() : false })
 		})
 	}
 	componentDidMount() {
 		// this.searchInput.focus();
+		GeoApi.getCountries().then(countries => {
+			this.setState(()=>({
+				countries
+			}))
+		}).finally(()=>{
+			this.setSubmitDisabled(false)
+		})
+	}
+	setSubmitDisabled = submitDisabled => {
+		this.setState(()=>({
+			submitDisabled
+		}))
 	}
 	_submit = e => {
 		e.preventDefault();
@@ -68,22 +159,43 @@ class EditPersonalData extends React.Component {
 		})
 		if(validForm) {
 			const toSend = {
-				firstName: this.state.values.firstName,
+				name: this.state.values.firstName,
 				lastName: this.state.values.lastName,
-				birthday: this.state.values.birthday,
-				sex: this.state.values.sex,
-				place: {
-					country: this.state.values.country,
-					province: this.state.values.province,
-					street: this.state.values.street,
-					stNumber: this.state.values.stNumber,
+				birthday: moment(this.state.values.birthday, 'D/M/YYYY').format('YYYY-M-D'),
+				sexId: this.state.values.sexId,
+				nationalityId: this.state.values.nationalityId,
+				addres: {
+					localityId: this.state.values.locality,
+					streetName: this.state.values.street,
+					streetNumber: this.state.values.stNumber,
+					zipCode: null,
+					department: null,
+					additionals: null
 				},
-				contact: {
-					phone: this.state.values.phone,
-					facebook: this.state.values.facebook,
-					twitter: this.state.values.twitter,
-					website: this.state.values.website
-				},
+				socialNetwork: [
+					{
+						socialNetworkName: 'facebook',
+						userName: this.state.values.facebook
+					},
+					{
+						socialNetworkName: 'twitter',
+						userName: this.state.values.twitter
+					},
+					{
+						socialNetworkName: 'instagram',
+						userName: this.state.values.instagram
+					},
+					{
+						socialNetworkName: 'website',
+						url: this.state.values.website
+					},
+				],
+				phone: this.state.values.phone,
+				// contact: {
+				// 	facebook: this.state.values.facebook,
+				// 	twitter: this.state.values.twitter,
+				// 	website: this.state.values.website
+				// },
 			}
 			UserApi.editBasicProfile(toSend).then(response => {
 				if(this.props.afterSend) {
@@ -139,20 +251,39 @@ class EditPersonalData extends React.Component {
 						/>
 						<Input
 							label="Sexo"
-							name='sex'
-							value={this.state.values.sex}
+							name='sexId'
+							value={this.state.values.sexId}
 							type="select"
 							required
 							options={[
-									[0,'Femenino'],
-									[1,'Masculino'],
-									[2,'Otro'],
+									[1,'Femenino'],
+									[2,'Masculino'],
+									[3,'Otro'],
 								].map((o,k)=>(
 									<option key={k} value={o[0]}>{o[1]}</option>
 								))
 							}
 							onChange={this.handleChange}
-							ref={ (input) => {this.inputRefs.sex = input} }
+							ref={ (input) => {this.inputRefs.sexId = input} }
+						/>
+						<Input
+							label='Nacionalidad'
+							name='nationalityId'
+							value={this.state.values.nationalityId}
+							type='select'
+							required
+							options={
+								this.state.countries ?
+									this.state.countries.map((o,k)=>(
+										<option key={o.id} value={o.id}>{o.name}</option>
+									))
+								:
+									<option disabled>Cargando</option>
+
+							}
+							value={this.state.values.nationalityId}
+							onChange={this.handleChange}
+							ref={ (input) => {this.inputRefs.nationalityId = input} }
 						/>
 					</div>
 					<h3>Dirección</h3>
@@ -164,9 +295,13 @@ class EditPersonalData extends React.Component {
 							type='select'
 							required
 							options={
-								Object.keys(this.countries).map((o,k)=>(
-									<option key={o} value={o}>{this.countries[o].name}</option>
-								))
+								this.state.countries ?
+									this.state.countries.filter(o=>o.name==='Argentina').map((o,k)=>(
+										<option key={o.id} value={o.id}>{o.name}</option>
+									))
+								:
+									<option disabled>Cargando</option>
+
 							}
 							value={this.state.values.country}
 							onChange={this.handleChange}
@@ -178,10 +313,10 @@ class EditPersonalData extends React.Component {
 							type='select'
 							required
 							options={
-								this.state.values.country ?
-									Object.keys(this.countries[this.state.values.country].provinces).map((o,k)=>(
-										<option key={o} value={o}>
-											{this.countries[this.state.values.country].provinces[o]}
+								this.state.provinces ?
+									this.state.provinces.map((o,k)=>(
+										<option key={o.id} value={o.id}>
+											{o.description}
 										</option>
 									))
 								: false
@@ -189,6 +324,42 @@ class EditPersonalData extends React.Component {
 							value={this.state.values.province}
 							onChange={this.handleChange}
 							ref={ (input) => {this.inputRefs.province = input} }
+						/>
+						<Input
+							label='Ciudad'
+							name='city'
+							type='select'
+							required
+							options={
+								this.state.cities ?
+									this.state.cities.map((o,k)=>(
+										<option key={o.id} value={o.id}>
+											{o.description}
+										</option>
+									))
+								: false
+							}
+							value={this.state.values.city}
+							onChange={this.handleChange}
+							ref={ (input) => {this.inputRefs.city = input} }
+						/>
+						<Input
+							label='Localidad'
+							name='locality'
+							type='select'
+							required
+							options={
+								this.state.localities ?
+									this.state.localities.map((o,k)=>(
+										<option key={o.id} value={o.id}>
+											{o.description}
+										</option>
+									))
+								: false
+							}
+							value={this.state.values.locality}
+							onChange={this.handleChange}
+							ref={ (input) => {this.inputRefs.locality = input} }
 						/>
 						<Input
 							label='Calle'
@@ -265,7 +436,7 @@ class EditPersonalData extends React.Component {
 							</div>
 						</>
 					}
-					<button type='submit' className="bn--green">
+					<button disabled={this.state.submitDisabled} type='submit' className="bn--green">
 						Guardar
 					</button>
 				</div>

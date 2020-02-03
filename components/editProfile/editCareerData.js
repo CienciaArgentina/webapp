@@ -235,7 +235,7 @@ export default class EditPersonalData extends React.Component {
 												type="select"
 												fullWidth
 												options={
-													['Laboratorio','Doscencia'].map((o,k)=>(
+													['Laboratorio','Docencia'].map((o,k)=>(
 														<option key={k} value={o.toLowerCase()}>{o}</option>
 													))
 												}
@@ -259,7 +259,7 @@ export default class EditPersonalData extends React.Component {
 												/>
 												<Input
 													required
-													label={o.workType=='doscencia'? 'Tu rol cómo doscente' :'Tu rol en el laboratorio'}
+													label={o.workType=='docencia'? 'Tu rol cómo docente' :'Tu rol en el laboratorio'}
 													name='rol'
 													ref={ref => this.workInputs[k].rol = ref}
 													onChange={(e) => {this.changeFormWork(e,k)}}

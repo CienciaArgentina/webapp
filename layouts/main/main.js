@@ -82,9 +82,34 @@ class Page extends Component {
 		  }
 		});
 	}
+	handlePanRight = e => {
+		if(e.isFinal && e.distance > 100) {
+			this.showMenu()
+			// const startX = e.changedPointers[0].screenX-e.deltaX
+			// if(startX < 120) {
+			// }
+		}
+	}
+	handlePanLeft = e => {
+		if(e.isFinal && e.distance > 100) {
+			this.hideMenu()
+		}
+	}
 	componentDidMount() {
 		const { dispatch } = this.props
-		this._isMounted = true;
+		this._isMounted = true
+		if(process.browser) {
+			const _touchDevice = "ontouchstart" in document.documentElement
+			if(_touchDevice) {
+				// start Hammer to create touch events
+				const Hammer = require('hammerjs')
+				const viewerImage = document.getElementById("app")
+				const hammertime = new Hammer(viewerImage)
+				hammertime.on("panright", this.handlePanRight)
+				hammertime.on("panleft", this.handlePanLeft)	
+			}
+		}
+
 		// this.timer = startClock(dispatch)
 		// --- Uso alguna funcion cuando cargo local --- //
 		

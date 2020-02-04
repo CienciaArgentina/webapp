@@ -50,19 +50,19 @@
 			display: flex;
 			justify-content: space-evenly;
 			padding: $s-5 0;
+			padding-top: $s-6;
 			div {
 				flex: 1;
 				text-align: center;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+				color: $lblue;
 				i {
 					font-size: 2rem;
-					color: $gray-600;
 					margin-bottom: $s-2;
 				}
 				label {
-					color: $lblue;
 					text-transform: uppercase;
 					font-size: 1.2rem;
 					font-weight: 500;

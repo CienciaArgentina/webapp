@@ -15,12 +15,21 @@
 	@include inputsHalf()
 }
 
+.editProfileContaier {
+	@media (min-width: $device-tablet) {
+		background-color: $gray-200;
+	}
+}
+
 #editProfile {
 	@include container(l);
 	margin-top: $s-6;
 	display: flex;
 	align-items: flex-start;
 	.editProfile__menu {
+		@media (max-width: $device-tablet) {
+			display: none;
+		}
 		flex-grow: 0;
 		flex-shrink: 0;
 		width: 20rem;
@@ -55,6 +64,26 @@
 	}
 	.mainEdit {
 		flex-grow: 1;
+		@media (max-width: $device-tablet) {
+			display: none;
+		}
+	}
+	.mainEditMobile {
+		display: none;
+		@media (max-width: $device-tablet) {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+		.__option {
+			width: 100%;
+			padding: $s-5 $s-4;
+			font-size: 1.6rem;
+			color: $gray-900;
+			i {
+				margin-right: $s-3;
+			}
+		}
 	}
 }
 .profileForm {

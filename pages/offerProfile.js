@@ -1,11 +1,17 @@
 import React from 'react'
 import Page from '../layouts/main/main'
 import Link from 'next/link'
+import { requiredLogin } from '../src/actions'
+
 
 export default class offerProfile extends React.Component {
+	static async getInitialProps(ctx,router) {
+		requiredLogin(ctx,router)
+		return {}
+	}
 	render() {
 		return (
-			<Page contentClass="bg--gray">
+			<Page requireLogin={true} contentClass="bg--gray">
 				<div id="offerProfile" className="">
 					<div className="offerBack backButton">
 						<Link href={`/offerDashboard`}>

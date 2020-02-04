@@ -1,6 +1,7 @@
 import Page from '../layouts/main/main'
 import { Input, Checkbox, CheckboxGroup } from '../components/Science'
 import classnames from 'classnames'
+import { requiredLogin } from '../src/actions'
 
 const FormStage = props => {
 	let sections = []
@@ -31,6 +32,10 @@ const FormStage = props => {
 }
 
 export default class newJobOffer extends React.Component {
+	static async getInitialProps(ctx,router) {
+		requiredLogin(ctx,router)
+		return {}
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -152,7 +157,7 @@ export default class newJobOffer extends React.Component {
 	}
 	render() {
 		return (
-			<Page contentClass="bg--gray">
+			<Page requireLogin={true} contentClass="bg--gray">
 				<div id='newJobOffer'>
 					<div className='__header'>
 						<div className='__background'></div>

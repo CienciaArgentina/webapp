@@ -3,6 +3,7 @@ import Page from '../layouts/main/main';
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip'
 import { JobsApi } from '../src/api/api'
+import { requiredLogin } from '../src/actions'
 
 const OfferCantidates = (props) => (
 	<div className="offerCandidates">
@@ -169,7 +170,7 @@ export default class offerDashboard extends React.Component {
 	}
 	render() {
 		return (
-			<Page contentClass="bg--gray">
+			<Page requireLogin={true} contentClass="bg--gray">
 				<ReactTooltip effect='solid' />
 				<div id="offerDashboard" className="pt-3">
 					<div className="offer__header">
@@ -226,8 +227,9 @@ export default class offerDashboard extends React.Component {
 	}
 }
 
-offerDashboard.getInitialProps = async function(context) {
-	const job = JobsApi.getAdminJob(context.query.id);
+offerDashboard.getInitialProps = async function(ctx, router) {
+	requiredLogin(ctx,router)
+	const job = JobsApi.getAdminJob(ctx.query.id);
 	// return job
 	return {
 		candidates: [

@@ -1,0 +1,143 @@
+#welcomeMessagePage {
+	// display: flex;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	z-index: 300;
+	.__omitir {
+		bottom: 2rem;
+		width: 100%;
+		position: absolute;
+		pointer-events: none;
+		opacity: 0;
+		transition: all .4s;
+		transition-delay: 3s;
+		&.--stage1 {
+			pointer-events: initial;
+			opacity: 1;
+		}
+	}
+	svg {
+		position: absolute;
+		@include abs-center();
+		width: 15rem;
+		fill: rgba(255,255,255,0);
+		stroke: $lblue;
+		stroke-width: .2rem;
+		stroke-dasharray: 4rem 8rem;
+		stroke-dashoffset: 0%;
+		animation: creatingLogo 100000s linear infinite;
+		transition: stroke-dasharray 3s ease, stroke-dashoffset 2s ease, top 2s;
+		&.--finished {
+			stroke-dasharray: 30rem 0rem;
+			stroke-dashoffset: 0;
+			animation-play-state: paused;
+			top: calc(15% + 7.5rem);
+		}
+		&.--stage2 {
+			transition: all 2s;
+			fill: $lblue;
+			stroke: rgba(255,255,255,0);
+			transform: translate(-50%, 0);
+			width: 5rem;
+			top: 3rem;
+		}
+	}
+	.__welcome {
+		text-align: center;
+		@include abs-center();
+		opacity: 0;
+		font-size: 2rem;
+		text-transform: uppercase;
+		color: $lblue;
+		letter-spacing: .4rem;
+		line-height: 2rem;
+		&.--visible {
+			transition: all .7s;
+			transition-delay: 1.2s;
+			opacity: 1;
+			line-height: 4rem;
+		}
+		&.--stage2 {
+			transition: opacity .5s, top .7s;
+			transition-delay: .5s;
+			opacity: 0;
+			top: 30%;
+		}
+	}
+	.__start {
+		position: absolute;
+		bottom: 20%;
+		text-align: center;
+		left: 50%;
+		transform: translateX(-50%);
+		opacity: 0;
+		pointer-events: none;
+		transition: all .5s;
+		&.--visible {
+			transition-delay: 2s;
+			pointer-events: initial;
+			opacity: 1;
+		}
+		&.--stage2 {
+			transition-delay: 0s;
+			pointer-events: none;
+			opacity: 0;
+			bottom: 0;
+		}
+	}
+	.__motivo {
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		text-align: center;
+		left: 50%;
+		top: 13rem;
+		transform: translateX(-50%);
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		color: $lblue;
+		letter-spacing: .1rem;
+		line-height: 2rem;
+		width: 100%;
+		transition: all .2s ease;
+		transition-delay: 2s;
+		&.--stage2 {
+			opacity: 1;
+			top: 11rem;
+		}
+	}
+	.__options {
+		opacity: 0;
+		pointer-events: none;
+		font-size: 1.7rem;
+		@include abs-center();
+		width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+		font-weight: 500;
+		color: $gray-700;
+		transition: all .2s ease;
+		transition-delay: 2.2s;
+		&.--stage2 {
+			opacity: 1;
+			pointer-events: initial;
+		}
+		div {
+			padding: 2rem $s-4;
+			margin: 8rem 0;
+		}
+	}
+}
+
+@keyframes creatingLogo {
+	from {
+		stroke-dashoffset: 0%;
+	}
+	to {
+		stroke-dashoffset: 1000000%;
+	}
+}

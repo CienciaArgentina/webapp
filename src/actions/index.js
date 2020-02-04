@@ -5,5 +5,6 @@ export {
 	updateMyData,
 	setLogged,
 	setUserData,
-	logOut
+	logOut,
+	setCreatingProfile
 } from './user/user'

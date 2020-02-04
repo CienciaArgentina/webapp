@@ -72,7 +72,7 @@ app
 		app.render(req, res, actualPage, queryParams)
 	});
 	server.get(['/editprofile/:section', '/editprofile/', '/editprofile'],(req,res) => {
-		const actualPage = '/editProfile'
+		const actualPage = '/editprofile'
 		const queryParams = { section: req.params.section } 
 		app.render(req, res, actualPage, queryParams)
 	})
@@ -85,6 +85,11 @@ app
 		res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
 		const actualPage = '/index'
 		app.render(req, res, actualPage)
+	})
+	server.get('/myJobs/:section', (req,res) => {
+		const actualPage = '/myJobs'
+		const queryParams = { section: req.params.section } 
+		app.render(req, res, actualPage, queryParams)
 	})
 	server.get('*', (req, res) => {
 		return handle(req, res);

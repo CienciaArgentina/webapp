@@ -29,7 +29,7 @@ const MobileOption = (props) => (
 	</Link>
 )
 
-const MobileMenu = (props) => (
+const MobileMenu = props => (
 	<div className={
 			"mobile-menu" +
 			(props.mobile_menu_display ? " mobile-menu--display" : '') +
@@ -47,7 +47,7 @@ const MobileMenu = (props) => (
 				<div onClick={props.hideMenu}></div>
 			</div>
 			<div className="mobile-menu__userCont">
-				{props.isLogged ?
+				{props.isLogged &&
 					<MobileUser
 						img={props.userData.personalData.profileImage}
 						name={props.userData.personalData.name}
@@ -56,7 +56,8 @@ const MobileMenu = (props) => (
 						email={props.userData.account.email}
 						userName={props.userData.account.userName}
 					/>
-				:
+				}
+				{(!props.isLogged && !props.isCreatingProfile) &&
 					<Link href='/login'>
 						<button onClick={props.hideMenu} className="bn--green ml-3 bn--w2 bn--icon-signIn">
 							Ingresar
@@ -129,6 +130,19 @@ const MobileMenu = (props) => (
 							label="Sumá a tu instituto"
 						/>
 					}
+					{props.isCreatingProfile &&
+						<div
+							key='logout'
+							onClick={()=>{
+								props.hideMenu()
+								logOut(props.dispatch)
+							}}
+							className="mobile-option"
+						>
+							<i className='fas fa-sign-out-alt'></i>
+							<span>Cerrar sesión</span>
+						</div>
+					}
 				</div>
 			</div>
 		</div>
@@ -138,7 +152,8 @@ const MobileMenu = (props) => (
 const mapStateToProps = (state) => {
 	return {
 		isLogged: state.user.isLogged,
-		userData: state.user.userData
+		userData: state.user.userData,
+		isCreatingProfile: state.user.isCreatingProfile
 	}
 }
 

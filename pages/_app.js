@@ -8,7 +8,9 @@ import configureStore from '../store'
 
 import ErrorPage from './_error'
 import {
-	updateMyData
+	updateMyData,
+	setCreatingProfile,
+	setUserData
 } from '../src/actions'
 
 import 'normalize.css/normalize.css';
@@ -21,17 +23,20 @@ class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
 		const cookies = parseCookies(ctx);
 		if(!process.browser) {
-			// this is server side
+			// server side
 			if(cookies.userData) {
-				// console.log('USER DATA:');
-				// console.log(JSON.parse(cookies.userData));
 				const error = await updateMyData(ctx.store.dispatch, JSON.parse(cookies.userData).userName)
-				if(error === 'profileIncomplete' && router.route!='/createProfile') {
-					router.push('/createProfile')
-					ctx.res.writeHead(302, {
-						Location: '/createProfile'
-					});
-					ctx.res.end();
+				if(error === 'profileIncomplete') {
+					if(router.route!='/createProfile') {
+						// redirect to createProfile
+						ctx.res.writeHead(302, {
+							Location: '/createProfile'
+						});
+						ctx.res.end();
+					} else {
+						// estoy en createProfile
+						ctx.store.dispatch(setCreatingProfile(true))
+					}
 				}
 			}
 		} else {

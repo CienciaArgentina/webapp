@@ -1,0 +1,21 @@
+#myJobs {
+	.__header {
+		display: flex;
+		justify-content: space-evenly;
+		padding: $s-2 0;
+		div {
+			text-transform: uppercase;
+			flex: 1;
+			margin: 0 $s-3;
+			padding: $s-3 0;
+			text-align: center;
+			&.--selected {
+				color: $lblue;
+				font-weight: 600;
+			}
+		}
+	}
+	.__output {
+
+	}
+}

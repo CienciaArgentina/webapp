@@ -17,6 +17,11 @@ export const setLogged = isLogged => ({
 	isLogged
 })
 
+export const setCreatingProfile = isCreatingProfile => ({
+	type: 'SET_CREATING_PROFILE',
+	isCreatingProfile
+})
+
 export const updateMyData = async (dispatch, userName) => {
 	let error = false
 	await UserApi.getMyData(userName).then(response => {
@@ -36,6 +41,7 @@ export const logOut = async (dispatch) => {
 	await UserApi.logOut().then(response => {
 		destroyCookie({}, 'userData')
 		dispatch(setLogged(false))
+		dispatch(setCreatingProfile(false))
 		dispatch(setUserData(false))
 	}).catch(e=>{
 		console.log(e)

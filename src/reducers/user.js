@@ -1,6 +1,7 @@
 const defaultState = {
 	isLogged: false,
 	userData: false,
+	isCreatingProfile: false
 }
 
 const userReducer = (state = defaultState, action) => {
@@ -13,6 +14,11 @@ const userReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				userData: action.userData
+			}
+		case 'SET_CREATING_PROFILE':
+			return {
+				...state,
+				isCreatingProfile: action.isCreatingProfile
 			}
 		default:
 			return state

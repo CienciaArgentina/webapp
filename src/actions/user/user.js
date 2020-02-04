@@ -43,9 +43,25 @@ export const logOut = async (dispatch) => {
 		dispatch(setLogged(false))
 		dispatch(setCreatingProfile(false))
 		dispatch(setUserData(false))
+		if(process.browser) {
+			document.location.href = '/login'
+		}
 	}).catch(e=>{
 		console.log(e)
 	})
+}
+
+export const requiredLogin = (ctx, router) => {
+	if(!ctx.store.getState().user.isLogged) {
+		if(ctx.isServer) {
+			ctx.res.writeHead(302, {
+				Location: '/login'
+			});
+			ctx.res.end();
+		} else {
+			router.push('/login')
+		}
+	}
 }
 
 //asi seria el get

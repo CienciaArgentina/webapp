@@ -6,5 +6,6 @@ export {
 	setLogged,
 	setUserData,
 	logOut,
-	setCreatingProfile
+	setCreatingProfile,
+	requiredLogin
 } from './user/user'

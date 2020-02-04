@@ -45,7 +45,7 @@ class MyApp extends App {
 				router.push('/createProfile')
 			}
 		}
-		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx, router) : {};
 		return { pageProps }
 	}
 	render() {

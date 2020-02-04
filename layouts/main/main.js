@@ -25,19 +25,6 @@ import { connect } from 'react-redux'
 
 class Page extends Component {
 	_isMounted = false
-	// static async getInitialProps({ store, req }) {
-	// 	console.log('DONDE MIERDA ESTOY');
-		
-	// 	const isServer = !!req
-	// 	if(isServer) {
-	// 		console.log('This is server');
-	// 	}
-	// 	console.log(isServer);
-		
-	// 	// await store.dispatch(serverRenderClock(isServer))
-	// 		// --- Uso alguna funcion cuando cargo --- //
-	// 	return {}
-	// }
 	state = {
 		mobile_menu_display: false,
 		mobile_menu_show: false,
@@ -85,9 +72,6 @@ class Page extends Component {
 	handlePanRight = e => {
 		if(e.isFinal && e.distance > 100) {
 			this.showMenu()
-			// const startX = e.changedPointers[0].screenX-e.deltaX
-			// if(startX < 120) {
-			// }
 		}
 	}
 	handlePanLeft = e => {
@@ -109,10 +93,6 @@ class Page extends Component {
 				hammertime.on("panleft", this.handlePanLeft)	
 			}
 		}
-
-		// this.timer = startClock(dispatch)
-		// --- Uso alguna funcion cuando cargo local --- //
-		
 		window.addEventListener('beforeinstallprompt', (e) => {
 		  console.log('beforeinstallprompt Event fired');
 		  e.preventDefault();
@@ -145,7 +125,11 @@ class Page extends Component {
 					mobile_menu_show={this.state.mobile_menu_show}
 				/>
 				<div id="content" className={this.props.contentClass?this.props.contentClass:''}>
-					{this.props.children}
+					{this.props.requireLogin ?
+						this.props.isLogged && this.props.children
+					:
+						this.props.children
+					}
 				</div>
 				<Footer />
 				{this.props.loading &&
@@ -159,4 +143,8 @@ class Page extends Component {
 	}
 }
 
-export default connect()(Page)
+const mapStateToProps = state => ({
+	isLogged: state.user.isLogged
+})
+
+export default connect(mapStateToProps)(Page)

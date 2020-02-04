@@ -47,25 +47,26 @@ class MapBox extends React.Component {
 						onStyleLoad={(map) => { //map loaded
 							// map.showCollisionBoxes = true;
 							map.loadImage('/static/img/icons/map-marker-institute.png', (error, image) => {
-								if (error) throw error;
-								map.addImage('LabIcon',  image);
-								map.addLayer({
-									"id": "points",
-									"type": "symbol",
-									"source": {
-										"type": "geojson",
-										"data": this.state.geoJsonData
-									},
-									"layout": {
-										"icon-image": "{icon}",
-										"text-field": "{title}",
-										"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-										"text-offset": [0, 0],
-										"text-anchor": "top",
-										"icon-anchor": "bottom",
-										"icon-size": 0.5
-									}
-								});
+								if(map && !error) {
+									map.addImage('LabIcon',  image);
+									map.addLayer({
+										"id": "points",
+										"type": "symbol",
+										"source": {
+											"type": "geojson",
+											"data": this.state.geoJsonData
+										},
+										"layout": {
+											"icon-image": "{icon}",
+											"text-field": "{title}",
+											"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+											"text-offset": [0, 0],
+											"text-anchor": "top",
+											"icon-anchor": "bottom",
+											"icon-size": 0.5
+										}
+									});
+								}
 							});
 						}}
 					>

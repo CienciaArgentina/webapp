@@ -57,6 +57,11 @@ class EditPersonalData extends React.Component {
 				case 'city':
 					this.updateLocalities()
 					break;
+				case 'firstName':
+					if(this.props.editName) {
+						this.props.editName(value)
+					}
+					break;
 			}
 		})
 	}
@@ -371,6 +376,7 @@ class EditPersonalData extends React.Component {
 						<Input
 							label='Altura'
 							name='stNumber'
+							type='number'
 							value={this.state.values.stNumber}
 							onChange={this.handleChange}
 							ref={ (input) => {this.inputRefs.stNumber = input} }

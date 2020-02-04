@@ -146,7 +146,7 @@ const teamPage = (props) => (
 		<div id="equipo" className="container--m">
 			<h1 className="grayTitle">Quiénes somos</h1>
 			<div className="equipo__description">
-				<p className="text--l">Somos un grupo de nerds que busca facilitar la comunicación en el campo de la ciencia. Nos dedicamos a buscar ofertas de pasantías, doctorados y posdoctorados y publicarlas para que los estudiantes y científicos puedan encontrar fácilmente un lugar para continuar con su carrera. Esta plataforma es de código abierto y fue creada de manera voluntaria, podés ver el código en <a href="https://github.com/CienciaArgentina" target="_blank">Github.</a></p>
+				<p className="text--l">Somos un grupo de nerds que busca facilitar la comunicación en el campo de la ciencia. Nos dedicamos a buscar ofertas de pasantías, doctorados y posdoctorados y publicarlas para que los estudiantes y científicos puedan encontrar fácilmente un lugar para continuar con su carrera. Esta plataforma es de código abierto y fue creada de manera voluntaria, podés ver el código y contribuir a la plataforma en <a href="https://github.com/CienciaArgentina" target="_blank">Github.</a></p>
 				{/* <p className="text--l">¿Tenés dudas? Tenemos una página de preguntas frecuentes donde respondemos algunas preguntas útiles.</p> */}
 				<div className="equipo__lista">
 					{equipoLista.map( (o,key)=>(

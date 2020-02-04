@@ -14,10 +14,25 @@ import { connect } from 'react-redux'
 Modal.setAppElement('#app');
 
 class login extends React.Component {
+	static async getInitialProps(ctx) {
+		if(ctx.store.getState().user.isLogged){
+			if(!process.browser) {
+				ctx.res.writeHead(302, {
+					Location: '/'
+				});
+				ctx.res.end();
+			}
+		}
+		return {}
+	}
 	constructor(props) {
 		super(props);
-		console.log(props);
 	}
+	// componentDidMount() {
+	// 	if(this.props.isLogged) {
+	// 		Router.push('/')
+	// 	}
+	// }
 	state = {
 		user: '',
 		password: '',
@@ -57,11 +72,14 @@ class login extends React.Component {
 
 					}
 				)
-				const cookies = parseCookies()
-				console.log('BACK COOKIES');
-				updateMyData(this.props.dispatch, JSON.parse(cookies.userData).userName).then(()=>{
-					Router.push('/');
-				})
+				location.reload()
+				// const cookies = parseCookies()
+				// updateMyData(this.props.dispatch, JSON.parse(cookies.userData).userName).then(()=>{
+				// 	Router.push('/');
+				// }).catch(e=>{
+				// 	console.log(e);
+					
+				// })
 			}).catch(err => {
 				const status = err.status;
 				let error_know = false;

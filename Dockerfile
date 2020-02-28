@@ -1,5 +1,4 @@
-﻿#TODO: ASPNETCORE_URLS and Test
-FROM node:10.15.0
+FROM node:10.15.0 AS BUILDER
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -8,6 +7,9 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+FROM nginx:1.17.6-alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=BUILDER /usr/src/app/.next .
 
-CMD ["npm","dev"]
+RUN mv /usr/share/nginx/html/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80

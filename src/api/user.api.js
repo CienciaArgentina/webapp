@@ -14,16 +14,12 @@ export class UserApi {
 			return Promise.reject(e)
 		});
 
-		return mapUserResponse(data);
+		return data
 	}
 
 	static async editBasicProfile(data) {
 		console.log(data);
 		return true
-		// const response = await axiosInstance.post('/Accounts/editprofile/basicData', {
-		// 	...data
-		// }).catch(e=> Promise.reject(e.response ? e.response : e))
-		// return response
 	}
 
 	static async confirmAccount(email, token) {

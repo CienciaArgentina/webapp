@@ -2,9 +2,10 @@ import Link from 'next/link';
 import MobileMenu from './MobileMenu'
 import MobileNav from './MobileNav'
 import { connect } from 'react-redux'
+import PorfileImage from '../../../components/profile/ProfileImage'
 
 
-const Header = (props) => (
+const Header = props => (
 	<header>
 		<Link href="/">
 			<a aria-label='Logo Ciencia Argentina'>
@@ -19,9 +20,33 @@ const Header = (props) => (
 				<a>Reclutar</a>
 			</Link>
 			{props.isLogged ?
-				<Link href="/login">
-					<button className="login">Perfil</button>
-				</Link>
+				<div className='__userOptions'>
+					<Link href='/profile'>
+						<a>
+							<PorfileImage
+								name = {props.userData.personalData.name}
+								img = {false}
+								size = '4'
+							/>
+						</a>
+					</Link>
+					<div className='__options'>
+						{[
+							[
+								['Laboratorios', '/profile'],
+								['Aplicaciones', '/myJobs?section=applications', '/myJobs/applications'],
+								['Favoritos', '/myJobs?section=favorites', '/myJobs/favorites'],
+							]
+						].map((group,kGroup) => (group.map((item,k) => (
+							// 
+							<Link key={`${kGroup}-${k}`} href={item[1]} as={item[2]?item[2]:item[1]}>
+								<div className='__option'>
+									{item[0]}
+								</div>
+							</Link>
+						))))}
+					</div>
+				</div>
 			:
 				<Link href="/login">
 					<button className="login">Ingresar</button>

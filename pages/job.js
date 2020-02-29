@@ -71,7 +71,7 @@ class job extends Component {
 					<div>
 						<div>
 							<button className='mt-4'>¡Aplicar!</button>
-							<Link href='/editprofile?section=basica' as='/editProfile/basica'>
+							<Link href='/editprofile?section=basic' as='/editProfile/basic'>
 								<button className='mt-2 ml-2 bn--blue--outline'>Revisar mi perfil</button>
 							</Link>
 						</div>

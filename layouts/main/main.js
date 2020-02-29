@@ -19,9 +19,6 @@ NProgress.configure({
 
 //redux
 import { connect } from 'react-redux'
-// import { startClock, serverRenderClock } from '../../store'
-// --- Importar funciones del store --- //
-
 
 class Page extends Component {
 	_isMounted = false

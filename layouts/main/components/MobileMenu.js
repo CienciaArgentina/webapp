@@ -2,17 +2,23 @@ import Link from 'next/link';
 import { connect } from 'react-redux'
 
 import { logOut } from '../../../src/actions'
+import ProfileImage from '../../../components//profile/ProfileImage'
 
 const MobileUser = (props) => (
 	<Link href='/profile'>
 		<div className="MobileMenuUser">
-			<div className={`MobileProfilePic`+(props.img ? ' --hasImage':' --noImage')}>
+			<ProfileImage
+				name = {props.name}
+				img = {props.img}
+				size = '6'
+			/>
+			{/* <div className={`MobileProfilePic`+(props.img ? ' --hasImage':' --noImage')}>
 				{props.img ?
 					<img src={props.img} />
 					:
 					<span>{props.name[0]}</span>
 				}
-			</div>
+			</div> */}
 			<div className="MobileMenuName">
 				<span className="__name">{props.name} {props.lastName}</span>
 				<span className="__email">@{props.userName}</span>

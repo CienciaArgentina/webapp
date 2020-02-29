@@ -1,13 +1,16 @@
 import Link from 'next/link'
+import PorfileImage from './ProfileImage'
 
 const ProfileMobile = props => (
 	<div id='profileMobile'>
 		<div className='__main'>
 			<div className='__header'>
 				<div className='__profileImg'>
-					<div className='__container'>
-						<label>M</label>
-					</div>
+					<PorfileImage
+						name = {props.personalData.name}
+						img = {false}
+						size = '8'
+					/>
 				</div>
 				<div className='__data'>
 					<h2>
@@ -22,10 +25,12 @@ const ProfileMobile = props => (
 				</div>
 			</div>
 			<div className='__shortcuts'>
-				<div>
-					<i className="fas fa-briefcase"></i>
-					<label>Tabajos</label>
-				</div>
+				<Link href='/myJobs'>
+					<div>
+						<i className="fas fa-briefcase"></i>
+						<label>Tabajos</label>
+					</div>
+				</Link>
 				<div>
 					<i className="fas fa-landmark"></i>
 					<label>Institutos</label>

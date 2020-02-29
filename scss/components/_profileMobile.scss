@@ -18,20 +18,6 @@
 				position: absolute;
 				display: flex;
 				justify-content: center;
-				.__container {
-					width: $profileSize;
-					height: $profileSize;
-					background-color: $green-500;
-					border-radius: 50%;
-					border: solid .3rem white;
-					box-sizing: border-box;
-					position: relative;
-					label {
-						@include abs-center();
-						color: white;
-						font-size: 2rem;
-					}
-				}
 			}
 			.__data {
 				padding-top: $profileSize / 2 + $s-3;

@@ -15,8 +15,18 @@ export default class editprofile extends React.Component {
 	static async getInitialProps(ctx, router) {
 		requiredLogin(ctx, router)
 		let selectedForm = ctx.query.section
-		if(!selectedForm){
-			selectedForm = ''
+		if(![
+			'',
+			'basic',
+			'career',
+			'publications',
+			'account'
+		].includes(selectedForm)) {
+			return {
+				error: {
+					statusCode: 404,
+				}
+			}
 		}
 		return {
 			// userData,

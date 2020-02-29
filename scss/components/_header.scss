@@ -1,3 +1,12 @@
+@keyframes optionsInitial {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 header {
 	$header-h: 7rem;
 	width: 100%;
@@ -31,6 +40,55 @@ header {
 			height: 100%;
 			width: $s-3*8;
 			background-color: $lblue;
+		}
+		.__userOptions {
+			margin: 0 $s-3;
+			margin-right: $s-6;
+			position: relative;
+			.ProfileImage {
+				cursor: pointer;
+			}
+			.__options {
+				display: none;
+				position: absolute;
+				background-color: white;
+				padding: $s-2 0;
+				top: 7rem;
+				right: -1rem;
+				width: 15rem;
+				// animation: optionsInitial 1s ease;
+				@include elevation(3);
+				&::before, &::after {
+					content: '';
+					position: absolute;
+					top: -.5rem;
+					right: 2rem;
+					border: 1rem solid transparent;
+					border-bottom-color: white;
+					transform: rotate(-45deg);
+					background-color: white;
+					pointer-events: none;
+				}
+				&::after {
+					z-index: -1;
+					@include elevation(5)
+				}
+				.__option {
+					padding: $s-2 $s-3;
+					cursor: pointer;
+					position: relative;
+					&:hover {
+						background-color: $lblue;
+						color: white;
+					}
+				}
+			}
+			&:hover {
+				.__options {
+					display: block;
+					opacity: 1;
+				}
+			}
 		}
 	}
 	.mobile-nav, .mobile-menu {
@@ -143,15 +201,8 @@ header {
 			padding-left: 1.5rem;
 			display: flex;
 			align-items: center;
-			.MobileProfilePic {
-				@include profilePic(6rem);
-				background-color: $red-900;
-				flex-shrink: 0;
+			.ProfileImage {
 				margin-right: 1.5rem;
-				span {
-					@include abs-center();
-					font-size: 2.4rem;
-				}
 			}
 			.MobileMenuName {
 				overflow: hidden;

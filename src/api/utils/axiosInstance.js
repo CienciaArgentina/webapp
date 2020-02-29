@@ -3,10 +3,10 @@
 
 import axios from 'axios';
 
-const API_DOMAIN = 'http://45.236.130.98:8080/api/'
+// const API_DOMAIN = 'http://localhost:5000/api/'
 
 const axiosInstance = axios.create({
-		baseURL: API_DOMAIN,
+		baseURL: process.env.API_URL,
 		timeout: 10000,
 		headers: {
 			contentType: 'application/json',

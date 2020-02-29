@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "SET NODE_ENV=development& SET API_URL=http://localhost:5000/api/& nodemon server.js",
     "build": "next build",
     "heroku-postbuild": "npm run build",
     "start": "NODE_ENV=production node server.js",
@@ -12,6 +12,11 @@
   },
   "engines": {
     "node": "10.15.0"
+  },
+  "nodemonConfig": {
+    "env": {
+      "NODE_ENV": "development"
+    }
   },
   "author": "CienciaArgentina",
   "license": "MIT",

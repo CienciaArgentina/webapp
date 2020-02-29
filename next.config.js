@@ -30,4 +30,9 @@ const options = {
 }
 
 
-module.exports = withCSS(withSass(withOffline()))
+module.exports = withCSS(withSass(withOffline({
+	env: {
+		ENVIROMENT: process.env.NODE_ENV,
+		API_URL: process.env.API_URL
+	},
+})))

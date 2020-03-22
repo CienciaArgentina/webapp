@@ -3,7 +3,10 @@ const next = require('next');
 const cookieParser = require('cookie-parser')
 
 const PORT = process.env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.LOCAL_ENV == 'true';
+console.log(process.env.LOCAL_ENV);
+
+console.log('IS DEV:', dev);
 const app = next({ dev });
 const handle = app.getRequestHandler();
 

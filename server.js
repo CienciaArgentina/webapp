@@ -21,11 +21,6 @@ app
 	const server = express();
 	server.use(cookieParser());
 
-	// server.get('/logguinTEST', (req,res) => {
-	// 	console.log(req.cookies);
-	// 	// res.clearCookie('cookieName'); // DELETE COOKIE
-	// 	res.render(req, res, path)
-	// })
 	server.get('/service-worker.js', (req, res) => {
 		res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
 		res.set("Content-Type", "application/javascript");

@@ -7,7 +7,7 @@ import {
 	updateMyData
 } from '../src/actions'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import { AuthApi, InstituteApi } from '../src/api/api'
+import { AuthApi, InstituteApi, UserApi } from '../src/api/api'
 import Router, { withRouter } from 'next/router'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
@@ -59,12 +59,13 @@ class login extends React.Component {
 				errorMsg: '',
 				loading: true
 			}))
-			AuthApi.login(this.state.user, this.state.password).then(response => {
+			UserApi.login(this.state.user, this.state.password).then(response => {
+				console.log(response);
 				setCookie(false, 'userData',
 					JSON.stringify({
-						jwtToken: response.data.jwtToken.token,
-						email: response.data.email,
-						userName: this.state.user
+						jwtToken: response.data.jwt,
+						// email: response.data.email,
+						// userName: this.state.user
 					}),
 					{
 						maxAge: 2 * 24 * 60 * 60,

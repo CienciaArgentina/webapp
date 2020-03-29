@@ -3,10 +3,22 @@ import moment from 'moment';
 
 import { userDataExample, mapUserResponse } from './responseExamples'
 
+
+const USERS = 'users'
+const LOGIN = 'login'
+
+//API /users
 export class UserApi {
 	static async logOut() {
 		return true
 	}
+	static async login(username, password) {
+		const { data } = await axiosInstance.post(`/${USERS}/${LOGIN}`, {
+			username,
+			password
+		})
+	}
+
 	static async getMyData(userName) {
 		// return userDataExample;
 		const { data } = await axiosInstance.get(`/Users/${userName}`)

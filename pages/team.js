@@ -62,18 +62,6 @@ const equipoLista = [
 		}
 	},
 	{
-		photo: "aldanois.jpg",
-		nombre: "Aldano",
-		apellido: "Pelusso",
-		social: {
-			github: "aldanois",
-			linkedin: "aldanois",
-			twitter: "aldanois",
-			instagram: "aldanois",
-			facebook: "aldanois",
-		}
-	},
-	{
 		photo: "debo.jpg",
 		nombre: "Débora",
 		apellido: "Villalobo",
@@ -85,12 +73,24 @@ const equipoLista = [
 		}
 	},
 	{
-		photo: "ale.jpg",
-		nombre: "Alejandro",
-		apellido: "Banzas",
+		photo: "maru.jpg",
+		nombre: "Maru",
+		apellido: "Armijo Marchant",
 		social: {
-			github: "AleBanzas",
-			linkedin: "alebanzas"
+			github: "Marumaar",
+			linkedin: "maria-eugenia-armijo-marchant-09b2a03",
+			twitter: 'Marumaar',
+			facebook: 'maru.maar'
+		}
+	},
+	{
+		photo: "gabo.jpg",
+		nombre: "Gabriel",
+		apellido: "Cavallo",
+		social: {
+			github: "gabmetal",
+			linkedin: "victor-gabriel-cavallo-870434110",
+			facebook: 'citruxinensis'
 		}
 	}
 ];

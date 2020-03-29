@@ -15,7 +15,8 @@ const axiosInstance = axios.create({
 			'Authorizarion': 'JWT',
 			'Access-Control-Allow-Origin': "*",
 			'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
-		}
+		},
+		crossDomain: true
 });
 
 // axiosInstance.interceptors.response.use(function (response) {

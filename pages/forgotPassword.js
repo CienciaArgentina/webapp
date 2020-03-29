@@ -1,7 +1,7 @@
 import React from 'react'
 import Page from '../layouts/main/main'
 import { Input } from '../components/Science'
-import { AuthApi } from '../src/api/api'
+import { UserApi } from '../src/api/api'
 import Modal from 'react-modal'
 Modal.setAppElement('#app');
 
@@ -19,7 +19,7 @@ export default class ForgotPassword extends React.Component {
 		if(this.state.loading || this.state.error || !this.emailInput.validate().valid || this.state.sended) {
 			return false
 		}
-		AuthApi.sendForgotPassword(this.state.email).then( () => {
+		UserApi.sendForgotPassword(this.state.email).then( () => {
 			this.setState(()=>({
 				loading: false,
 				sended: true

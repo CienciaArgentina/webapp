@@ -9,11 +9,11 @@ const axiosInstance = axios.create({
 		baseURL: API_DOMAIN,
 		timeout: 10000,
 		headers: {
-			contentType: 'application/json',
-			accept: 'application/json',
+			'Content-Type': 'application/json',
+			'Accept': '*',
 			// TODO: Add JWT
-			'Authorizarion': 'JWT'
-		}
+			'Authorizarion': 'JWT',
+		},
 });
 
 // axiosInstance.interceptors.response.use(function (response) {

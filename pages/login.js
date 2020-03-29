@@ -6,9 +6,9 @@ import Link from 'next/link'
 import {
 	updateMyData
 } from '../src/actions'
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import { AuthApi, InstituteApi, UserApi } from '../src/api/api'
-import Router, { withRouter } from 'next/router'
+import { setCookie } from 'nookies'
+import { UserApi } from '../src/api/api'
+import Router from 'next/router'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
 Modal.setAppElement('#app');
@@ -28,11 +28,6 @@ class login extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	// componentDidMount() {
-	// 	if(this.props.isLogged) {
-	// 		Router.push('/')
-	// 	}
-	// }
 	state = {
 		user: '',
 		password: '',
@@ -42,13 +37,6 @@ class login extends React.Component {
 		emailResended: false,
 		loadig: false
 	}
-	// static async getInitialProps(ctx) {
-	// 	// Parse
-	// 	const cookies = parseCookies(ctx);
-	// 	return {
-	// 		name: cookies.loginName
-	// 	}
-	// }
 	sendLogin = (event) => {
 		event.preventDefault();
 		if(this.state.loadig || this.state.emailNotConfirmed || this.state.emailResended) {
@@ -60,7 +48,6 @@ class login extends React.Component {
 				loading: true
 			}))
 			UserApi.login(this.state.user, this.state.password).then(response => {
-				console.log(response);
 				setCookie(false, 'userData',
 					JSON.stringify({
 						jwtToken: response.data.jwt,
@@ -82,6 +69,8 @@ class login extends React.Component {
 					
 				// })
 			}).catch(err => {
+				console.log(err);
+				
 				const status = err.status;
 				let error_know = false;
 				if(status==400) {
@@ -106,10 +95,6 @@ class login extends React.Component {
 				}
 			})
 		}
-		// setCookie(false, 'loginName', user, {
-		// 	maxAge: 30 * 24 * 60 * 60,
-		// 	path: '/',
-		// });
 	}
 	handleChange = e => {
 		const name = e.target.name;
@@ -123,7 +108,7 @@ class login extends React.Component {
 			loading:true,
 			emailNotConfirmed: false
 		}))
-		AuthApi.sendConfirmationRegisterMail(this.state.emailToConfirm).then(response=>{
+		UserApi.sendConfirmationEmail(this.state.emailToConfirm).then(response=>{
 			this.setState(()=>({
 				loading:false,
 				emailResended: true

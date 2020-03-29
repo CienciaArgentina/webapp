@@ -3,7 +3,7 @@ import {
 	Input
 } from '../components/Science'
 
-import { AuthApi } from '../src/api/api'
+import { UserApi } from '../src/api/api'
 import Router from 'next/router'
 import Link from 'next/link'
 
@@ -32,7 +32,7 @@ export default class login extends React.Component {
 			this.repeatEmailInput.validate().valid
 		) {
 			this.setState(()=>({loading:true}))
-			AuthApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
+			UserApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
 				const registeredEmail = response.data.email
 				this.setState(()=>({
 					loading:false,

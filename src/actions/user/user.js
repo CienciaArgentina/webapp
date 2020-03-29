@@ -1,4 +1,4 @@
-import { UserApi } from '../../api/api'
+import { UserProfileApi } from '../../api/api'
 import moment from 'moment'
 import {
 	destroyCookie
@@ -24,7 +24,7 @@ export const setCreatingProfile = isCreatingProfile => ({
 
 export const updateMyData = async (dispatch, userName) => {
 	let error = false
-	await UserApi.getMyData(userName).then(response => {
+	await UserProfileApi.getMyData(userName).then(response => {
 		// console.log(response);
 		dispatch(setUserData(response))
 		dispatch(setLogged(true))

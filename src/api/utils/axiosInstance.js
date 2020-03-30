@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 			'Content-Type': 'application/json',
 			'Accept': '*',
 			// TODO: Add JWT
-			'Authorizarion': 'JWT',
+			'Authorization': 'JWT',
 		},
 });
 

@@ -16,8 +16,12 @@
 	.ProfileImage.#{'--size-'}#{$size} {
 		width: #{$size}rem;
 		height: #{$size}rem;
+		overflow: hidden;
 		span {
 			font-size: #{$size/3}rem;
+		}
+		img {
+			max-width: 100%;
 		}
 	}
 }

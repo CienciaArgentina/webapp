@@ -56,11 +56,11 @@ const MobileMenu = props => (
 				{props.isLogged &&
 					<MobileUser
 						img={props.userData.personalData.profileImage}
-						name={props.userData.personalData.name}
-						lastName={props.userData.personalData.lastName}
-						id={props.userData.account.id}
-						email={props.userData.account.email}
-						userName={props.userData.account.userName}
+						name={props.userData.personalData.fname}
+						lastName={props.userData.personalData.lname}
+						id={props.userData.id}
+						email={props.userData.personalData.email}
+						userName={props.userData.username}
 					/>
 				}
 				{(!props.isLogged && !props.isCreatingProfile) &&

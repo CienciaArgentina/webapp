@@ -7,20 +7,20 @@ const ProfileMobile = props => (
 			<div className='__header'>
 				<div className='__profileImg'>
 					<PorfileImage
-						name = {props.personalData.name}
+						name = {props.personalData.fname}
 						img = {false}
 						size = '8'
 					/>
 				</div>
 				<div className='__data'>
 					<h2>
-						{props.personalData.name} {props.personalData.lastName}
+						{props.personalData.name} {props.personalData.lname}
 					</h2>
 					<div className='mb-1'>
-						<label>@{props.account.userName}</label>
+						<label>@{props.username}</label>
 					</div>
 					<div>
-						<label>{props.account.email}</label>
+						<label>{props.personalData.email}</label>
 					</div>
 				</div>
 			</div>

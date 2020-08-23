@@ -16,11 +16,11 @@ import {
 	LabMap
 } from '../components/Science';
 
-import { JobsApi, InstituteApi } from '../src/api/api'
+import { JobsApi, InstituteApi, OrganizationsApi } from '../src/api/api'
 
 export default class institute extends Component {
 	static async getInitialProps(context) {
-		const data = await InstituteApi.getInstitute(context.query.id);
+		const data = await OrganizationsApi.getOrganization(context.query.id)
 		if(!data){
 			return {
 				error: {
@@ -29,7 +29,8 @@ export default class institute extends Component {
 				}
 			}
 		}
-		const jobOffers = await JobsApi.getFromInstitute(context.query.id)
+		// const jobOffers = await JobsApi.getFromInstitute(context.query.id)
+		const jobOffers = []
 		return {
 			data,
 			jobOffers
@@ -42,16 +43,6 @@ export default class institute extends Component {
 			jobOffers: this.props.jobOffers
 		}
 	}
-	instituteName = 'Leloir'
-	location = 'Buenos Aires, Argentina'
-	description = 'La Fundación Instituto Leloir es un centro de investigación científica dedicada a la investigación básica y a la formación de jóvenes investigadores en bioquímica y biología celular y molecular. La misión del Instituto es fomentar los más altos estándares de excelencia tanto en los proyectos de investigación como en la docencia.'
-	staff = [
-		{name: 'Jeanette Acosta', position: 'Directora', email: 'jean@cienciaargentina.com'},
-		{name: 'Lucas Lopez', position: 'Tesorero', email: 'jean@cienciaargentina.com'},
-		{name: 'Matias Gonzalez', position: 'Comunicación', email: 'jean@cienciaargentina.com'},
-	]
-	website = 'http://leloir.org.ar'
-	logo = `/static/img/logos-labos/leloir_logo.png`
 	handleChange = (selected) => {
 		this.setState({selected})
 	}
@@ -59,8 +50,8 @@ export default class institute extends Component {
 		const data = this.props.data
 		return (
 			<Page contentClass= 'bg--gray' customMeta={{
-				title:`${data.instituteName}`,
-				description: data.instituteDescription,
+				title:`${data.name}`,
+				description: data.description,
 				ogimage: data.logo
 			}}>
 				<div id="institute">
@@ -68,8 +59,8 @@ export default class institute extends Component {
 						img={data.logo}
 						title={
 							<div className="institute__name">
-								<h1>{data.instituteName}</h1>
-								<label>{`${data.city}, ${data.country}`}</label>
+								<h1>{data.name}</h1>
+								{/* <label>{`${data.city}, ${data.country}`}</label> */}
 							</div>
 						}
 						tabs={
@@ -94,18 +85,18 @@ export default class institute extends Component {
 					<TabDisplay className="contentDisplay" selected={this.state.selected}>
 						<div className="container textCont aboutInstitute">
 							<div className="mainAbout">
-								{data.instituteDescription &&
+								{data.description &&
 									<>
 										<h3>Sobre el instituto</h3>
 										<p className="text">
-											{data.instituteDescription}
+											{data.description}
 										</p>
 									</>
 								}
-								{data.instituteUrl&&
-									<a href={data.instituteUrl} target="_blank" className="bn--text bn--icon-link">Sitio web</a>
+								{data.website&&
+									<a href={data.website} target="_blank" className="bn--text bn--icon-link">Sitio web</a>
 								}
-								<button className="bn--text bn--icon-world">{data.country}</button>
+								<button className="bn--text bn--icon-world">ARGENTINA</button>
 								{data.coordinates &&
 									<div className='mt-2'>
 										<LabMap
@@ -129,15 +120,15 @@ export default class institute extends Component {
 							</div> */}
 						</div>
 						<div className="container labListCont">
-							{this.props.data.labs.map((o,k)=>(
+							{this.props.data.departments.map((o,k)=>(
 								<LabList
-									title={o.labName}
-									description={o.labDescription}
-									researcher={o.labHead}
-									activeJobs={this.state.jobOffers.filter(i=>(i.organization.labId==o.labId)).length}
-									key={o.labId}
-									href={`/laboratory?id=${o.labId}`}
-									as={`/laboratory/${o.labId}`}
+									title={o.name}
+									description={o.description}
+									researcher={o.department_head}
+									// activeJobs={this.state.jobOffers.filter(i=>(i.organization.labId==o.labId)).length}
+									key={o.id}
+									href={`/laboratory?id=${o.id}`}
+									as={`/laboratory/${o.id}`}
 								/>
 							))}
 						</div>

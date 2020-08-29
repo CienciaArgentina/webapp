@@ -16,7 +16,7 @@ import {
 	LabMap
 } from '../components/Science';
 
-import { JobsApi, InstituteApi, OrganizationsApi } from '../src/api/api'
+import { JobsApi, InstituteApi, OrganizationsApi } from '@api'
 
 export default class institute extends Component {
 	static async getInitialProps(context) {

@@ -6,11 +6,11 @@ export class OrganizationsApi {
 		return response.data
 	}
 	static async getDepartment(id) {
-		const response = await axiosInstance.get(`/department/${id}`)
+		const response = await axiosInstance.get(`/departments/${id}`)
 		return response.data
 	}
 	static async getProject(id) {
-		const response = await axiosInstance.get(`/project/${id}`)
+		const response = await axiosInstance.get(`/projects/${id}`)
 		return response.data
 	}
 }

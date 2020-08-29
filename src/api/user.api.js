@@ -18,6 +18,7 @@ export class UserApi {
 	}
 
 	static async login(username, password) {
+		return {data:{jtw:'asdasd'}}
 		const { data } = await axiosInstance.post(`/${USERS}/${LOGIN}`, {
 			username,
 			password

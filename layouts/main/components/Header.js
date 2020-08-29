@@ -24,7 +24,7 @@ const Header = props => (
 					<Link href='/profile'>
 						<a>
 							<PorfileImage
-								name = {props.userData.personalData.name}
+								name = {props.userData.personalData.fname}
 								img = {false}
 								size = '4'
 							/>

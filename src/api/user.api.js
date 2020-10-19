@@ -13,16 +13,14 @@ const FORGOT_PASSWORD = 'sendpasswordreset'
 
 //API /users
 export class UserApi {
-	static async logOut() {
-		return true
-	}
 
 	static async login(username, password) {
-		return {data:{jtw:'asdasd'}}
+		// return {data:{jtw:'asdasd'}}
 		const { data } = await axiosInstance.post(`/${USERS}/${LOGIN}`, {
 			username,
 			password
 		}).catch(e => Promise.reject(e.response))
+		console.log(data);
 		return data
 	}
 

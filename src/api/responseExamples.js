@@ -56,7 +56,7 @@ export const filtersExample = [
 ]
 
 export const jobExample = {
-	id: 'ZALALAAAAA',
+	id: '2',
 	title: 'Regulación de la N-glicosilación de proteínas eucariotas',
 	isFav: false,
 	isOpen: true,

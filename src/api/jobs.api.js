@@ -12,9 +12,7 @@ export class JobsApi {
 	// id: int
 	static async getJob(id) {
 		return jobExample //fakeReturn
-		const { data } = await axiosInstance.get(`/jobs`, {
-			id
-		});
+		const { data } = await axiosInstance.get(`/job-offer/${id}`);
 		return data;
 	}
 
@@ -24,7 +22,7 @@ export class JobsApi {
 			jobExample,
 			jobExample
 		]
-		const { data } = await axiosInstance.get(`/jobs/search`, {
+		const { data } = await axiosInstance.get(`/job-offer/search`, {
 			params
 		});
 		return data;
@@ -46,7 +44,7 @@ export class JobsApi {
 	static async setFav(id) {
 		return true;
 		try {
-			const response = await axiosInstance.post(`/jobs/setFav`, {
+			const response = await axiosInstance.post(`/job-offer/fav`, {
 				id
 			});
 			return response

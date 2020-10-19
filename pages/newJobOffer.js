@@ -33,7 +33,7 @@ const FormStage = props => {
 
 export default class newJobOffer extends React.Component {
 	static async getInitialProps(ctx,router) {
-		requiredLogin(ctx,router)
+		// requiredLogin(ctx,router)
 		return {}
 	}
 	constructor(props) {

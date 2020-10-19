@@ -50,7 +50,7 @@ class login extends React.Component {
 			UserApi.login(this.state.user, this.state.password).then(response => {
 				setCookie(false, 'userData',
 					JSON.stringify({
-						jwtToken: response.data.jwt,
+						jwtToken: response.jwt,
 						// email: response.data.email,
 						// userName: this.state.user
 					}),
@@ -74,13 +74,13 @@ class login extends React.Component {
 				const status = err.status;
 				let error_know = false;
 				if(status==400) {
-					if(err.data.error[0].code == 'PasswordOrUserIncorrect') {
+					if(err.data.error[0].code == 'invalid_login' || err.data.error[0].code == 'bad_request') {
 						error_know = true
 						this.setState(()=>({
 							errorMsg: 'Usuario o contraseña incorrectos.',
 							loading: false
 						}))
-					} else if(err.data.error[0].code == 'EmailNotConfirmed') {
+					} else if(err.data.error[0].code == 'email_not_confirmed') {
 						//falta confirmar email
 						this.setState(()=>({
 							emailNotConfirmed:true,

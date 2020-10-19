@@ -33,7 +33,7 @@ export default class login extends React.Component {
 		) {
 			this.setState(()=>({loading:true}))
 			UserApi.register(this.state.user, this.state.email, this.state.password).then(response=>{
-				const registeredEmail = response.data.email
+				const registeredEmail = this.state.email
 				this.setState(()=>({
 					loading:false,
 					registerConfirmed: true,

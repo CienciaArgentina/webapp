@@ -1,4 +1,4 @@
-import { UserProfileApi } from '../../api/api'
+import { UserProfileApi, UserApi } from '../../api/api'
 import moment from 'moment'
 import {
 	destroyCookie
@@ -38,17 +38,13 @@ export const updateMyData = async (dispatch, userName) => {
 }
 
 export const logOut = async (dispatch) => {
-	await UserApi.logOut().then(response => {
-		destroyCookie({}, 'userData')
-		dispatch(setLogged(false))
-		dispatch(setCreatingProfile(false))
-		dispatch(setUserData(false))
-		if(process.browser) {
-			document.location.href = '/login'
-		}
-	}).catch(e=>{
-		console.log(e)
-	})
+	destroyCookie({}, 'userData')
+	dispatch(setLogged(false))
+	dispatch(setCreatingProfile(false))
+	dispatch(setUserData(false))
+	if(process.browser) {
+		document.location.href = '/login'
+	}
 }
 
 export const requiredLogin = (ctx, router) => {

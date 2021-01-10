@@ -29,7 +29,7 @@ export default class editprofile extends React.Component {
 			}
 		}
 		return {
-			// userData,
+			// user_data,
 			selectedForm
 		}
 	}

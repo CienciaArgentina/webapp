@@ -18,32 +18,24 @@ import "../scss/main.scss";
 
 //cookies
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import axiosInstance from 'src/api/utils/axiosInstance';
 
 class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
 		const cookies = parseCookies(ctx);
 		if(!process.browser) {
 			// server side
-			if(cookies.userData) {
-				const error = await updateMyData(ctx.store.dispatch, JSON.parse(cookies.userData).userName)
-				if(error === 'profileIncomplete') {
-					if(router.route!='/createProfile') {
-						// redirect to createProfile
-						ctx.res.writeHead(302, {
-							Location: '/createProfile'
-						});
-						ctx.res.end();
-					} else {
-						// estoy en createProfile
-						ctx.store.dispatch(setCreatingProfile(true))
-					}
-				}
+			let jwtToken = false
+			if(cookies.user_data) {
+				jwtToken = JSON.parse(cookies.user_data).jwtToken
+				axiosInstance.defaults.headers.Authorization = jwtToken
+				await updateMyData(ctx.store.dispatch)
 			}
 		} else {
 			// client side
-			if(cookies.userData && !ctx.store.getState().user.isLogged && ctx.pathname!='/createProfile') {
-				router.push('/createProfile')
-			}
+			// if(cookies.user_data && !ctx.store.getState().user.isLogged && ctx.pathname!='/createProfile') {
+			// 	router.push('/createProfile')
+			// }
 		}
 		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx, router) : {};
 		return { pageProps }

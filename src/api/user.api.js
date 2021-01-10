@@ -1,26 +1,21 @@
 import axiosInstance from "./utils/axiosInstance";
-import moment from "moment";
-
-import { userDataExample, mapUserResponse } from "./responseExamples";
 
 const USERS = "users";
 const LOGIN = "login";
-const SEND_CONFIRMATION_EMAIL = "sendconfirmationemail";
+const SEND_CONFIRMATION_EMAIL = "send_confirmation_email";
 const CONFIRM_EMAIL = "confirm_email";
-const FORGOT_USERNAME = "forgotusername";
-const FORGOT_PASSWORD = "sendpasswordreset";
+const FORGOT_USERNAME = "forgot_username";
+const FORGOT_PASSWORD = "send_password_reset";
 
 //API /users
 export class UserApi {
   static async login(username, password) {
-    // return {data:{jtw:'asdasd'}}
     const { data } = await axiosInstance
       .post(`/${USERS}/${LOGIN}`, {
         username,
         password,
       })
       .catch((e) => Promise.reject(e.response));
-    console.log(data);
     return data;
   }
 
@@ -78,7 +73,7 @@ export class UserApi {
 
   //TODO:
   static async getMyData(userName) {
-    // return userDataExample;
+    // return user_dataExample;
     const { data } = await axiosInstance
       .get(`/Users/${userName}`)
       .catch((e) => {

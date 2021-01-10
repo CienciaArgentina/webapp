@@ -3,9 +3,6 @@ import {
 	Input
 } from '../components/Science'
 import Link from 'next/link'
-import {
-	updateMyData
-} from '../src/actions'
 import { setCookie } from 'nookies'
 import { UserApi } from '../src/api/api'
 import Router from 'next/router'
@@ -48,7 +45,7 @@ class login extends React.Component {
 				loading: true
 			}))
 			UserApi.login(this.state.user, this.state.password).then(response => {
-				setCookie(false, 'userData',
+				setCookie(false, 'user_data',
 					JSON.stringify({
 						jwtToken: response.jwt,
 						// email: response.data.email,
@@ -62,7 +59,7 @@ class login extends React.Component {
 				)
 				location.reload()
 				// const cookies = parseCookies()
-				// updateMyData(this.props.dispatch, JSON.parse(cookies.userData).userName).then(()=>{
+				// updateMyData(this.props.dispatch, JSON.parse(cookies.user_data).userName).then(()=>{
 				// 	Router.push('/');
 				// }).catch(e=>{
 				// 	console.log(e);
@@ -70,6 +67,7 @@ class login extends React.Component {
 				// })
 			}).catch(err => {
 				console.log(err);
+				console.log(err.data.error[0].code);
 				
 				const status = err.status;
 				let error_know = false;
@@ -80,12 +78,12 @@ class login extends React.Component {
 							errorMsg: 'Usuario o contraseña incorrectos.',
 							loading: false
 						}))
-					} else if(err.data.error[0].code == 'email_not_confirmed') {
+					} else if(err.data.error[0].code == 'email_not_verified') {
 						//falta confirmar email
 						this.setState(()=>({
 							emailNotConfirmed:true,
 							loading: false,
-							emailToConfirm: err.data.data.email
+							emailToConfirm: err.data.error[0].detail
 						}))
 						error_know = true
 					}
@@ -204,7 +202,7 @@ class login extends React.Component {
 const mapStateToProps = state => {
 	return {
 		isLogged: state.user.isLogged,
-		userData: state.user.userData
+		user_data: state.user.user_data
 	}
 }
 

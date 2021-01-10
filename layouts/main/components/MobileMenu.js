@@ -55,12 +55,12 @@ const MobileMenu = props => (
 			<div className="mobile-menu__userCont">
 				{props.isLogged &&
 					<MobileUser
-						img={props.userData.personalData.profileImage}
-						name={props.userData.personalData.fname}
-						lastName={props.userData.personalData.lname}
-						id={props.userData.id}
-						email={props.userData.personalData.email}
-						userName={props.userData.username}
+						img={false}
+						name={'Matias'}
+						lastName={'Gonzalez'}
+						id={'props.auth_id'}
+						email={'props.email'}
+						userName={'props.user_data.username'}
 					/>
 				}
 				{(!props.isLogged && !props.isCreatingProfile) &&
@@ -158,7 +158,7 @@ const MobileMenu = props => (
 const mapStateToProps = (state) => {
 	return {
 		isLogged: state.user.isLogged,
-		userData: state.user.userData,
+		user_data: state.user.user_data,
 		isCreatingProfile: state.user.isCreatingProfile
 	}
 }

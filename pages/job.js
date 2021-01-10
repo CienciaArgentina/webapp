@@ -175,7 +175,7 @@ class job extends Component {
 												{job.organization.instituteName}
 											</a>
 											</Link>
-										&nbsp;>&nbsp;
+										&nbsp;{'>'}&nbsp;
 										<Link
 											href={`/laboratory?id=${job.organization.labId}`}
 											as={`/laboratory/${job.organization.labId}`}
@@ -314,7 +314,7 @@ class job extends Component {
 
 const mapStateToProps = state => ({
 	isLogged: state.user.isLogged,
-	userData: state.user.userData
+	user_data: state.user.user_data
 })
 
 export default connect(mapStateToProps)(job)

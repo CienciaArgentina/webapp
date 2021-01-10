@@ -24,7 +24,7 @@ const Header = props => (
 					<Link href='/profile'>
 						<a>
 							<PorfileImage
-								name = {props.userData.personalData.fname}
+								name = {'props.user_data.personalData.fname'}
 								img = {false}
 								size = '4'
 							/>
@@ -68,7 +68,7 @@ const Header = props => (
 const mapStateToProps = (state) => {
 	return {
 		isLogged: state.user.isLogged,
-		userData: state.user.userData
+		user_data: state.user.user_data
 	}
 }
 

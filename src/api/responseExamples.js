@@ -107,7 +107,7 @@ export const jobExample = {
 	}
 }
 
-export const userDataExample = {
+export const user_dataExample = {
 	id: 'userIdDataSting',
 	username: 'matiasgf',
 	rol: 'user',
@@ -191,17 +191,17 @@ export const jobWithCandidates = {
 	candidates: [
 		{
 			applyDate: moment('2019-05-20', 'YYYY-MM-DD').unix(),
-			userData: {
-				id: userDataExample.id, //heredo las propiedades de userDataExample
-				username: userDataExample.username,
+			user_data: {
+				id: user_dataExample.id, //heredo las propiedades de user_dataExample
+				username: user_dataExample.username,
 				address: {
 					country: 'Argentina',
 					province: 'CABA',
 				},
-				personalData: userDataExample.personalData,
-				contact: userDataExample.contact,
-				studies: userDataExample.studies,
-				work: userDataExample.work
+				personalData: user_dataExample.personalData,
+				contact: user_dataExample.contact,
+				studies: user_dataExample.studies,
+				work: user_dataExample.work
 			}
 		}
 	]

@@ -6,7 +6,7 @@ import {
 
 export const setUserData = data => ({
 	type: 'SET_USER_DATA',
-	userData: {
+	user_data: {
 		...data,
 		updatedAt: moment()
 	}
@@ -22,23 +22,21 @@ export const setCreatingProfile = isCreatingProfile => ({
 	isCreatingProfile
 })
 
-export const updateMyData = async (dispatch, userName) => {
+export const updateMyData = async (dispatch) => {
 	let error = false
-	await UserProfileApi.getMyData(userName).then(response => {
-		// console.log(response);
+	console.log('UPDATING DATA');
+	await UserProfileApi.getMyData().then(response => {
+		console.log(response);
 		dispatch(setUserData(response))
 		dispatch(setLogged(true))
 	}).catch(e=>{
-		if(e.response.status==404) {
-			//user is logged in but has to complete profile
-			error = 'profileIncomplete'
-		}
+		console.log(e);
 	})
 	return error
 }
 
 export const logOut = async (dispatch) => {
-	destroyCookie({}, 'userData')
+	destroyCookie({}, 'user_data')
 	dispatch(setLogged(false))
 	dispatch(setCreatingProfile(false))
 	dispatch(setUserData(false))

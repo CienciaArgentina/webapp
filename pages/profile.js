@@ -15,7 +15,7 @@ class profile extends React.Component {
 			<Page requireLogin={true}>
 				<div id='profilePage'>
 					<ProfileMobile
-						{...this.props.userData}
+						{...this.props.user_data}
 					/>
 				</div>
 			</Page>
@@ -24,7 +24,7 @@ class profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	userData: state.user.userData
+	user_data: state.user.user_data
 })
 
 export default connect(mapStateToProps)(profile)

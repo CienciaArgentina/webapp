@@ -22,7 +22,9 @@
 		"target": "esnext",
 		"baseUrl": "./src",
 		"paths": {
-			"@components/*": ["components/*"]
+			"@components/*": ["components/*"],
+			"@layouts/*": ["layouts/*"],
+			"@theme/*": ["theme/*"]
 		}
 	},
 	"exclude": [

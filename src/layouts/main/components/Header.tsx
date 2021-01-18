@@ -14,6 +14,9 @@ const Container = styled.header`
 	justify-content: space-between;
 	width: 100%;
 	height: 7rem;
+	top: 0;
+	left: 0;
+	box-shadow: ${({theme}) => theme.shadows[1]}
 `
 const Logo = styled.img`
 	height: 50%;

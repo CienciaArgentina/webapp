@@ -21,6 +21,8 @@
   "author": "CienciaArgentina",
   "license": "MIT",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.21.1",
     "form-serialize": "^0.7.2",
     "next": "^10.0.5",
     "react": "^16.12.0",

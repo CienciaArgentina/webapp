@@ -1,5 +1,7 @@
+import { FormError } from "@components/FormError"
 import { CardStyle, TextField, Title, Space, Form, SerializedFormEvent } from "@components/ui"
 import { Button } from "@components/ui/Button/ButtonComponent"
+import { useState } from "react"
 import styled from "styled-components"
 
 const LoginContainer = styled.div`
@@ -15,6 +17,7 @@ type FormResult = {
 }
 
 const LoginPage = () => {
+	const [formError, setFormError] = useState<string|null>(null)
 
 	const handleSubmit:SerializedFormEvent<FormResult> = ( {values} ) => {
 		console.log(values);
@@ -25,7 +28,7 @@ const LoginPage = () => {
 			<LoginContainer>
 				<Space>
 					<Title level={2}>Ingresá a Ciencia</Title>
-					<p>¿No tenés cuenta? <a href='/register'>Registrate acá</a></p>
+					<p>¿No tenés cuenta? <a href='/auth/register'>Registrate acá.</a></p>
 
 					<Form serialize onSubmit={handleSubmit}>
 						<Space>
@@ -41,13 +44,14 @@ const LoginPage = () => {
 								label='Contraseña'
 								required
 							/>
-							<Button>Ingresar</Button>
+							<Button type='submit'>Ingresar</Button>
 						</Space>
+						{formError && <FormError>{formError}</FormError> }
 					</Form>
 
-					<div><a href='/reset/password'>Olvide mi contraseña</a></div>
+					<div><a href='auth//reset_password'>Olvide mi contraseña</a></div>
 
-					<div><a href='/reset/username'>Olvidé mi usuario</a></div>
+					<div><a href='auth//reset_username'>Olvidé mi usuario</a></div>
 
 				</Space>
 			</LoginContainer>

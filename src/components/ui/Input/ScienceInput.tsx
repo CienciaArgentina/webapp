@@ -137,7 +137,10 @@ export abstract class ScienceInput<InputProps extends ScienceInputProps> extends
 					const validation_response = this.validate( value )
 					const is_valid:boolean = await this.processValidationResponse(validation_response)
 					if(!silent) { this.updateErrorRender() }
-					if(!is_valid){ resolve(this.getValidationResponse()) }
+					if(!is_valid){
+						resolve(this.getValidationResponse())
+						return
+					}
 				}
 				const validations:undefined | Array<ValidationFunction> = this.props.validations
 				if(validations) {
@@ -145,13 +148,17 @@ export abstract class ScienceInput<InputProps extends ScienceInputProps> extends
 						const validation_response = validation_fuction( value )
 						const is_valid:boolean = await this.processValidationResponse(validation_response)
 						if(!silent) { this.updateErrorRender() }
-						if(!is_valid){ resolve(this.getValidationResponse()) }
+						if(!is_valid){
+							resolve(this.getValidationResponse())
+							return
+						}
 					}
 				}
 				if(!silent) {
 					this.updateErrorRender()
 				}
 				resolve(this.getValidationResponse())
+				return
 			})
 		})
 	}

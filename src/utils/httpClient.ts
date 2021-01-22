@@ -29,3 +29,4 @@ export const httpClient = (url: string, interceptor = true): AxiosInstance => {
   if (interceptor) initializeResponseInterceptor(instance);
   return instance;
 };
+export const cienciaArgentinaRequest = httpClient(cienciaArgentinaHost);

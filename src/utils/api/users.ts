@@ -31,3 +31,19 @@ export const register = async (
   const { data } = await httpRequest.post<RegisterResponse>(path, userRequest);
   return data;
 };
+
+// static async sendConfirmationEmail(userId) {
+//     const { data } = await axiosInstance
+//       .get(`/${USERS}/${SEND_CONFIRMATION_EMAIL}/${userId}`)
+//       .catch((e) => Promise.reject(e.response));
+//     return data;
+//   }
+
+export const sendConfirmationEmail = async (
+  userId: number
+): Promise<RegisterResponse> => {
+  const path = `/send_confirmation_email/${userId}`;
+  const httpRequest = httpClient(cienciaArgentinaHost);
+  const { data } = await httpRequest.get<RegisterResponse>(path);
+  return data;
+};

@@ -4,6 +4,7 @@ import { Button } from "@components/ui/Button/ButtonComponent"
 import { useState } from "react"
 import styled from "styled-components"
 import * as UsersApi from '@api/users'
+import { ClientError } from "@utils/httpClient"
 
 const LoginContainer = styled.div`
 	${CardStyle({rounded:false, outline: true})}
@@ -26,10 +27,12 @@ const LoginPage = () => {
 		setSending(true)
 		UsersApi.login({username: values.username, password: values.password}).then(response => {
 			const jwt = response.jwt
+			console.log(jwt);
 			setSending(false)
-		}).catch(err => {
+		}).catch((err:ClientError) => {
+			console.log(err);
+			setFormError(err.message);
 			setSending(false)
-			console.log(err.response);
 		})
 	}
 	

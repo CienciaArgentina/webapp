@@ -1,16 +1,12 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import http from 'http';
 import https from 'https';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export const cienciaArgentinaHost = process.env
-  .CIENCIA_ARGENTINA_HOST as string;
+.CIENCIA_ARGENTINA_HOST as string;
 
-export const cienciaArgentinaHost = 'https://api.cienciaargentina.dev/' as string;
-
-const handleResponse = <T>(response: AxiosResponse): T => {
-  return response?.data;
+const handleResponse = <T>(response: AxiosResponse):AxiosResponse<T> => {
+  return response;
 };
 
 interface ApiError {
@@ -26,7 +22,12 @@ export interface ClientError {
 }
 
 const handleError = (error: AxiosError): Promise<ClientError> => {
-  return Promise.reject(error);
+  return Promise.reject(error.response?.data || {
+    id: "",
+    status: 0,
+    message: "Ocurrió un error",
+    errors: []
+  });
 };
 
 const initializeResponseInterceptor = (instance: AxiosInstance): void => {

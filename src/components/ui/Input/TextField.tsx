@@ -11,6 +11,7 @@ interface TextFieldProps extends ScienceInputProps {
 	maxLength?: number;
 	min?: number;
 	max?: number;
+	autoComplete?: boolean;
 }
 
 export class TextField extends ScienceInput<TextFieldProps> {
@@ -32,6 +33,7 @@ export class TextField extends ScienceInput<TextFieldProps> {
 	}
 	render() {
 		const type:TextFieldProps['type'] = this.props.type
+		const autoComplete = typeof this.props.autoComplete=='undefined' ? undefined : (this.props.autoComplete ? 'on' : 'off')
 		return (
 				<InputRoot
 					style={this.props.style}
@@ -52,6 +54,7 @@ export class TextField extends ScienceInput<TextFieldProps> {
 							type = {type}
 							min = {this.props.min}
 							max = {this.props.max}
+							autoComplete={autoComplete}
 						/>
 					</InputContainer>
 					{(!!this.state.error_message) && this.state.render_error &&

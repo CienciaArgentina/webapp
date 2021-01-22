@@ -32,13 +32,6 @@ export const register = async (
   return data;
 };
 
-// static async sendConfirmationEmail(userId) {
-//     const { data } = await axiosInstance
-//       .get(`/${USERS}/${SEND_CONFIRMATION_EMAIL}/${userId}`)
-//       .catch((e) => Promise.reject(e.response));
-//     return data;
-//   }
-
 export const sendConfirmationEmail = async (
   userId: number
 ): Promise<RegisterResponse> => {

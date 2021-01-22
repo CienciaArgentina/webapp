@@ -34,9 +34,6 @@ const LoginPage = () => {
 								type='text'
 								label='Usuario'
 								required
-								validations = {[
-									value => value=='1234' || '¡El valor debe ser 1234!'
-								]}
 							/>
 							<TextField
 								name='password'

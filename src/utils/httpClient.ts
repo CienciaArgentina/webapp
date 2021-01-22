@@ -1,9 +1,11 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import http from 'http';
 import https from 'https';
+import dotenv from 'dotenv';
+dotenv.config();
 
-// export const cienciaArgentinaHost = process.env
-// .CIENCIA_ARGENTINA_HOST as string;
+export const cienciaArgentinaHost = process.env
+  .CIENCIA_ARGENTINA_HOST as string;
 
 export const cienciaArgentinaHost = 'https://api.cienciaargentina.dev/' as string;
 
@@ -40,6 +42,8 @@ export const httpClient = (url: string, interceptor = true): AxiosInstance => {
     maxRedirects: 10,
     maxContentLength: 50 * 1000 * 1000, //50MBs
   });
+
   if (interceptor) initializeResponseInterceptor(instance);
   return instance;
 };
+export const cienciaArgentinaRequest = httpClient(cienciaArgentinaHost);

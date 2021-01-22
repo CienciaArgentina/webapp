@@ -14,10 +14,11 @@ interface UserRequest {
   email?: string;
 }
 
+const resource = '/users';
 export const login = async (
   userRequest: UserRequest
 ): Promise<LoginResponse> => {
-  const path = '/login';
+  const path = `${resource}/login`;
   const { data } = await cienciaArgentinaRequest.post<LoginResponse>(
     path,
     userRequest
@@ -28,7 +29,7 @@ export const login = async (
 export const register = async (
   userRequest: UserRequest
 ): Promise<RegisterResponse> => {
-  const path = '/users';
+  const path = `${resource}`;
 
   const { data } = await cienciaArgentinaRequest.post<RegisterResponse>(
     path,
@@ -41,7 +42,7 @@ export const confirmAccount = async (
   email: string,
   token: string
 ): Promise<void> => {
-  const path = `/users/confirm_email`;
+  const path = `${resource}/confirm_email`;
   const config = {
     params: { email, token },
   };
@@ -50,12 +51,12 @@ export const confirmAccount = async (
 };
 
 export const sendConfirmationEmail = async (userId: number): Promise<void> => {
-  const path = `/users/send_confirmation_email/${userId}`;
+  const path = `${resource}/send_confirmation_email/${userId}`;
   await cienciaArgentinaRequest.get<void>(path);
 };
 
 export const sendForgotUsername = async (email: string): Promise<void> => {
-  const path = `/users/forgot_username`;
+  const path = `${resource}/forgot_username`;
   const config = {
     params: { email },
   };
@@ -64,7 +65,7 @@ export const sendForgotUsername = async (email: string): Promise<void> => {
 };
 
 export const sendForgotPassword = async (email: string): Promise<void> => {
-  const path = `/users/send_password_reset`;
+  const path = `${resource}/send_password_reset`;
   const config = {
     params: { email },
   };

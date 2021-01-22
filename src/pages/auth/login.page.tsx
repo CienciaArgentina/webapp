@@ -3,6 +3,7 @@ import { CardStyle, TextField, Title, Space, Form, SerializedFormEvent } from "@
 import { Button } from "@components/ui/Button/ButtonComponent"
 import { useState } from "react"
 import styled from "styled-components"
+import * as UsersApi from '@api/users'
 
 const LoginContainer = styled.div`
 	${CardStyle({rounded:false, outline: true})}
@@ -18,9 +19,18 @@ type FormResult = {
 
 const LoginPage = () => {
 	const [formError, setFormError] = useState<string|null>(null)
+	const [sending, setSending] = useState<boolean>(false)
 
 	const handleSubmit:SerializedFormEvent<FormResult> = ( {values} ) => {
-		console.log(values);
+		setFormError(null)
+		setSending(true)
+		UsersApi.login({username: values.username, password: values.password}).then(response => {
+			const jwt = response.jwt
+			setSending(false)
+		}).catch(err => {
+			setSending(false)
+			console.log(err.response);
+		})
 	}
 	
 	return (
@@ -44,7 +54,7 @@ const LoginPage = () => {
 								label='Contraseña'
 								required
 							/>
-							<Button type='submit'>Ingresar</Button>
+							<Button type='submit' isLoading={sending}>Ingresar</Button>
 						</Space>
 						{formError && <FormError>{formError}</FormError> }
 					</Form>

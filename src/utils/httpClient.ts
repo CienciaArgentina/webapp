@@ -2,14 +2,28 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import http from 'http';
 import https from 'https';
 
-export const cienciaArgentinaHost = process.env
-  .CIENCIA_ARGENTINA_HOTS as string;
+// export const cienciaArgentinaHost = process.env
+// .CIENCIA_ARGENTINA_HOST as string;
+
+export const cienciaArgentinaHost = 'https://api.cienciaargentina.dev/' as string;
 
 const handleResponse = <T>(response: AxiosResponse): T => {
   return response?.data;
 };
 
-const handleError = (error: AxiosError): Promise<void> => {
+interface ApiError {
+  code: string,
+  detail: string
+}
+
+export interface ClientError {
+  "id": string,
+  "status": number,
+  "message": string,
+  "errors": ApiError[]
+}
+
+const handleError = (error: AxiosError): Promise<ClientError> => {
   return Promise.reject(error);
 };
 

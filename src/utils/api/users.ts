@@ -50,8 +50,9 @@ export const confirmAccount = async (
   await cienciaArgentinaRequest.get<void>(path, config);
 };
 
-export const sendConfirmationEmail = async (userId: number): Promise<void> => {
-  const path = `${resource}/send_confirmation_email/${userId}`;
+// #TODO: que me venga el userid la respuesta de email sin confirmar
+export const sendConfirmationEmail = async (user_id: string): Promise<void> => {
+  const path = `${resource}/send_confirmation_email/${user_id}`;
   await cienciaArgentinaRequest.get<void>(path);
 };
 

@@ -1,6 +1,7 @@
 import { FormError } from "@components/FormError"
 import { CardStyle, TextField, Title, Space, Form, SerializedFormEvent } from "@components/ui"
 import { Button } from "@components/ui/Button/ButtonComponent"
+import Link from "next/link"
 import { useRef, useState } from "react"
 import styled from "styled-components"
 
@@ -33,7 +34,7 @@ const RegisterPage = () => {
 			<LoginContainer>
 				<Space>
 					<Title level={2}>Registrate</Title>
-					<p>¿Ya tenés cuenta? <a href='/auth/login'>Ingresá acá.</a></p>
+					<p>¿Ya tenés cuenta? <Link href='/auth/login'>Ingresá acá.</Link></p>
 
 					<Form serialize onSubmit={handleSubmit}>
 						<Space>
@@ -76,7 +77,7 @@ const RegisterPage = () => {
 									v => password_ref.current?.getValue() === v || 'Las contraseñas deben coincidir.'
 								]}
 							/>
-							<Button type='submit'>Ingresar</Button>
+							<Button type='submit'>Registrarme</Button>
 						</Space>
 						{formError && <FormError>{formError}</FormError>}
 					</Form>

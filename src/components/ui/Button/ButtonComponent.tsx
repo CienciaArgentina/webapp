@@ -61,7 +61,7 @@ export const Button = ({
 			>
 			{isLoading&&
 				<ButtonLoading>
-					<Spinner fill={buttonFontColor}/>
+					<Spinner size={12} fill={buttonFontColor}/>
 				</ButtonLoading>}
 				{children||text}
 			</ButtonMain>

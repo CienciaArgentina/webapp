@@ -3,14 +3,31 @@ import http from 'http';
 import https from 'https';
 
 export const cienciaArgentinaHost = process.env
-  .CIENCIA_ARGENTINA_HOTS as string;
+.CIENCIA_ARGENTINA_HOST as string;
 
-const handleResponse = <T>(response: AxiosResponse): T => {
-  return response?.data;
+const handleResponse = <T>(response: AxiosResponse):AxiosResponse<T> => {
+  return response;
 };
 
-const handleError = (error: AxiosError): Promise<void> => {
-  return Promise.reject(error);
+interface ApiError {
+  code: string,
+  detail: string
+}
+
+export interface ClientError {
+  "id": string,
+  "status": number,
+  "message": string,
+  "errors": ApiError[]
+}
+
+const handleError = (error: AxiosError): Promise<ClientError> => {
+  return Promise.reject(error.response?.data || {
+    id: "",
+    status: 0,
+    message: "Ocurrió un error",
+    errors: []
+  });
 };
 
 const initializeResponseInterceptor = (instance: AxiosInstance): void => {
@@ -26,6 +43,8 @@ export const httpClient = (url: string, interceptor = true): AxiosInstance => {
     maxRedirects: 10,
     maxContentLength: 50 * 1000 * 1000, //50MBs
   });
+
   if (interceptor) initializeResponseInterceptor(instance);
   return instance;
 };
+export const cienciaArgentinaRequest = httpClient(cienciaArgentinaHost);

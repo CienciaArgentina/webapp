@@ -21,7 +21,7 @@ const Login = styled.div`
 export const UserLogin = () => {
 	return (
 		<Container>
-			<Link href='/login'>
+			<Link href='/auth/login'>
 				<Login>Ingresar</Login>
 			</Link>
 		</Container>

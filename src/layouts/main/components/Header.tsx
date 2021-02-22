@@ -16,7 +16,7 @@ const Container = styled.header`
 	height: 7rem;
 	top: 0;
 	left: 0;
-	box-shadow: ${({theme}) => theme.shadows[1]}
+	box-shadow: ${({theme}) => theme.shadows[1]};
 `
 const Logo = styled.img`
 	height: 50%;

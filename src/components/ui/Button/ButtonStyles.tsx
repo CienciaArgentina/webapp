@@ -84,7 +84,7 @@ export const ButtonContainer = styled.div<ButtonContainerInteface>`
 
 export const ButtonLoading = styled.div`
 	position: absolute;
-	left: 1rem;
-	top: 55%;
+	left: .4rem;
+	top: 50%;
 	transform: translateY(-50%);
 `

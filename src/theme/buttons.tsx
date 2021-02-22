@@ -24,8 +24,8 @@ export const buttons:ButtonsInterface = {
 			color: 'white',
 		},
 		outline: {
-			outline: 'color',
-			color: 'color',
+			outline: colors['gray-400'],
+			color: colors.lblue,
 		}
 	},
 	green: {

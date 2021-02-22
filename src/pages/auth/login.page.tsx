@@ -45,7 +45,7 @@ const LoginPage = () => {
 			location.replace('/')
 			// LOGIN OK
 		}).catch((err:ClientError) => {
-			if(err.errors?.[0].code == 'email_not_verified') {
+			if(err.errors.length && err.errors[0].code == 'email_not_verified') {
 				setFormError( () => <>
 					{err.message} <Button onClick={resendConfirmEmail(err.errors[0].detail, setFormError)}>Reenviar correo</Button>
 				</>)

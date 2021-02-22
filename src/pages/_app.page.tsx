@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import Head from 'next/head'
 import { theme } from '../theme'
@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
 export default function App({ Component, pageProps }: any) {
 	const Layout = Component.Layout ? Component.Layout : MainLayout;
 	const LayoutProps = Component.LayoutProps ? Component.LayoutProps : {};
-	
+
 	return (
 		<div id='app'>
 			<ThemeProvider theme={theme}>
@@ -39,4 +39,29 @@ export default function App({ Component, pageProps }: any) {
 			</ThemeProvider>
 		</div>
 	)
+}
+
+import {cienciaArgentinaRequest} from '@utils/httpClient'
+import { parseCookies } from 'nookies'
+import { NextPageContext } from 'next'
+
+App.getInitialProps = async (ctx:NextPageContext) => {
+	const cookies = parseCookies(ctx);
+	if(!process.browser) {
+		// server side
+		let jwtToken:string|undefined = undefined
+		if(cookies.user_data) {
+			jwtToken = cookies.authToken
+			cienciaArgentinaRequest.defaults.headers.Authorization = jwtToken
+			// await updateMyData(ctx.store.dispatch)
+			console.log();
+			
+		}
+	} else {
+		// client side
+		// if(cookies.user_data && !ctx.store.getState().user.isLogged && ctx.pathname!='/createProfile') {
+		// 	router.push('/createProfile')
+		// }
+	}
+	return {}
 }

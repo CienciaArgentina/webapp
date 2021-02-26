@@ -1,4 +1,4 @@
-import { httpClient, cienciaArgentinaHost } from 'utils/httpClient';
+import { httpClient, cienciaArgentinaHost, cienciaArgentinaRequest } from 'utils/httpClient';
 
 const USER_PROFILES = "/user_profiles"
 
@@ -47,3 +47,46 @@ export const getUserProfile = async (
     const { data } = await httpRequest.put<UserProfileRequest>(path);
     return data;
   };
+
+  interface ClaimInterface {
+    id: number
+    description: string
+  }
+  
+  interface RolInterface {
+    id: number
+    description: number
+    claims: ClaimInterface[]
+  }
+ /**
+  * TODO:
+  * 1 Completed / incompleted vesion que si es completed, name es string, sino, null.
+  * 2 Unificar los permisios en una sola variable de permisos.
+  * 3 Funcion para verificar que tengo un permiso desde redux.
+  * 4 Reemplazar todos los httpClient() por cienciaArgentinaRequest para unificar jwt en todos.
+ */ 
+  export interface MyProfileInterface {
+    user: {
+        id: number,
+        username: string,
+        name: string | null,
+        last_name: string | null,
+        birthdate: string | null,
+        email: string,
+        sex: string | null,
+        education: [],
+        job_experience: []
+    },
+    auth: {
+        auth_id: number,
+        email: string,
+        roles: RolInterface,
+        timestamp: number
+    }
+  }
+
+  export const getMyProfile = async (): Promise<MyProfileInterface> => {
+    const path = `${USER_PROFILES}/me`;
+    const { data } = await cienciaArgentinaRequest.get<MyProfileInterface>(path);
+    return data
+  }

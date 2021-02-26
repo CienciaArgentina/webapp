@@ -1,9 +1,20 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+//store
+import { wrapper } from '@store/index'
+import { setUserLogged, setUserNotLogged } from '@store/user/user.actions';
+
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import Head from 'next/head'
 import { theme } from '../theme'
 //default layout
 import MainLayout from '@layouts/main/MainLayout'
+
+//initial props
+import {cienciaArgentinaRequest} from '@utils/httpClient'
+import { parseCookies } from 'nookies'
+import { getMyProfile } from '@api/user_profiles'
+import App, { AppContext } from 'next/app'
+// import { AppInitialProps } from 'next/app'
 
 const GlobalStyle = createGlobalStyle`
 	html {
@@ -21,47 +32,55 @@ const GlobalStyle = createGlobalStyle`
 	}
 `
 
-export default function App({ Component, pageProps }: any) {
-	const Layout = Component.Layout ? Component.Layout : MainLayout;
-	const LayoutProps = Component.LayoutProps ? Component.LayoutProps : {};
-
-	return (
-		<div id='app'>
-			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				<Head>
-					<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"></link>
-					<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-				</Head>
-				<Layout {...LayoutProps}>
-					<Component {...pageProps} />
-				</Layout>
-			</ThemeProvider>
-		</div>
-	)
-}
-
-import {cienciaArgentinaRequest} from '@utils/httpClient'
-import { parseCookies } from 'nookies'
-import { NextPageContext } from 'next'
-
-App.getInitialProps = async (ctx:NextPageContext) => {
-	const cookies = parseCookies(ctx);
-	if(!process.browser) {
-		// server side
-		let jwtToken:string|undefined = undefined
-		if(cookies.user_data) {
-			jwtToken = cookies.authToken
-			cienciaArgentinaRequest.defaults.headers.Authorization = jwtToken
-			// await updateMyData(ctx.store.dispatch)
-			console.log();
-			
+class MyApp extends App<any> {
+	public static getInitialProps = async ({Component, ctx}: AppContext) => {
+		const cookies = parseCookies(ctx);
+		// console.log();	
+		if(!process.browser) {
+			// server side
+			let jwtToken:string|undefined = undefined
+			if(cookies.authToken) {
+				jwtToken = cookies.authToken
+				cienciaArgentinaRequest.defaults.headers.Authorization = jwtToken			
+				try {
+					const user_data  = await getMyProfile()				
+					ctx.store.dispatch(setUserLogged(user_data))
+				} catch(e) {
+					ctx.store.dispatch(setUserNotLogged())
+				}
+	
+				
+			}
 		}
-	} else {
-		// client side
-		// if(cookies.user_data && !ctx.store.getState().user.isLogged && ctx.pathname!='/createProfile') {
-		// 	router.push('/createProfile')
-		// }
+		return {
+            pageProps: {
+                // Call page-level getInitialProps
+                ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+                // Some custom thing for all pages
+                pathname: ctx.pathname,
+            },
+        };
 	}
-	return {}
+
+	render() {
+		const {Component, pageProps} = this.props
+		const Layout = Component.Layout ? Component.Layout : MainLayout;
+		const LayoutProps = Component.LayoutProps ? Component.LayoutProps : {};
+		return (
+			<div id='app'>
+				<ThemeProvider theme={theme}>
+					<GlobalStyle />
+					<Head>
+						<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"></link>
+						<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+					</Head>
+					<Layout {...LayoutProps}>
+						<Component {...pageProps} />
+					</Layout>
+				</ThemeProvider>
+			</div>
+		)
+	}
 }
+
+export default wrapper.withRedux(MyApp)

@@ -38,8 +38,7 @@ const LoginPage = () => {
 			const jwt = response.jwt
 			console.log(jwt);
 			setCookie(null, 'authToken',jwt, {
-				maxAge: 2 * 24 * 60 * 60,
-				path: '/',
+				maxAge: 2 * 24 * 60 * 60
 			})
 			setSending(false)
 			location.replace('/')

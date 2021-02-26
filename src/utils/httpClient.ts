@@ -25,7 +25,7 @@ const handleError = (error: AxiosError): Promise<ClientError> => {
   return Promise.reject(error.response?.data || {
     id: "",
     status: 0,
-    message: "Ocurrió un error",
+    message: "Ocurrió un error desconocido",
     errors: []
   });
 };
@@ -37,7 +37,7 @@ const initializeResponseInterceptor = (instance: AxiosInstance): void => {
 export const httpClient = (url: string, interceptor = true): AxiosInstance => {
   const instance = axios.create({
     baseURL: url,
-    timeout: 1000,
+    timeout: 1000000,
     httpAgent: new http.Agent({ keepAlive: true }),
     httpsAgent: new https.Agent({ keepAlive: true }),
     maxRedirects: 10,

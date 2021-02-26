@@ -27,6 +27,7 @@
 			"@theme/*": ["theme/*"],
 			"@utils/*": ["utils/*"],
 			"@api/*": ["utils/api/*"],
+			"@store/*": ["store/*"],
 		}
 	},
 	"exclude": [

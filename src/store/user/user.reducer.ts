@@ -17,16 +17,14 @@ const userReducer = (state:UserReducerState = defaultState, action:UserActionTyp
 			return {...state,
 				is_logged: action.is_logged,
 				profile: action.profile,
-				auth: action.auth,
-				completed_profile: action.completed_profile,
+				auth: action.auth
 			};
 		case 'SET_USER_NOT_LOGGED':
 			return {
 				...state,
 				is_logged: action.is_logged,
 				profile: action.profile,
-				auth: action.auth,
-				completed_profile: action.completed_profile,
+				auth: action.auth
 			}
 		default:
 			return state

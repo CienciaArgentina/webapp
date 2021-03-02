@@ -8,7 +8,6 @@ export type UserReducerState = {
 	is_logged: false,
 	profile: null,
 	auth: null,
-	completed_profile: null
 }
 
 export const SET_USER_LOGGED = 'SET_USER_LOGGED'

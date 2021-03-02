@@ -72,14 +72,14 @@ type ProfileCommon = {
   job_experience: any[]
 }
 
-interface CompletedUserProfile extends ProfileCommon {
+export interface CompletedUserProfile extends ProfileCommon {
   completed_profile: true
   name: string
   last_name: string
   sex: string,
   birthdate: string
 }
-interface UncompletedUserProfile extends ProfileCommon {
+export interface UncompletedUserProfile extends ProfileCommon {
   completed_profile: false
   name: null
   last_name: null
@@ -87,7 +87,7 @@ interface UncompletedUserProfile extends ProfileCommon {
   birthdate: null
 }
 
-type UserProfile = (CompletedUserProfile | UncompletedUserProfile)
+export type UserProfile = (CompletedUserProfile | UncompletedUserProfile)
 
 export interface MyProfileInterface {
   profile: UserProfile,

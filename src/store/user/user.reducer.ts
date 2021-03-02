@@ -6,10 +6,9 @@ const defaultState:UserReducerState = {
 	is_logged: false,
 	profile: null,
 	auth: null,
-	completed_profile: null,
 }
 
-const userReducer = (state:UserReducerState = defaultState, action:UserActionTypes | ReduxHydrate) => {
+const userReducer = (state:UserReducerState = defaultState, action:UserActionTypes | ReduxHydrate):UserReducerState => {
 	switch (action.type) {
 		case HYDRATE:
             return {...state, ...action.payload.user};

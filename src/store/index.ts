@@ -16,14 +16,18 @@ export type ReduxHydrate = {
 	payload: StoreState
 }
 
+const rootReducer = combineReducers({
+	user: userReducer,
+	page: pageReducer,
+})
+
 // create a makeStore function
 const makeStore: MakeStore<StoreState> = () => createStore(
-	combineReducers({
-		user: userReducer,
-		page: pageReducer,
-	}),
+	rootReducer,
 	composeWithDevTools(applyMiddleware(thunk))
 );
+
+export type RootState = ReturnType<typeof rootReducer>
 
 // export an assembled wrapper
 export const wrapper = createWrapper<StoreState>(makeStore, {debug: false});

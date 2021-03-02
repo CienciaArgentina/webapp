@@ -32,6 +32,7 @@ const Container = styled.div<ContainerProps>`
 	justify-content: center;
 	text-transform: uppercase;
 	text-decoration: none !important;
+	position: relative;
 	${({hasOnClick}) => `
 		cursor: ${(hasOnClick) ? 'pointer' : 'default'};
 	`}

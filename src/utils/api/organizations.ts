@@ -23,9 +23,9 @@ export const getUserProfile = async (
     return data;
   };
 
-  export const postOrganization = async (): Promise<OrganizationsRequest> => {
-    const path = `${ORGANIZATIONS}`;
-    const httpRequest = httpClient(cienciaArgentinaHost);
-    const { data } = await httpRequest.post<OrganizationsRequest>(path);
-    return data;
-  };
+export const postOrganization = async (): Promise<OrganizationsRequest> => {
+  const path = `${ORGANIZATIONS}`;
+  const httpRequest = httpClient(cienciaArgentinaHost);
+  const { data } = await httpRequest.post<OrganizationsRequest>(path);
+  return data;
+};

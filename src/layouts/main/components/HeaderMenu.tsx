@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { UserLogin } from "./UserLogin"
 import {StoreState} from '@store/index'
 import { useSelector } from "react-redux"
-import { Avatar } from "@components/user/avatar"
+import { Avatar } from "@components/user/Avatar"
 import { UserProfile } from "@utils/api/user_profiles"
 import { FunctionComponent } from "react"
 
@@ -73,7 +73,7 @@ const HeaderAvatarOptions = styled.div`
 		top: 0;
 		right: 1.3333rem;
 		transform: translateY(-48%) rotate(45deg);
-		pointer-events: none
+		pointer-events: none;
 	}
 `
 

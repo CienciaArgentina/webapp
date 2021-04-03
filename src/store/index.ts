@@ -28,6 +28,7 @@ const makeStore: MakeStore<StoreState> = () => createStore(
 );
 
 export type RootState = ReturnType<typeof rootReducer>
+export type DefaultRootState = ReturnType<typeof rootReducer>
 
 // export an assembled wrapper
 export const wrapper = createWrapper<StoreState>(makeStore, {debug: false});

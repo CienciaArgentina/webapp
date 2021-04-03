@@ -48,12 +48,12 @@ export const updateUserProfile = async (
   return data;
 };
 
-interface ClaimInterface {
+export interface ClaimInterface {
   id: number
   description: string
 }
 
-interface RolInterface {
+export interface RolInterface {
   id: number
   description: number
   claims: ClaimInterface[]
@@ -94,7 +94,7 @@ export interface MyProfileInterface {
   auth: {
     auth_id: number
     email: string
-    roles: RolInterface
+    roles: RolInterface[]
     timestamp: number
   }
 }

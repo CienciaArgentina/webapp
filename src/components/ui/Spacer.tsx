@@ -49,28 +49,28 @@ interface buildSpacerCssInterface {
 	): string
 }
 
-const getSpaceUnit = ( size:SpaceUnit, theme:DefaultTheme ) => size=='auto' ? 'auto' : (theme.layout.spacing * size)+theme.layout.spacing_unit
+const getSpaceUnit = ( size:SpaceUnit, theme:DefaultTheme ) => size=='auto' ? 'auto' : `${theme.layout.spacing * size}${theme.layout.spacing_unit}`
 const buildSpacerCss:buildSpacerCssInterface = (prop, side, size, theme) => `${prop}${side=='all'? '' : `-${side}`}: ${getSpaceUnit(size, theme)};`
 
 export const spacerMargin = css<MarignSpacerInterface>`
-	${ ({m , theme}) => m  && buildSpacerCss('margin', 'all', m, theme) }
-	${ ({my, theme}) => my && buildSpacerCss('margin', 'top', my, theme) +
-							  buildSpacerCss('margin', 'bottom', my, theme) }
-	${ ({mx, theme}) => mx && buildSpacerCss('margin', 'right', mx, theme) +
-							  buildSpacerCss('margin', 'left', mx, theme) }
-	${ ({mt, theme}) => mt && buildSpacerCss('margin', 'top', mt, theme) }
-	${ ({mr, theme}) => mr && buildSpacerCss('margin', 'right', mr, theme) }
-	${ ({mb, theme}) => mb && buildSpacerCss('margin', 'bottom', mb, theme) }
-	${ ({ml, theme}) => ml && buildSpacerCss('margin', 'left', ml, theme) }
+	${ ({m , theme}) => m!==undefined  && buildSpacerCss('margin', 'all', m, theme) }
+	${ ({my, theme}) => my!==undefined && buildSpacerCss('margin', 'top', my, theme)}
+	${ ({my, theme}) => my!==undefined && buildSpacerCss('margin', 'bottom', my, theme)}
+	${ ({mx, theme}) => mx!==undefined && buildSpacerCss('margin', 'left', mx, theme)}
+	${ ({mx, theme}) => mx!==undefined && buildSpacerCss('margin', 'right', mx, theme)}
+	${ ({mt, theme}) => mt!==undefined && buildSpacerCss('margin', 'top', mt, theme) }
+	${ ({mr, theme}) => mr!==undefined && buildSpacerCss('margin', 'right', mr, theme) }
+	${ ({mb, theme}) => mb!==undefined && buildSpacerCss('margin', 'bottom', mb, theme) }
+	${ ({ml, theme}) => ml!==undefined && buildSpacerCss('margin', 'left', ml, theme) }
 `
 export const spacerPadding = css<PaddingSpacerInterface>`
-	${ ({p , theme}) => p  && buildSpacerCss('padding', 'all', p, theme) }
-	${ ({py, theme}) => py && buildSpacerCss('padding', 'top', py, theme) +
-							  buildSpacerCss('padding', 'bottom', py, theme) }
-	${ ({px, theme}) => px && buildSpacerCss('padding', 'right', px, theme) +
-							  buildSpacerCss('padding', 'left', px, theme) }
-	${ ({pt, theme}) => pt && buildSpacerCss('padding', 'top', pt, theme) }
-	${ ({pr, theme}) => pr && buildSpacerCss('padding', 'right', pr, theme) }
-	${ ({pb, theme}) => pb && buildSpacerCss('padding', 'bottom', pb, theme) }
-	${ ({pl, theme}) => pl && buildSpacerCss('padding', 'left', pl, theme) }
+	${ ({p , theme}) => p!==undefined  && buildSpacerCss('padding', 'all', p, theme) }
+	${ ({py, theme}) => py!==undefined && buildSpacerCss('padding', 'top', py, theme)}
+	${ ({py, theme}) => py!==undefined && buildSpacerCss('padding', 'bottom', py, theme)}
+	${ ({px, theme}) => px!==undefined && buildSpacerCss('padding', 'right', px, theme)}
+	${ ({px, theme}) => px!==undefined && buildSpacerCss('padding', 'left', px, theme)}
+	${ ({pt, theme}) => pt!==undefined && buildSpacerCss('padding', 'top', pt, theme) }
+	${ ({pr, theme}) => pr!==undefined && buildSpacerCss('padding', 'right', pr, theme) }
+	${ ({pb, theme}) => pb!==undefined && buildSpacerCss('padding', 'bottom', pb, theme) }
+	${ ({pl, theme}) => pl!==undefined && buildSpacerCss('padding', 'left', pl, theme) }
 `

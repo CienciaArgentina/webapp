@@ -8,6 +8,7 @@ import {
 	useSpacerMargin,
 	useSpacerPadding
 } from './Spacer'
+import {buildContainer} from '@theme/utils'
 
 const buildInnerSpace = (space:any, direction:string) => {
 	switch (direction) {
@@ -30,6 +31,8 @@ interface BoxWrapperProps extends MarignSpacerInterface, PaddingSpacerInterface 
 	col_count: number|Boolean;
 	span?: number;
 	flex?: boolean
+	container?: boolean
+	containerSize?: 'l' | 'm' | 's' | number
 }
 
 const addProp = (propName:string, value:any) => value && `
@@ -63,6 +66,7 @@ const BoxWrapper = styled.div<BoxWrapperProps>`
 		grid-gap: ${theme.layout.col_gap+'rem'};
 	`}
 	${({span})=>!!span&&`grid-column:span ${span};`}
+	${({container, containerSize}) => container&& buildContainer({size: containerSize||'l', padding:true})}
 `
 
 export interface BoxProps extends MarignSpacerInterface, PaddingSpacerInterface {
@@ -79,6 +83,8 @@ export interface BoxProps extends MarignSpacerInterface, PaddingSpacerInterface 
 	className?: any;
 	as?: any;
 	flex?: Boolean;
+	container?: Boolean
+	containerSize?: 'l' | 'm' | 's' | number
 }
 
 const mapChilds = (child:React.ReactNode, align:string|undefined) => {
@@ -113,6 +119,8 @@ export const Box = (props:BoxProps) => {
 			span={props.span}
 			className={props.className}
 			flex={props.flex}
+			container={props.container}
+			containerSize={props.containerSize}
 			{...marginProps}
 			{...paddingProps}
 		>

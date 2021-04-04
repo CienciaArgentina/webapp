@@ -1,11 +1,10 @@
-import { UserProfile } from '@api/user_profiles'
 import styled from 'styled-components'
 import { getColor } from '@theme/utils'
 import { MarignSpacerInterface, PaddingSpacerInterface, spacerMargin, spacerPadding, useSpacerMargin, useSpacerPadding } from '@components/ui/Spacer'
 import { ConditionalLink } from '@components/ui/ConditionalLink'
 
 interface AvatarProps extends MarignSpacerInterface, PaddingSpacerInterface {
-	profile: UserProfile
+	name: string
 	onClick?: any,
 	size?: number,
 	href?: string
@@ -38,7 +37,7 @@ const Container = styled.div<ContainerProps>`
 	`}
 `
 
-export const Avatar = ( { href, profile, onClick, size, ...props }:AvatarProps ) => {
+export const Avatar = ( { href, name, onClick, size, ...props }:AvatarProps ) => {
 	const marginProps = useSpacerMargin(props)
 	const paddingProps = useSpacerPadding(props)
 	return(
@@ -50,7 +49,7 @@ export const Avatar = ( { href, profile, onClick, size, ...props }:AvatarProps )
 				{...marginProps}
 				{...paddingProps}
 			>
-				{profile.username.charAt(0)}
+				{name.charAt(0)}
 			</Container>
 		</ConditionalLink>
 	)

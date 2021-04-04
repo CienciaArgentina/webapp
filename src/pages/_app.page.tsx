@@ -46,7 +46,7 @@ class MyApp extends App<any> {
 				jwtToken = cookies.authToken
 				cienciaArgentinaRequest.defaults.headers.Authorization = jwtToken			
 				try {
-					const user_data  = await getMyProfile()				
+					const user_data  = await getMyProfile()
 					ctx.store.dispatch(setUserLogged(user_data))
 				} catch(e) {
 					ctx.store.dispatch(setUserNotLogged())
@@ -60,7 +60,6 @@ class MyApp extends App<any> {
                 // Call page-level getInitialProps
                 ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
                 // Some custom thing for all pages
-                pathname: ctx.pathname,
             },
         };
 	}

@@ -101,7 +101,7 @@ const HeaderAvatar:FunctionComponent<{profile:UserProfile}> = ({profile}) => (
 			</Link>
 			<Option><b>Cerrar sesión</b></Option>
 		</HeaderAvatarOptions>
-		<Avatar href='/profile' profile={profile}/>
+		<Avatar href='/profile' name={profile.username}/>
 	</HeaderAvatarContainer>
 )
 

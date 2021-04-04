@@ -21,6 +21,9 @@
   "author": "CienciaArgentina",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@types/axios": "^0.14.0",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.21.1",

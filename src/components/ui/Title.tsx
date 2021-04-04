@@ -1,9 +1,18 @@
+import { getColor } from "@theme/utils"
 import { FunctionComponent } from "react"
-import styled, { CSSProperties } from "styled-components"
+import styled, { css, CSSProperties } from "styled-components"
+import {
+	MarignSpacerInterface,
+	PaddingSpacerInterface,
+	useSpacerMargin,
+	useSpacerPadding,
+	spacerMargin,
+	spacerPadding
+} from "./Spacer"
 
 type HeadingLevel = 1|2|3|4|5|6
 
-interface TitleProps {
+interface TitleProps extends MarignSpacerInterface, PaddingSpacerInterface {
 	level?: HeadingLevel
 	center?: boolean
 	align?: 'left' | 'right' | 'center'
@@ -14,7 +23,7 @@ const title_size = {
 	1: 3,
 	2: 2.2,
 	3: 1.8,
-	4: 1.7,
+	4: 1.5,
 	5: 1.5,
 	6: 1.0,
 }
@@ -22,12 +31,18 @@ const title_weight = {
 	1: 700,
 	2: 700,
 	3: 500,
-	4: 200,
+	4: 700,
 	5: 200,
 	6: 100,
 }
 
-interface StyleTitleProps {
+const Title4Css = css`
+	color: ${getColor('lblue')};
+	letter-spacing: .1rem;
+	text-transform: uppercase;
+`
+
+interface StyleTitleProps extends MarignSpacerInterface, PaddingSpacerInterface {
 	level: HeadingLevel
 	align?: 'left' | 'right' | 'center'
 }
@@ -37,10 +52,13 @@ const StyleTitle = styled.div<StyleTitleProps>`
 	${({align}) => align&&`
 		text-align: ${align};
 	`}
-	${({level}) => `
+	${({level}) => css`
 		font-size: ${title_size[level]}rem;
 		font-weight: ${title_weight[level]};
+		${level===4 && Title4Css}
 	`}
+	${spacerMargin}
+	${spacerPadding}
 `
 
 export const Title: FunctionComponent<TitleProps> = ({ level, children, ...props }) => {
@@ -55,6 +73,17 @@ export const Title: FunctionComponent<TitleProps> = ({ level, children, ...props
 	const as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" = LEVEL_MAP[level||3]
 
 	const align = props.align || (props.center&&'center') || undefined
+	const marginProps = useSpacerMargin(props)
+	const paddingProps = useSpacerPadding(props)
 	
-	return <StyleTitle style={props.style} as={as} level={level||3} align={align}>{children}</StyleTitle>
+	return <StyleTitle
+		{...marginProps}
+		{...paddingProps}
+		style={props.style}
+		as={as}
+		level={level||3}
+		align={align}
+	>
+		{children}
+	</StyleTitle>
 }

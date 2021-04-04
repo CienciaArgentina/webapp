@@ -19,15 +19,21 @@ export interface ClientError {
   "status": number,
   "message": string,
   "errors": ApiError[]
+  "netowrk_error":AxiosError<any>
 }
 
 const handleError = (error: AxiosError): Promise<ClientError> => {
-  return Promise.reject(error.response?.data || {
-    id: "",
-    status: 0,
-    message: "Ocurrió un error desconocido",
-    errors: []
-  });
+  if( !!error.response?.data ) {
+    return Promise.reject({...error.response?.data, network_error: error})
+  } else {
+    return Promise.reject({
+      id: "",
+      status: 400,
+      message: "Ocurrió un error desconocido",
+      errors: [],
+      netowrk_error: error
+    })
+  }
 };
 
 const initializeResponseInterceptor = (instance: AxiosInstance): void => {

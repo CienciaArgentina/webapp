@@ -20,6 +20,7 @@ const MenuButtonContainer = styled.div<{isSelected:boolean}>`
 	}
 `
 const MenuIcon = styled.div`
+	flex-shrink: 0;
 	width: 3rem;
 	display: flex;
 	align-items: center;

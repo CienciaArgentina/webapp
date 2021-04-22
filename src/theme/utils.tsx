@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css, DefaultTheme } from 'styled-components'
 import {ThemeType} from './index'
 
 export type colorKey = keyof ThemeType['colors']
@@ -17,9 +17,11 @@ const max_sizes = {
 	s: '20'
 }
 
+export const getGap = ( {theme}:{theme:DefaultTheme}) => css`${theme.layout.col_gap}${theme.layout.spacing_unit}`
+
 export const buildContainer = ({size, padding}:ContainerProps) => css`
 	max-width: ${typeof size==='number' ? size : !!size ? max_sizes[size] : max_sizes['l'] }rem;
-	${padding && 'padding-left: 1rem; padding-right: 1rem;' }
+	${padding && css`padding-left: ${getGap}; padding-right: ${getGap};` }
 	margin: 0 auto;
 	position: relative;
 	box-sizing: border-box;

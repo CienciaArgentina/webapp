@@ -1,5 +1,5 @@
 import { MenuButton } from '@components/MenuButton';
-import { Card, Title } from '@components/ui';
+import { Card } from '@components/ui';
 import { Box } from '@components/ui/Box';
 import { faFlask, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { OrganizationInterface } from '@utils/api/organizations';
@@ -22,12 +22,12 @@ export const OrganizationSideMenu:FunctionComponent<OrganizationSideMenuProps> =
 					/>
 				</a>
 			</Link>
-			<Link href={`/organization/${id}/laboratories`}>
+			<Link href={`/organization/${id}/departments`}>
 				<a>
 					<MenuButton
 						icon={faFlask}
 						label='Laboratorios'
-						isSelected={selected==='laboratories'}
+						isSelected={selected==='departments'}
 					/>
 				</a>
 			</Link>
@@ -35,7 +35,7 @@ export const OrganizationSideMenu:FunctionComponent<OrganizationSideMenuProps> =
 				<a>
 					<MenuButton
 						icon={faSearch}
-						label='Ofertas'
+						label='Trabajos'
 						isSelected={selected==='jobs'}
 					/>
 				</a>
@@ -46,37 +46,16 @@ export const OrganizationSideMenu:FunctionComponent<OrganizationSideMenuProps> =
 
 interface OrganizationBodyProps {
 	organization: OrganizationInterface
+	selected: 'home'| 'departments'| 'jobs'
 }
-const OrganizationMain:FunctionComponent<OrganizationBodyProps> = ({organization}) => {
-	return (
-		<>
-			{!!(organization.description || organization.summary) && (
-				<Box mb={2}>
-					<Title mb={1} level={2} >Sobre el instituto</Title>
-					<p>
-						{organization.description || organization.summary}
-					</p>
-				</Box>
-			) }
-			{organization.website && <Box>
-				<Link href={organization.website}><a target='_blank'>{organization.website}</a></Link>
-			</Box>}
-			{organization.website && <Box>
-				<Link href={'/search/CABA'}>Calle falsea 123, Buenos Aires, Argentina</Link>
-			</Box>}
-		</>
-	)
-}
-export const OrganizationBody:FunctionComponent<OrganizationBodyProps> = ({organization}) => {
+export const OrganizationBody:FunctionComponent<OrganizationBodyProps> = ({organization, selected, children}) => {
 	return (
 		<Box container py={5} cols={24}>
 			<Box span={5}>
-				<OrganizationSideMenu selected={'home'} id={organization.id} />
+				<OrganizationSideMenu selected={selected} id={organization.id} />
 			</Box>
 			<Box span={19}>
-				<Card>
-					<OrganizationMain organization={organization} />
-				</Card>
+				{children}
 			</Box>
 		</Box>
 	)

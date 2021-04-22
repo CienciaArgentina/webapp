@@ -1,5 +1,5 @@
 import { httpClient, cienciaArgentinaHost, cienciaArgentinaRequest } from 'utils/httpClient';
-import { DepartmentsRequest } from './departments';
+import { DepartmentsInterface } from './departments';
 
 const ORGANIZATIONS = "/organizations";
 
@@ -11,7 +11,7 @@ interface OrganizationsRequest {
     description?: string;
     website?: string;
     organization_type?: string;
-    departments?: DepartmentsRequest[] | null;
+    departments?: DepartmentsInterface[] | null;
 }
 
 export const getUserProfile = async (
@@ -30,6 +30,19 @@ export const postOrganization = async (): Promise<OrganizationsRequest> => {
   return data;
 };
 
+export interface OrganizationAddress {
+  id: number
+  date_created: string
+  date_deleted: null | string
+  street_name: string
+  street_number: string
+  zip_code: string
+  additionals: null | string
+  latitude: string
+  longitude: string
+  locality_id: number
+}
+
 export interface OrganizationInterface {
   id: number;
   name: string;
@@ -38,7 +51,8 @@ export interface OrganizationInterface {
   description?: string;
   website?: string;
   organization_type?: string;
-  departments?: DepartmentsRequest[] | null;
+  departments?: DepartmentsInterface[] | null;
+  address: OrganizationAddress | null
 }
 
 export const getOrganization = async (id:number): Promise<OrganizationInterface> => {

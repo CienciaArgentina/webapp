@@ -43,11 +43,6 @@ const flexBox = css<BoxWrapperProps>`
 	display: flex;
 	flex-wrap: ${({noWrap}) => noWrap?'nowrap':'wrap'};
 	flex-direction: ${props=>props.direction || 'row'};
-	${({grow}) => (
-		(grow!==undefined)&&`
-			flex-grow: ${grow ? 1 : 0};
-		`
-	)}
 `
 
 const BoxWrapper = styled.div<BoxWrapperProps>`
@@ -67,6 +62,11 @@ const BoxWrapper = styled.div<BoxWrapperProps>`
 	`}
 	${({span})=>!!span&&`grid-column:span ${span};`}
 	${({container, containerSize}) => container&& buildContainer({size: containerSize||'l', padding:true})}
+	${({grow}) => (
+		(grow!==undefined)&&`
+			flex-grow: ${grow ? 1 : 0};
+		`
+	)}
 `
 
 export interface BoxProps extends MarignSpacerInterface, PaddingSpacerInterface {

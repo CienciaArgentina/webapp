@@ -2,6 +2,7 @@ import { ReactChildren } from "react"
 import styled from "styled-components"
 import { Header } from "./components/Header"
 import { MobileHeader } from "./components/MobileHeader"
+import NextNprogress from 'nextjs-progressbar';
 
 interface ContainerProps {
 	background?: string
@@ -30,6 +31,9 @@ interface LayoutInterface extends LayoutProps {
 const MainLayout = ({children, background}:LayoutInterface) => {
 	return (
 		<Container background={background} >
+			<NextNprogress
+				options={{showSpinner: false}}
+			/>
 			<Header />
 			<MobileHeader />
 			<div>

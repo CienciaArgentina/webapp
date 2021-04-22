@@ -1,0 +1,40 @@
+export const colors = {
+	'error': '#b00020',
+
+	'red-50': '#FFEBEE',
+	'red-100': '#FFCDD2',
+	'red-200': '#EF9A9A',
+	'red-300': '#E57373',
+	'red-400': '#EF5350',
+	'red-500': '#F44336',
+	'red-600': '#E53935',
+	'red-700': '#D32F2F',
+	'red-800': '#C62828',
+	'red-900': '#B71C1C',
+
+	'lblue-600': '#219ae3',
+	'lblue-700': '#1e87cf',
+	'lblue': '#1b76bb',
+	'lblue-900': '#165699',
+
+	'green-200': '#8cd2ac',
+	'green': '#22b573',
+	'green-500': '#00a85b',
+	'green-800': '#007639',
+	'gray-50': ' #FAFAFA',
+	'gray-100': '#F5F5F5',
+	'gray-200': '#EEEEEE',
+	'gray-300': '#E0E0E0',
+	'gray-400': '#BDBDBD',
+	'gray-500': '#9E9E9E',
+	'gray-600': '#757575',
+	'gray-700': '#616161',
+	'gray-800': '#424242',
+	'gray-900': '#212121',
+	
+	'bg-gray': '#efefef',
+
+	'transparent': 'rgba(0,0,0,0)',
+	'gradient-a': 'linear-gradient(-30deg, #1BA4BB 0%, #1B75BB 44.33%, #615BBB 94.85%)',
+	'gradient-b': 'linear-gradient(90deg, rgba(27, 164, 187, 1) 0%, rgba(27, 117, 187, 1) 100%)',
+}

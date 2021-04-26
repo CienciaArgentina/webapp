@@ -26,6 +26,7 @@ const RegisterPage = () => {
 	const password_ref = useRef<TextField>(null)
 
 	const handleSubmit:SerializedFormEvent<FormResult> = ( {values} ) => {
+		setFormError(null)
 		console.log(values.username);
 	}
 	

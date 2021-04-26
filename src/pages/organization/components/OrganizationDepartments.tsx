@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react"
-import { DepartmentsRequest } from '@api/departments'
+import { DepartmentsInterface } from '@api/departments'
 import { Box, Card, Text, Title } from "@components/ui/index"
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -19,7 +19,7 @@ const DepartmentCardContainer = styled(Card)`
 `
 
 interface OrganizationDepartmentsProps {
-	departments: DepartmentsRequest[]
+	departments: DepartmentsInterface[]
 }
 
 export const OrganizationDepartments:FunctionComponent<OrganizationDepartmentsProps> = ({departments}) => (

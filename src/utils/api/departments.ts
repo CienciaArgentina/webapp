@@ -1,4 +1,5 @@
-import { httpClient, cienciaArgentinaHost } from 'utils/httpClient';
+import { cienciaArgentinaRequest } from 'utils/httpClient';
+import { OrganizationInterface } from './organizations';
 
 const DEPARTMENTS = "/departments"
 

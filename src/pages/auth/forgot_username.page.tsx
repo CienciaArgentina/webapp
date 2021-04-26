@@ -20,6 +20,7 @@ const ForgorUsernamePage = () => {
 	const [formError, setFormError] = useState<string|null>(null)
 
 	const handleSubmit:SerializedFormEvent<FormResult> = ( {values:{email}} ) => {
+		setFormError(null)
 		console.log(email);
 	}
 	

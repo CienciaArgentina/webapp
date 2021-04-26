@@ -1,4 +1,5 @@
 FROM node:lts-alpine
+ENV CIENCIA_ARGENTINA_HOST=localhost
 WORKDIR /usr/src/app
 
 COPY package*.json ./

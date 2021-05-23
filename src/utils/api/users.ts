@@ -26,15 +26,16 @@ export const login = async (
   return data;
 };
 
-export const register = async (
-  userRequest: UserRequest
-): Promise<RegisterResponse> => {
+interface RegisterRequest {
+  username: string,
+  email: string,
+  password: string
+}
+
+export const register = async ( registerData: RegisterRequest ): Promise<RegisterResponse> => {
   const path = `${resource}`;
 
-  const { data } = await cienciaArgentinaRequest.post<RegisterResponse>(
-    path,
-    userRequest
-  );
+  const { data } = await cienciaArgentinaRequest.post<RegisterResponse>( path, registerData );
   return data;
 };
 

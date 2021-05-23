@@ -18,13 +18,13 @@ const Container = styled.div<ContainerProps>`
 	${spacerMargin}
 	${spacerPadding}
 	${({size}) => `
+		font-size:  ${size? size/2.5 : 1.5}rem;
 		width:  ${size || 4}rem;
 		height: ${size || 4}rem;
 	`}
 	border-radius: 50%;
 	background-color: ${getColor('lblue')};
 	color: white;
-	font-size: 1.5rem;
 	font-weight: 500;
 	display: flex;
 	align-items: center;

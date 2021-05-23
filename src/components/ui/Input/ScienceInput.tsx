@@ -33,7 +33,14 @@ export interface ScienceInputProps {
 	style?: CSSProperties
 	className?: string
 }
-export interface ScienceInputState {
+// export interface ScienceInputState {
+// 	input_value:any;
+// 	is_valid:boolean;
+// 	render_error:boolean;
+// 	error_message: string|boolean;
+// }
+
+export type ScienceInputState<T> = T & {
 	input_value:any;
 	is_valid:boolean;
 	render_error:boolean;
@@ -47,17 +54,25 @@ type InputValidationResponse = {
 	error_message?: string | boolean
 }
 
-export abstract class ScienceInput<InputProps extends ScienceInputProps> extends React.Component<InputProps, ScienceInputState> {
+export abstract class ScienceInput<InputProps extends ScienceInputProps, InputState={}> extends React.Component<InputProps, ScienceInputState<InputState>> {
 	static contextType = FormContext
 	context!: React.ContextType<typeof FormContext>;
 	input_id:string | null = null
 
-	state:ScienceInputState = {
-		input_value: '',
-		is_valid: false,
-		render_error: false,
-		error_message: false
+	constructor(props:InputProps, childState:InputState) {
+		super(props)
+		const defaultState = {
+			input_value: '',
+			is_valid: false,
+			render_error: false,
+			error_message: false
+		}
+		this.state = {
+			...childState,
+			...defaultState
+		}
 	}
+
 	//user defined functions
 	abstract getValue():any
 	validate: undefined | ValidationFunction = undefined
@@ -101,7 +116,7 @@ export abstract class ScienceInput<InputProps extends ScienceInputProps> extends
 		})
 	}
 	updateErrorRender = () => {
-		this.setState( (prevState:ScienceInputState) => ({render_error: !prevState.is_valid}) )
+		this.setState( (prevState:ScienceInputState<InputState>) => ({...prevState, render_error: !prevState.is_valid}) )
 	}
 	updateValue = async ():Promise<void> => {
 		const input_value = this.getValue()

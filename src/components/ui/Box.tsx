@@ -50,6 +50,7 @@ const BoxWrapper = styled.div<BoxWrapperProps>`
 	${spacerPadding}
 	${({flex}) => flex&&flexBox}
 	${({align}) => addProp('align-items', align)}
+	${({justify}) => addProp('justify-content', justify)}
 	${({space, direction='row'}) => space && `
 		& > *:not(:last-child) {
 			${buildInnerSpace(space, direction)}

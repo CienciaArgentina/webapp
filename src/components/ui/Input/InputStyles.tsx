@@ -1,7 +1,12 @@
 import { getColor } from '@theme/utils';
 import styled, { css } from 'styled-components'
 
+//General input vars
 const transitionCurve = '200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms';
+const space_top = 2.3;
+const space_bottom = .7;
+const space_left = 1.2;
+const space_right = 1.2;
 
 export const InputError = styled.div`
 	color: ${getColor('red-300')};
@@ -9,16 +14,23 @@ export const InputError = styled.div`
 	font-size: 1.3rem;
 	font-weight: 600;
 	text-align: left;
+	padding-left: ${space_left}rem;
+	padding-right: ${space_right}rem;
+`
+
+export const InputHelper = styled.div`
+	color: ${getColor('gray-600')};
+	margin-top: .5rem;
+	font-size: 1.3rem;
+	font-weight: 600;
+	text-align: left;
+	padding-left: ${space_left}rem;
+	padding-right: ${space_right}rem;
 `
 
 interface InputRootProps {
 	readonly?: boolean;
 }
-
-const space_top = 2.3;
-const space_bottom = .7;
-const space_left = 1.2;
-const space_right = 1.2;
 
 export const InputRoot = styled.div<InputRootProps>`
 	margin: 0;
@@ -47,9 +59,36 @@ export const InputLabel = styled.div<InputLabelProps>`
 	`}
 `
 
+interface ExtraInputInterface {
+	show: boolean
+	pre?: boolean
+	post?:boolean
+}
+
+export const ExtraInput = styled.div<ExtraInputInterface>`
+	display: flex;
+	${ ({ show }) => !show && 'visibility: hidden;' }
+	align-content: center;
+	justify-content: center;
+	user-select: none;
+	pointer-events: none;
+	position: absolute;
+	bottom: 0;
+	${({pre}) => pre && `
+		left: 0;
+		padding-left: ${space_left}rem;
+	`}
+	${({post}) => post && `
+		right: 0;
+		padding-right: ${space_right}rem;
+	`}
+`
+
 export interface InputContainerProps {
 	hasValue: boolean
 	error:boolean
+	preInputWidth:number
+	postInputWidth:number
 }
 
 export const InputContainer = styled.div<InputContainerProps>`
@@ -60,7 +99,12 @@ export const InputContainer = styled.div<InputContainerProps>`
 	transition: background-color ${transitionCurve}, box-shadow ${transitionCurve};
 	border-radius: .5rem;
 	overflow: hidden;
-	input, select, textarea{
+	display: flex;
+	align-items: flex-end;
+	${ExtraInput} {
+		padding-bottom: ${space_bottom}rem;
+	}
+	input, select, textarea {
 		font: inherit;
 		color: currentColor;
 		width: 100%;
@@ -73,8 +117,8 @@ export const InputContainer = styled.div<InputContainerProps>`
 		-webkit-tap-highlight-color: transparent;
 		padding-top: ${space_top}rem;
 		padding-bottom: ${space_bottom}rem;
-		padding-left: ${space_left}rem;
-		padding-right: ${space_right}rem;
+		padding-left: ${({preInputWidth}) => !!preInputWidth ? preInputWidth/10 + 0.1 : space_left}rem;
+		padding-right: ${({postInputWidth}) => !!postInputWidth ? postInputWidth/10 + 0.1 : space_right}rem;
 		font-weight: 500;
 		min-width: 20.594rem;
 		height: 4.6rem;
@@ -91,6 +135,8 @@ export const InputContainer = styled.div<InputContainerProps>`
 		color: rgba(0, 0, 0, 0.64);
 		font-weight: 500;
 		z-index: 10;
+		top: 0;
+		left: 0;
 		${({hasValue}) => hasValue&&`transform: translate(12px, 7px) scale(0.75);`}
 	}
 	&:focus-within {
@@ -98,6 +144,9 @@ export const InputContainer = styled.div<InputContainerProps>`
 		${InputLabel} {
 			color: ${getColor('lblue')};
 			transform: translate(12px, 7px) scale(0.75);
+		}
+		${ExtraInput} {
+			visibility: visible;
 		}
 	}
 	//ERROR STATE

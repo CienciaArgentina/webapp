@@ -45,14 +45,6 @@ const RegisterPage = () => {
 		}).catch((err:ClientError) => {
 			setFormError(err.message)
 			setSending(false)
-			// if(err.errors.length && err.errors[0].code == 'email_not_verified') {
-			// 	setFormError( () => <>
-			// 		{err.message} <Button onClick={resendConfirmEmail(err.errors[0].detail, setFormError)}>Reenviar correo</Button>
-			// 	</>)
-			// } else {
-			// 	setFormError(err.message);
-			// }
-			// setSending(false)
 		})
 	}
 
